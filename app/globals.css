@@ -1,0 +1,89 @@
+@import 'tailwindcss';
+
+@theme {
+  /* Colors */
+  --color-primary: #000000;
+  --color-primary-dark: #000000;
+  --color-background-light: #ffffff;
+  --color-surface-white: #ffffff;
+  --color-gray-kr: #888888;
+  --color-text-main: #191f28;
+  --color-text-sub: #4e5968;
+  --color-border-color: #e9ecef;
+
+  /* Font Family */
+  --font-family-sans: 'Noto Sans KR', sans-serif;
+
+  /* Market Sidebar */
+  --spacing-sidebar: 6.5rem;
+
+  /* Border Radius */
+  --radius: 0.5rem;
+  --radius-lg: 0.75rem;
+  --radius-xl: 1rem;
+  --radius-2xl: 1.5rem;
+  --radius-full: 9999px;
+
+  /* Box Shadows */
+  --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+body {
+  word-break: keep-all;
+}
+
+/* Custom container class for consistent content width */
+.container-custom {
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media (max-width: 768px) {
+  .container-custom {
+    width: 90%;
+  }
+}
+
+/* Tiptap Placeholder */
+.tiptap p.is-editor-empty:first-child::before,
+.tiptap p.is-empty:first-child::before {
+  content: attr(data-placeholder);
+  float: left;
+  color: #adb5bd;
+  pointer-events: none;
+  height: 0;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #d1d5db;
+  border-radius: 4px;
+}
+/*
+::-webkit-scrollbar-thumb:hover {
+  background: #ff3399;
+} */
+
+.chat-scroll::-webkit-scrollbar {
+  width: 6px;
+}
+.chat-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.chat-scroll::-webkit-scrollbar-thumb {
+  background: #dee2e6;
+  border-radius: 3px;
+}
+.chat-scroll::-webkit-scrollbar-thumb:hover {
+  background: #adb5bd;
+}

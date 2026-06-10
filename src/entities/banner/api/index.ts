@@ -1,0 +1,1 @@
+export { getBannerList } from './bannerApi';

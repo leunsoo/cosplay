@@ -1,0 +1,1 @@
+export { ProductSearchInput } from './ProductSearchInput';

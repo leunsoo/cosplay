@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(head:*)",
+      "Bash(tail:*)",
+      "Bash(ls:*)",
+      "Bash(for file in *.tsx)",
+      "Bash(do sed -i '' 's|from \"\"./types\"\"|from \"\"../model/types\"\"|g' \"$file\")",
+      "Bash(done)",
+      "Bash(tree:*)",
+      "Bash(npx tsc:*)"
+    ]
+  }
+}
