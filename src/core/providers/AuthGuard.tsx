@@ -4,6 +4,7 @@ import { Suspense, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
 import { ROUTES } from '@/core/config';
 import { useAuthStore } from '@/shared/store/authStore';
+import { IS_DEMO } from '@/shared/lib/isDemo';
 
 interface AuthGuardProps {
   children: React.ReactNode;
@@ -23,6 +24,8 @@ function AuthGuardInner({
   const role = useAuthStore((state) => state.role);
 
   useEffect(() => {
+    if (IS_DEMO) return;
+
     if (authStatus === 'checking') {
       return;
     }
@@ -46,6 +49,8 @@ function AuthGuardInner({
     router,
     searchParams,
   ]);
+
+  if (IS_DEMO) return <>{children}</>;
 
   if (authStatus === 'checking') {
     return null;

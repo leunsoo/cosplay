@@ -6,6 +6,7 @@ export type AuthStatus = 'checking' | 'authenticated' | 'unauthenticated';
 interface AuthActions {
   setAuthChecking: () => void;
   setAuthenticated: (accessToken: string) => void;
+  setDemoAuthenticated: () => void;
   setUnauthenticated: () => void;
 }
 
@@ -33,6 +34,13 @@ export const useAuthStore = create<AuthStore>((set) => ({
       authStatus: 'authenticated',
     });
   },
+  setDemoAuthenticated: () =>
+    set({
+      userUuid: 'demo-user-uuid-0000',
+      role: 'user',
+      accessToken: 'demo-token',
+      authStatus: 'authenticated',
+    }),
   setUnauthenticated: () =>
     set({
       userUuid: '',

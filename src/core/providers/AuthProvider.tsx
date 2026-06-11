@@ -10,6 +10,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
   const hasBootstrapped = useRef(false);
   const setAuthChecking = useAuthStore((state) => state.setAuthChecking);
   const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
+  const setDemoAuthenticated = useAuthStore(
+    (state) => state.setDemoAuthenticated
+  );
   const setUnauthenticated = useAuthStore((state) => state.setUnauthenticated);
 
   useEffect(() => {
@@ -20,7 +23,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     hasBootstrapped.current = true;
 
     if (IS_DEMO) {
-      setAuthenticated('demo-token');
+      setDemoAuthenticated();
       return;
     }
 
