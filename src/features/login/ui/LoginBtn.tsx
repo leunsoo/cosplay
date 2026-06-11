@@ -1,5 +1,7 @@
 'use client';
 
+import { IS_DEMO } from '@/shared/lib/isDemo';
+
 type Provider = 'google' | 'kakao' | 'x';
 
 interface LoginBtnProps {
@@ -35,6 +37,11 @@ export function LoginBtn({ provider, nextPath }: LoginBtnProps) {
   const meta = PROVIDER_META[provider];
 
   const onClick = () => {
+    if (IS_DEMO) {
+      alert('데모 모드에서는 로그인을 지원하지 않습니다.');
+      return;
+    }
+
     if (!baseURL) {
       alert('API 주소가 설정되지 않았습니다.');
       return;

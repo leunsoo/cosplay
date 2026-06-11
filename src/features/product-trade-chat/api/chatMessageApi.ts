@@ -13,6 +13,8 @@ import {
   type UploadChatImageBody,
   type UploadChatImageDTO,
 } from '../model/schema';
+import { IS_DEMO } from '@/shared/lib/isDemo';
+import { mockChatMessages } from '@/mocks/chat';
 
 /**
  * 채팅방 메시지 목록 조회 API
@@ -23,6 +25,8 @@ export const getChatMessages = async (
   params: GetChatMessagesParams
 ): Promise<ApiResponse<MessageListDTO>> => {
   const { roomId, ...queryParams } = GetChatMessagesParamsSchema.parse(params);
+
+  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockChatMessages[roomId] ?? [] };
 
   return apiClient.getWithValidation(
     `/api/v1/chat/messages/room/${roomId}`,

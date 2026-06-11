@@ -17,11 +17,15 @@ import {
   FavoriteMeetupActionResponseSchema,
   type FavoriteMeetupActionResponse,
 } from '../model';
+import { IS_DEMO } from '@/shared/lib/isDemo';
+import { mockFavoriteMeetupList, mockFavoriteMeetupStatus } from '@/mocks/favorite';
 
 export const getFavoriteMeetupList = async (
   params: GetFavoriteMeetupListParams
 ): Promise<ApiResponse<FavoriteMeetupListDTO>> => {
   const validatedParams = GetFavoriteMeetupListParamsSchema.parse(params);
+  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockFavoriteMeetupList };
+
   return apiClient.getWithValidation(
     `/api/v1/users/${validatedParams.uuid}/favorite-meetups`,
     FavoriteMeetupListDTOSchema
@@ -32,6 +36,8 @@ export const getFavoriteMeetupStatus = async (
   params: GetFavoriteMeetupStatusParams
 ): Promise<ApiResponse<FavoriteMeetupStatusDTO>> => {
   const validatedParams = GetFavoriteMeetupStatusParamsSchema.parse(params);
+  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockFavoriteMeetupStatus };
+
   return apiClient.getWithValidation(
     `/api/v1/users/${validatedParams.uuid}/favorite-meetups/${validatedParams.meetupId}/status`,
     FavoriteMeetupStatusDTOSchema

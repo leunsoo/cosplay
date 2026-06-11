@@ -9,6 +9,8 @@ import {
   type GetSellerProductsParams,
   type SellerProductsDTO,
 } from '../model/schema';
+import { IS_DEMO } from '@/shared/lib/isDemo';
+import { MOCK_SELLER_UUID, mockSellerProfiles, mockSellerProducts } from '@/mocks/seller';
 
 /**
  * 판매자 프로필 정보 조회 API
@@ -31,6 +33,11 @@ export const getSellerProfile = async (
   const validatedParams = GetSellerProfileParamsSchema.parse(params);
 
   // API 호출 및 응답 검증
+  if (IS_DEMO) {
+    const profile = mockSellerProfiles[validatedParams.sellerId] ?? mockSellerProfiles[MOCK_SELLER_UUID];
+    return { status: 'SUCCESS', message: '성공', data: profile };
+  }
+
   return apiClient.getWithValidation(
     `/api/v1/sellers/${validatedParams.sellerId}`,
     SellerProfileResponseSchema
@@ -64,6 +71,11 @@ export const getSellerProducts = async (
   const { sellerId, ...queryParams } = validatedParams;
 
   // API 호출 및 응답 검증
+  if (IS_DEMO) {
+    const products = mockSellerProducts[sellerId] ?? mockSellerProducts[MOCK_SELLER_UUID];
+    return { status: 'SUCCESS', message: '성공', data: products };
+  }
+
   return apiClient.getWithValidation(
     `/api/v1/sellers/${sellerId}/products`,
     SellerProductsResponseSchema,

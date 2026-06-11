@@ -1,4 +1,5 @@
 import { Client, IFrame, IMessage } from '@stomp/stompjs';
+import { IS_DEMO } from '@/shared/lib/isDemo';
 import SockJS from 'sockjs-client';
 import {
   StompClientCallbacks,
@@ -71,6 +72,7 @@ export class StompClient {
   }
 
   connect(): void {
+    if (IS_DEMO) return;
     this.client.activate();
   }
 
@@ -113,6 +115,8 @@ export class StompClient {
   }
 
   publish(options: StompPublishOptions): void {
+    if (IS_DEMO) return;
+
     const { destination, body, headers } = options;
 
     if (!this.client.connected) {

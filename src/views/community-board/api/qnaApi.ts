@@ -5,14 +5,22 @@ import {
   type QnaPostListDTO,
   type QnaPostDetailDTO,
 } from '../model/schema/qnaSchema';
+import { IS_DEMO } from '@/shared/lib/isDemo';
+import { mockQnaList, mockQnaDetails } from '@/mocks/community';
 
 export const getQnaList = async (): Promise<ApiResponse<QnaPostListDTO>> => {
+  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockQnaList };
   return apiClient.getWithValidation('/api/v1/qna-posts', QnaPostListDTOSchema);
 };
 
 export const getQnaPost = async (
   qnaPostId: number
 ): Promise<ApiResponse<QnaPostDetailDTO>> => {
+  if (IS_DEMO) {
+    const detail = mockQnaDetails[qnaPostId] ?? mockQnaDetails[1];
+    return { status: 'SUCCESS', message: '성공', data: detail };
+  }
+
   return apiClient.getWithValidation(
     `/api/v1/qna-posts/${qnaPostId}`,
     QnaPostDetailDTOSchema

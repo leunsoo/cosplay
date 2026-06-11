@@ -17,6 +17,8 @@ import {
   FavoriteActionResponseSchema,
   type FavoriteActionResponse,
 } from '../model';
+import { IS_DEMO } from '@/shared/lib/isDemo';
+import { mockFavoriteProductList, mockFavoriteProductStatus } from '@/mocks/favorite';
 
 /**
  * 찜한 상품 목록 조회 API
@@ -38,6 +40,8 @@ export const getFavoriteList = async (
   const validatedParams = GetFavoriteListParamsSchema.parse(params);
 
   // API 호출 및 응답 검증
+  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockFavoriteProductList };
+
   return apiClient.getWithValidation(
     `/api/v1/users/${validatedParams.uuid}/favorites`,
     FavoriteListDTOSchema
@@ -64,6 +68,8 @@ export const getFavoriteStatus = async (
   const validatedParams = GetFavoriteStatusParamsSchema.parse(params);
 
   // API 호출 및 응답 검증
+  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockFavoriteProductStatus };
+
   return apiClient.getWithValidation(
     `/api/v1/users/${validatedParams.uuid}/favorites/${validatedParams.productId}/status`,
     FavoriteStatusDTOSchema

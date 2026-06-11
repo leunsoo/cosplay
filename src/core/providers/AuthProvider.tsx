@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react';
 import { apiClient } from '@/shared/api';
 import { useAuthStore } from '@/shared/store/authStore';
 import { reissueToken } from '@/entities/auth';
+import { IS_DEMO } from '@/shared/lib/isDemo';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const hasBootstrapped = useRef(false);
@@ -17,6 +18,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     }
 
     hasBootstrapped.current = true;
+
+    if (IS_DEMO) {
+      setAuthenticated('demo-token');
+      return;
+    }
+
     let cancelled = false;
 
     apiClient.setReissueFn(async () => {

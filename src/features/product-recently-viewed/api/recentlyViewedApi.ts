@@ -12,6 +12,8 @@ import {
   type DeleteAllRecentlyViewedParams,
   type DeleteAllRecentlyViewedDTO,
 } from '../model';
+import { IS_DEMO } from '@/shared/lib/isDemo';
+import { mockRecentlyViewedList } from '@/mocks/recently-viewed';
 
 /**
  * 최근 본 상품 목록 조회 API
@@ -33,6 +35,8 @@ export const getRecentlyViewedList = async (
   const validatedParams = GetRecentlyViewedListParamsSchema.parse(params);
 
   // API 호출 및 응답 검증
+  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockRecentlyViewedList };
+
   return apiClient.getWithValidation(
     '/api/v1/recently-viewed',
     RecentlyViewedListDTOSchema,
