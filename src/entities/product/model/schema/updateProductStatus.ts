@@ -20,6 +20,12 @@ export const UpdateProductStatusDTOSchema = z.object({
 });
 
 // ------------------ 타입 추론
-export type UpdateProductStatusParams = z.infer<typeof UpdateProductStatusParamsSchema>;
-export type UpdateProductStatusBody = z.infer<typeof UpdateProductStatusBodySchema>;
-export type UpdateProductStatusDTO = z.infer<typeof UpdateProductStatusDTOSchema>;
+export type UpdateProductStatusParams = z.infer<
+  typeof UpdateProductStatusParamsSchema
+>;
+export type UpdateProductStatusBody = z.infer<
+  typeof UpdateProductStatusBodySchema
+>;
+export type UpdateProductStatusDTO = z.infer<
+  typeof UpdateProductStatusDTOSchema
+>;

@@ -22,7 +22,9 @@ export function useRecentKeywords() {
   const { mutate: deleteAll } = useMutation({
     mutationFn: () => deleteAllSearchKeywords({ uuid: userUuid }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['search-keywords', userUuid] });
+      queryClient.invalidateQueries({
+        queryKey: ['search-keywords', userUuid],
+      });
     },
   });
 
@@ -30,7 +32,9 @@ export function useRecentKeywords() {
     mutationFn: (keywordId: number) =>
       deleteSearchKeyword({ keywordId, uuid: userUuid }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['search-keywords', userUuid] });
+      queryClient.invalidateQueries({
+        queryKey: ['search-keywords', userUuid],
+      });
     },
   });
 

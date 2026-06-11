@@ -1,4 +1,1 @@
-export {
-  PresignedUrlDataSchema,
-  type PresignedUrlData,
-} from './createMeetup';
+export { PresignedUrlDataSchema, type PresignedUrlData } from './createMeetup';

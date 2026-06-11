@@ -1,6 +1,11 @@
 import type { NoticeSummaryDTO, NoticeDetailDTO } from './schema/noticeSchema';
 import type { QnaPostSummaryDTO, QnaPostDetailDTO } from './schema/qnaSchema';
-import type { NoticeSummary, NoticeDetail, QnaPostSummary, QnaPostDetail } from './types';
+import type {
+  NoticeSummary,
+  NoticeDetail,
+  QnaPostSummary,
+  QnaPostDetail,
+} from './types';
 
 export function mapNoticeSummaryDTO(dto: NoticeSummaryDTO): NoticeSummary {
   return {

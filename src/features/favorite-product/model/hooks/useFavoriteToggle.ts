@@ -43,7 +43,8 @@ export function useFavoriteToggle({
 
   // 찜하기 mutation
   const addFavoriteMutation = useMutation({
-    mutationFn: () => addFavorite({ uuid: userUuid }, { productId: String(productId) }),
+    mutationFn: () =>
+      addFavorite({ uuid: userUuid }, { productId: String(productId) }),
     onError: () => {
       // 오류 발생 시 낙관적 상태 초기화 → 원래 서버 상태로 복원
       setOptimisticFavorited(null);

@@ -1,1 +1,5 @@
-export { getMeetupPresignedUrl, createMeetup, updateMeetup } from './meetupRegistApi';
+export {
+  getMeetupPresignedUrl,
+  createMeetup,
+  updateMeetup,
+} from './meetupRegistApi';

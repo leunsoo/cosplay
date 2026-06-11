@@ -1,7 +1,6 @@
 import type { EventDate, Event } from '../types';
 import { EventStatus } from '../types';
 
-
 /**
  * 날짜를 한국어 표시 형식으로 변환 (EventDate 객체를 받음)
  * @example formatEventDate({ startDate: new Date('2024-08-24'), endDate: new Date('2024-08-26') })

@@ -10,5 +10,7 @@ export const MeetupChatRoomDTOSchema = z.object({
   status: z.string(),
 });
 
-export type GetMeetupChatRoomParams = z.infer<typeof GetMeetupChatRoomParamsSchema>;
+export type GetMeetupChatRoomParams = z.infer<
+  typeof GetMeetupChatRoomParamsSchema
+>;
 export type MeetupChatRoomDTO = z.infer<typeof MeetupChatRoomDTOSchema>;

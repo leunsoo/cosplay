@@ -11,10 +11,10 @@ export const getNoticeList = async (): Promise<ApiResponse<NoticeListDTO>> => {
 };
 
 export const getNoticeDetail = async (
-  noticeId: number,
+  noticeId: number
 ): Promise<ApiResponse<NoticeDetailDTO>> => {
   return apiClient.getWithValidation(
     `/api/v1/notices/${noticeId}`,
-    NoticeDetailDTOSchema,
+    NoticeDetailDTOSchema
   );
 };

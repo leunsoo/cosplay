@@ -18,8 +18,14 @@ export const MeetupChatMessageDTOSchema = z.object({
   createdAt: z.string(),
 });
 
-export const MeetupChatMessageListDTOSchema = z.array(MeetupChatMessageDTOSchema);
+export const MeetupChatMessageListDTOSchema = z.array(
+  MeetupChatMessageDTOSchema
+);
 
-export type GetMeetupChatMessagesParams = z.infer<typeof GetMeetupChatMessagesParamsSchema>;
+export type GetMeetupChatMessagesParams = z.infer<
+  typeof GetMeetupChatMessagesParamsSchema
+>;
 export type MeetupChatMessageDTO = z.infer<typeof MeetupChatMessageDTOSchema>;
-export type MeetupChatMessageListDTO = z.infer<typeof MeetupChatMessageListDTOSchema>;
+export type MeetupChatMessageListDTO = z.infer<
+  typeof MeetupChatMessageListDTOSchema
+>;

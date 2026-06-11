@@ -11,11 +11,11 @@ export const getQnaList = async (): Promise<ApiResponse<QnaPostListDTO>> => {
 };
 
 export const getQnaPost = async (
-  qnaPostId: number,
+  qnaPostId: number
 ): Promise<ApiResponse<QnaPostDetailDTO>> => {
   return apiClient.getWithValidation(
     `/api/v1/qna-posts/${qnaPostId}`,
-    QnaPostDetailDTOSchema,
+    QnaPostDetailDTOSchema
   );
 };
 
@@ -35,7 +35,7 @@ export const updateQnaPost = async (body: {
 };
 
 export const deleteQnaPost = async (
-  qnaPostId: number,
+  qnaPostId: number
 ): Promise<ApiResponse<string>> => {
   return apiClient.delete(`/api/v1/qna-posts/${qnaPostId}`);
 };

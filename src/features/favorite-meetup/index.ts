@@ -1,6 +1,2 @@
-export {
-  FavoriteMeetupButton,
-  FavoriteMeetup,
-  FavoriteMeetupList,
-} from './ui';
+export { FavoriteMeetupButton, FavoriteMeetup, FavoriteMeetupList } from './ui';
 export { useMeetupFavoriteToggle, useMeetupFavoriteList } from './model';

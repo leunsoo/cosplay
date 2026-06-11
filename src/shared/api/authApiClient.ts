@@ -19,7 +19,9 @@ class AuthApiClient {
       withCredentials: true,
     });
 
-    this.client.interceptors.response.use((response: AxiosResponse) => response.data);
+    this.client.interceptors.response.use(
+      (response: AxiosResponse) => response.data
+    );
   }
 
   get<T>(url: string, config?: AxiosRequestConfig): Promise<ApiResponse<T>> {
@@ -50,7 +52,10 @@ class AuthApiClient {
     return this.client.patch<ApiResponse<T>>(url, data, config) as any;
   }
 
-  delete<T>(url: string, config?: InternalAxiosRequestConfig): Promise<ApiResponse<T>> {
+  delete<T>(
+    url: string,
+    config?: InternalAxiosRequestConfig
+  ): Promise<ApiResponse<T>> {
     return this.client.delete<ApiResponse<T>>(url, config) as any;
   }
 }

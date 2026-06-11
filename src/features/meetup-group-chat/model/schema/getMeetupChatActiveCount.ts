@@ -8,5 +8,9 @@ export const MeetupChatActiveCountDTOSchema = z.object({
   count: z.number().int().nonnegative(),
 });
 
-export type GetMeetupChatActiveCountParams = z.infer<typeof GetMeetupChatActiveCountParamsSchema>;
-export type MeetupChatActiveCountDTO = z.infer<typeof MeetupChatActiveCountDTOSchema>;
+export type GetMeetupChatActiveCountParams = z.infer<
+  typeof GetMeetupChatActiveCountParamsSchema
+>;
+export type MeetupChatActiveCountDTO = z.infer<
+  typeof MeetupChatActiveCountDTOSchema
+>;

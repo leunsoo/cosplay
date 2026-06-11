@@ -23,5 +23,9 @@ export const MeetupChatActiveCountPayloadSchema = z.object({
 });
 
 export type MeetupChatSendPayload = z.infer<typeof MeetupChatSendPayloadSchema>;
-export type MeetupChatReceivePayload = z.infer<typeof MeetupChatReceivePayloadSchema>;
-export type MeetupChatActiveCountPayload = z.infer<typeof MeetupChatActiveCountPayloadSchema>;
+export type MeetupChatReceivePayload = z.infer<
+  typeof MeetupChatReceivePayloadSchema
+>;
+export type MeetupChatActiveCountPayload = z.infer<
+  typeof MeetupChatActiveCountPayloadSchema
+>;

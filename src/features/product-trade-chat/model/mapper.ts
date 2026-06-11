@@ -27,7 +27,9 @@ export function transformChatRoomDTO(dto: ChatRoomDTO): ChatRoom {
 /**
  * ChatRoomDetailDTO를 ProductInfo 타입으로 변환
  */
-export function transformChatRoomDetailDTO(dto: ChatRoomDetailDTO): ProductInfo {
+export function transformChatRoomDetailDTO(
+  dto: ChatRoomDetailDTO
+): ProductInfo {
   return {
     productImage: dto.productPhotoUrl,
     productTitle: dto.productTitle,
