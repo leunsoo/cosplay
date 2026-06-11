@@ -8,7 +8,7 @@ import { QueryProvider } from '@/core/providers/QueryProvider';
 import { ClarityMaskBoundary } from '@/shared/observability/ClarityMaskBoundary';
 import { ClarityScript } from '@/shared/observability/ClarityScript';
 import { TracingBootstrap } from '@/shared/observability/TracingBootstrap';
-import { MobileGuard } from '@/shared/ui';
+import { MobileGuard, DemoBanner } from '@/shared/ui';
 import { MobileBottomNav } from '@/widgets/mobile-bottom-nav/MobileBottomNav';
 import { MobileHeader } from '@/widgets/mobile-header/MobileHeader';
 
@@ -107,6 +107,7 @@ export default function RootLayout({
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`}
           strategy="beforeInteractive"
         />
+        <DemoBanner />
         <QueryProvider>
           <TracingBootstrap serviceName="cosplay-web" />
           <MobileGuard>

@@ -4,3 +4,4 @@ export { ConfirmDialog, type ConfirmDialogContent } from './ConfirmDialog';
 export { MobileGuard } from './MobileGuard';
 export { SummaryCardInfoRow } from './SummaryCardInfoRow';
 export { MobileFab } from './MobileFab';
+export { DemoBanner } from './DemoBanner';
