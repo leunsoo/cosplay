@@ -2,8 +2,7 @@ import type { ChatRoomListDTO } from '@/features/product-trade-chat/model/schema
 import type { ChatRoomDetailDTO } from '@/features/product-trade-chat/model/schema/getChatRoom';
 import type { ResolveChatRoomDTO } from '@/features/product-trade-chat/model/schema/resolveChatRoom';
 import type { MessageListDTO } from '@/features/product-trade-chat/model/schema/getChatMessages';
-
-export const DEMO_USER_UUID = 'demo-user-uuid-0000';
+import { DEMO_USER_UUID } from './user';
 
 export const mockChatRoomList: ChatRoomListDTO = [
   {
