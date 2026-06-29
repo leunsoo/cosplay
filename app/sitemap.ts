@@ -15,7 +15,7 @@ import { serverFetch } from '@/shared/api';
  * 접근 경로: /sitemap.xml
  */
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const BASE_URL = 'https://llowa.kr';
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 
   // 정적 페이지
   const staticRoutes: MetadataRoute.Sitemap = [

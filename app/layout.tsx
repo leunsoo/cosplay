@@ -18,7 +18,7 @@ const notoSansKR = Noto_Sans_KR({
   variable: '--font-noto-sans-kr',
 });
 
-const BASE_URL = 'https://llowa.kr';
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 
 /**
  * 사이트 전체에 적용되는 기본 메타데이터
