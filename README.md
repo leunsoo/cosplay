@@ -6,6 +6,19 @@
 
 > 데모 모드로 배포되어 있습니다. 서버 연결 없이 목 데이터로 모든 기능을 체험할 수 있습니다.
 
+- `NEXT_PUBLIC_DEMO_MODE=true` 환경 변수로 활성화됩니다.
+- API 함수 레벨에서 `IS_DEMO` 분기를 적용해 목 데이터를 반환합니다.
+
+---
+
+## 프로젝트 배경
+
+코스플레이어들은 행사 정보, 의상 거래, 모임을
+각각 다른 플랫폼(트위터, 번개장터, 오픈카톡)에서 따로 찾아야 하는 불편함이 있었습니다.
+이를 하나의 플랫폼으로 통합한 커뮤니티 서비스를 기획·개발했습니다.
+
+서비스는 아쉽게도 운영되지 못했으며, 포트폴리오 목적으로 데모 모드를 적용해 배포했습니다.
+
 ---
 
 ## 주요 기능
@@ -30,9 +43,8 @@
 | 서버 상태   | TanStack Query 5                  |
 | 유효성 검사 | Zod 4, React Hook Form 7          |
 | 실시간 통신 | STOMP / SockJS                    |
-| 에디터      | Tiptap 3                          |
+| 편집 에디터 | Tiptap 3                          |
 | 지도        | Kakao Maps SDK                    |
-| 모니터링    | OpenTelemetry (OTLP)              |
 | 테스트      | Vitest, Testing Library           |
 | 배포        | Vercel                            |
 
@@ -54,35 +66,14 @@ src/
 
 ---
 
-## 데모 모드
+## 기술적 의사결정
 
-서버 없이 실행할 수 있도록 데모 모드를 구현했습니다.
+**FSD 아키텍처 도입**
+페이지가 늘어날수록 컴포넌트 간 의존성이 복잡해지는 문제를 방지하기 위해
+Feature-Sliced Design을 적용했습니다. 레이어 간 단방향 참조 규칙 덕분에
+새 기능 추가 시 영향 범위를 예측하기 쉬웠습니다.
 
-- `NEXT_PUBLIC_DEMO_MODE=true` 환경 변수로 활성화
-- 모든 GET API 함수에 `IS_DEMO` 분기를 적용해 목 데이터 반환
-- 인증은 JWT 파싱 없이 Zustand 스토어에 데모 유저 정보 직접 주입
-- STOMP WebSocket 연결 비활성화
-- 로그인 버튼 클릭 시 데모 모드 안내 알림 표시
-
----
-
-## 로컬 실행
-
-```bash
-# 의존성 설치
-npm install
-
-# 환경 변수 설정 (.env.development 참고)
-# NEXT_PUBLIC_DEMO_MODE=true 로 설정하면 백엔드 없이 실행 가능
-
-# 개발 서버 실행
-npm run dev
-```
-
-```bash
-# 테스트
-npm test
-
-# 빌드
-npm run build
-```
+**Zod를 통한 API 응답 런타임 검증**
+TypeScript 타입만으로는 런타임 API 응답의 형태를 보장할 수 없습니다.
+모든 API 함수에 Zod 스키마를 함께 정의하고 `WithValidation` 메서드로 응답을 검증해,
+예상치 못한 스키마 변경을 조기에 감지할 수 있도록 했습니다.
