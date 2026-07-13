@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter, useSearchParams } from 'next/navigation';
+import { useRouter } from 'next/navigation';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import {
   ProductGrid,
@@ -15,10 +15,12 @@ import { useFavoriteList } from '@/features/favorite-product';
 import { PaginationControl } from '@/shared/ui';
 import { Header } from './ui';
 
-export function ProductListView() {
+interface ProductListViewProps {
+  keyword?: string;
+}
+
+export function ProductListView({ keyword = '' }: ProductListViewProps) {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const keyword = searchParams.get('keyword') ?? '';
   const userUuid = useAuthStore((state) => state.userUuid);
   const isLogined = useLogined();
   const [currentPage, setCurrentPage] = useState(1);
@@ -39,8 +41,6 @@ export function ProductListView() {
             uuid: userUuid || undefined,
           })
         : getProductList({ page: currentPage }),
-    staleTime: 0,
-    gcTime: 0,
   });
 
   const { allProductsAsCards, handleProductClick: handleFavoriteClick } =

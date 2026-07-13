@@ -2,7 +2,6 @@
 export const dynamic = 'force-dynamic';
 
 import { type Metadata } from 'next';
-import { Suspense } from 'react';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
 import { getProductListServer } from '@/entities/product';
@@ -27,6 +26,10 @@ export const metadata: Metadata = {
   },
 };
 
+interface MarketPageProps {
+  searchParams: Promise<{ keyword?: string }>;
+}
+
 /**
  * [서버 컴포넌트]
  *
@@ -36,13 +39,18 @@ export const metadata: Metadata = {
  *   3. 클라이언트의 useQuery(['products', 1])이 캐시에서 즉시 데이터를 가져옴
  *      → 구글 봇에게 완성된 상품 목록 HTML 전달 → SEO 가능
  *
- * Suspense를 유지하는 이유:
- *   ProductListView 내부에서 useSearchParams()를 사용하므로 Suspense가 필요
- *   (Next.js에서 useSearchParams는 반드시 Suspense로 감싸야 함)
+ * keyword를 useSearchParams() 대신 searchParams prop으로 받는 이유:
+ *   useSearchParams()(클라이언트 훅)를 쓰면 Suspense 경계가 필요해지는데,
+ *   Suspense의 fallback→실제 콘텐츠 스트리밍 교체는 JS로 실행되는 스크립트에
+ *   의존한다. JS 없이 접속하면(크롤러 등) fallback(null)에서 멈춰 HTML에
+ *   데이터가 도달해도 화면엔 보이지 않는다. 이미 force-dynamic이라 정적 생성
+ *   최적화 대상도 아니므로, 서버 컴포넌트가 받는 searchParams를 그대로 prop으로
+ *   내려 Suspense 자체를 제거한다.
  *
  * revalidate: 300 → 5분마다 백그라운드에서 상품 목록 캐시 갱신
  */
-export default async function MarketPage() {
+export default async function MarketPage({ searchParams }: MarketPageProps) {
+  const { keyword = '' } = await searchParams;
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
@@ -52,9 +60,7 @@ export default async function MarketPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <Suspense fallback={null}>
-        <ProductListView />
-      </Suspense>
+      <ProductListView keyword={keyword} />
     </HydrationBoundary>
   );
 }
