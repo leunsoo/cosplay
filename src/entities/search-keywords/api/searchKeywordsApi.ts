@@ -36,7 +36,8 @@ export const getSearchKeywords = async (
   const validatedParams = GetSearchKeywordsParamsSchema.parse(params);
 
   // 2. API 호출 및 응답 검증
-  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockSearchKeywords };
+  if (IS_DEMO)
+    return { status: 'SUCCESS', message: '성공', data: mockSearchKeywords };
 
   return apiClient.getWithValidation(
     '/api/v1/search-keywords',

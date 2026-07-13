@@ -18,7 +18,10 @@ import {
   type FavoriteEventActionResponse,
 } from '../model';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockFavoriteEventList, mockFavoriteEventStatus } from '@/mocks/favorite';
+import {
+  mockFavoriteEventList,
+  mockFavoriteEventStatus,
+} from '@/mocks/favorite';
 
 /**
  * 찜한 행사 목록 조회 API
@@ -40,7 +43,8 @@ export const getFavoriteEventList = async (
   const validatedParams = GetFavoriteEventListParamsSchema.parse(params);
 
   // API 호출 및 응답 검증
-  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockFavoriteEventList };
+  if (IS_DEMO)
+    return { status: 'SUCCESS', message: '성공', data: mockFavoriteEventList };
 
   return apiClient.getWithValidation(
     `/api/v1/users/${validatedParams.uuid}/favorite-events`,
@@ -68,7 +72,12 @@ export const getFavoriteEventStatus = async (
   const validatedParams = GetFavoriteEventStatusParamsSchema.parse(params);
 
   // API 호출 및 응답 검증
-  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockFavoriteEventStatus };
+  if (IS_DEMO)
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: mockFavoriteEventStatus,
+    };
 
   return apiClient.getWithValidation(
     `/api/v1/users/${validatedParams.uuid}/favorite-events/${validatedParams.eventId}/status`,

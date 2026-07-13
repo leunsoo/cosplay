@@ -61,7 +61,8 @@ export const getMyProfile = async (
 ): Promise<ApiResponse<MyProfileDTO>> => {
   const validatedParams = GetMyProfileParamsSchema.parse(params);
 
-  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockMyProfile };
+  if (IS_DEMO)
+    return { status: 'SUCCESS', message: '성공', data: mockMyProfile };
 
   return apiClient.getWithValidation(
     `/api/v1/user/${validatedParams.uuid}`,

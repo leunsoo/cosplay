@@ -22,7 +22,11 @@ import {
   type LeaveChatRoomBody,
 } from '../model/schema';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockChatRoomList, mockChatRoomDetails, mockResolveChatRoom } from '@/mocks/chat';
+import {
+  mockChatRoomList,
+  mockChatRoomDetails,
+  mockResolveChatRoom,
+} from '@/mocks/chat';
 
 /**
  * 채팅방 목록 조회 API
@@ -34,7 +38,8 @@ export const getChatRoomList = async (
 ): Promise<ApiResponse<ChatRoomListDTO>> => {
   const validatedParams = GetChatRoomListParamsSchema.parse(params);
 
-  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockChatRoomList };
+  if (IS_DEMO)
+    return { status: 'SUCCESS', message: '성공', data: mockChatRoomList };
 
   return apiClient.getWithValidation(
     '/api/v1/chat/rooms',
@@ -73,7 +78,8 @@ export const getChatRoom = async (
   const validatedParams = GetChatRoomParamsSchema.parse(params);
 
   if (IS_DEMO) {
-    const detail = mockChatRoomDetails[validatedParams.roomId] ?? mockChatRoomDetails[1];
+    const detail =
+      mockChatRoomDetails[validatedParams.roomId] ?? mockChatRoomDetails[1];
     return { status: 'SUCCESS', message: '성공', data: detail };
   }
 
@@ -96,7 +102,8 @@ export const resolveChatRoom = async (
 ): Promise<ApiResponse<ResolveChatRoomDTO>> => {
   const validatedParams = ResolveChatRoomParamsSchema.parse(params);
 
-  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockResolveChatRoom };
+  if (IS_DEMO)
+    return { status: 'SUCCESS', message: '성공', data: mockResolveChatRoom };
 
   return apiClient.getWithValidation(
     '/api/v1/chat/rooms/resolve',

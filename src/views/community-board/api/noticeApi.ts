@@ -9,7 +9,8 @@ import { IS_DEMO } from '@/shared/lib/isDemo';
 import { mockNoticeList, mockNoticeDetails } from '@/mocks/community';
 
 export const getNoticeList = async (): Promise<ApiResponse<NoticeListDTO>> => {
-  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockNoticeList };
+  if (IS_DEMO)
+    return { status: 'SUCCESS', message: '성공', data: mockNoticeList };
   return apiClient.getWithValidation('/api/v1/notices', NoticeListDTOSchema);
 };
 

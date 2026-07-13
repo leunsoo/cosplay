@@ -7,9 +7,7 @@ export interface GetEventDetailParams {
   eventId: number;
 }
 
-function resolveDemoEventDetail(
-  eventId: number
-): ApiResponse<EventDetailDTO> {
+function resolveDemoEventDetail(eventId: number): ApiResponse<EventDetailDTO> {
   const detail = mockEventDetails[eventId] ?? mockEventDetails[1];
   return { status: 'SUCCESS', message: '성공', data: detail };
 }
@@ -30,9 +28,8 @@ export const getEventDetailServer = async (
   params: GetEventDetailParams
 ): Promise<ApiResponse<EventDetailDTO>> => {
   if (IS_DEMO) return resolveDemoEventDetail(params.eventId);
-  return serverFetch(
-    `/api/v1/events/${params.eventId}`,
-    EventDetailDTOSchema,
-    { revalidate: 300, tags: ['events'] }
-  );
+  return serverFetch(`/api/v1/events/${params.eventId}`, EventDetailDTOSchema, {
+    revalidate: 300,
+    tags: ['events'],
+  });
 };

@@ -14,13 +14,18 @@ import {
   type MeetupChatActiveCountDTO,
 } from '../model/schema';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockMeetupChatRoom, mockMeetupChatMessages, mockMeetupChatActiveCount } from '@/mocks/group-chat';
+import {
+  mockMeetupChatRoom,
+  mockMeetupChatMessages,
+  mockMeetupChatActiveCount,
+} from '@/mocks/group-chat';
 
 export const getMeetupChatRoom = async (
   params: GetMeetupChatRoomParams
 ): Promise<ApiResponse<MeetupChatRoomDTO>> => {
   const validatedParams = GetMeetupChatRoomParamsSchema.parse(params);
-  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockMeetupChatRoom };
+  if (IS_DEMO)
+    return { status: 'SUCCESS', message: '성공', data: mockMeetupChatRoom };
 
   return apiClient.getWithValidation(
     `/api/v1/meetups/${validatedParams.meetupId}/chat/room`,
@@ -32,7 +37,8 @@ export const getMeetupChatMessages = async (
   params: GetMeetupChatMessagesParams
 ): Promise<ApiResponse<MeetupChatMessageListDTO>> => {
   const validatedParams = GetMeetupChatMessagesParamsSchema.parse(params);
-  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockMeetupChatMessages };
+  if (IS_DEMO)
+    return { status: 'SUCCESS', message: '성공', data: mockMeetupChatMessages };
 
   return apiClient.getWithValidation(
     `/api/v1/meetups/${validatedParams.meetupId}/chat/messages`,
@@ -45,7 +51,12 @@ export const getMeetupChatActiveCount = async (
   params: GetMeetupChatActiveCountParams
 ): Promise<ApiResponse<MeetupChatActiveCountDTO>> => {
   const validatedParams = GetMeetupChatActiveCountParamsSchema.parse(params);
-  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockMeetupChatActiveCount };
+  if (IS_DEMO)
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: mockMeetupChatActiveCount,
+    };
 
   return apiClient.getWithValidation(
     `/api/v1/meetups/${validatedParams.meetupId}/chat/active-count`,

@@ -26,7 +26,12 @@ export const getChatMessages = async (
 ): Promise<ApiResponse<MessageListDTO>> => {
   const { roomId, ...queryParams } = GetChatMessagesParamsSchema.parse(params);
 
-  if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockChatMessages[roomId] ?? [] };
+  if (IS_DEMO)
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: mockChatMessages[roomId] ?? [],
+    };
 
   return apiClient.getWithValidation(
     `/api/v1/chat/messages/room/${roomId}`,
