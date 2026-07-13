@@ -8,6 +8,7 @@ import { LogoutBtn } from '@/features/logout';
 import { useLogined } from '@/entities/auth';
 import { UserAvatar, getMyProfile } from '@/entities/user';
 import { useAuthStore } from '@/shared/store/authStore';
+import { IS_DEMO } from '@/shared/lib/isDemo';
 
 export function MainMenu() {
   const pathname = usePathname();
@@ -24,7 +25,11 @@ export function MainMenu() {
   });
 
   return (
-    <div className="hidden md:block sticky top-0 z-50 w-full border-b border-gray-200 bg-white/90 backdrop-blur-md">
+    <div
+      className={`hidden md:block sticky ${
+        IS_DEMO ? 'top-9' : 'top-0'
+      } z-50 w-full border-b border-gray-200 bg-white/90 backdrop-blur-md`}
+    >
       <div className="container-custom mx-auto h-16 flex items-center justify-between">
         <div className="flex items-center gap-8 md:gap-12">
           <Link className="flex items-center gap-2 group" href={ROUTES.HOME}>
