@@ -5,9 +5,8 @@ export const dynamic = 'force-dynamic';
 import { type Metadata } from 'next';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
-import { serverFetch } from '@/shared/api';
-import { EventListDTOSchema } from '@/entities/event/model';
-import { BannersDTOSchema } from '@/entities/banner/model';
+import { getEventsListServer } from '@/entities/event';
+import { getBannerListServer } from '@/entities/banner';
 import { EventListView } from '@/views/event-list';
 
 /**
@@ -34,7 +33,7 @@ export const metadata: Metadata = {
  * Hydration 패턴 적용:
  *   1. 서버에서 prefetchQuery로 행사 목록을 미리 fetch
  *   2. dehydrate로 직렬화 → HydrationBoundary를 통해 클라이언트 캐시에 주입
- *   3. 클라이언트의 useQuery(['events'])가 캐시에서 즉시 데이터를 가져옴
+ *   3. 클라이언트의 useQuery(['events', 'ALL'])가 캐시에서 즉시 데이터를 가져옴
  *      → API 재호출 없음, 구글 봇에게 완성된 HTML 전달 → SEO 가능
  *
  * QueryProvider는 layout.tsx에 이미 있으므로 여기서는 HydrationBoundary만 사용
@@ -45,20 +44,12 @@ export default async function EventMainPage() {
 
   await Promise.all([
     queryClient.prefetchQuery({
-      queryKey: ['events'],
-      queryFn: () =>
-        serverFetch('/api/v1/events', EventListDTOSchema, {
-          revalidate: 300,
-          tags: ['events'],
-        }),
+      queryKey: ['events', 'ALL'],
+      queryFn: () => getEventsListServer('ALL'),
     }),
     queryClient.prefetchQuery({
       queryKey: ['banners'],
-      queryFn: () =>
-        serverFetch('/api/v1/banners', BannersDTOSchema, {
-          revalidate: 300,
-          tags: ['banners'],
-        }),
+      queryFn: () => getBannerListServer(),
     }),
   ]);
 

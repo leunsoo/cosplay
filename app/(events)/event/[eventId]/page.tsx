@@ -4,8 +4,7 @@ export const dynamic = 'force-dynamic';
 import { type Metadata } from 'next';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
-import { serverFetch } from '@/shared/api';
-import { EventDetailDTOSchema } from '@/views/event-detail/model';
+import { getEventDetailServer } from '@/views/event-detail/api';
 import { EventDetailView } from '@/views/event-detail';
 import { EventJsonLd } from './_components/EventJsonLd';
 
@@ -20,11 +19,7 @@ interface EventDetailPageProps {
  * Next.js가 자동으로 중복 제거(dedup)합니다. (실제 API 호출은 1번)
  */
 async function fetchEventDetail(eventId: string) {
-  const response = await serverFetch(
-    `/api/v1/events/${eventId}`,
-    EventDetailDTOSchema,
-    { revalidate: 300, tags: ['events'] }
-  );
+  const response = await getEventDetailServer({ eventId: Number(eventId) });
   return response.data;
 }
 

@@ -1,2 +1,2 @@
-export { getBannerList } from './api';
+export { getBannerList, getBannerListServer } from './api';
 export { type BannerDTO, type BannersDTO } from './model';

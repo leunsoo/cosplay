@@ -16,7 +16,7 @@ export {
 } from './types';
 
 // API
-export { getEventsList } from './api';
+export { getEventsList, getEventsListServer } from './api';
 
 // Model
 export { mapEventDtoToEvent, mapEventDtosToEvents } from './model';

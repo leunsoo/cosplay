@@ -5,8 +5,7 @@ import { type Metadata } from 'next';
 import { Suspense } from 'react';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
-import { serverFetch } from '@/shared/api';
-import { ProductListDTOSchema } from '@/entities/product/model';
+import { getProductListServer } from '@/entities/product';
 import { ProductListView } from '@/views/product-list';
 
 /**
@@ -48,10 +47,7 @@ export default async function MarketPage() {
 
   await queryClient.prefetchQuery({
     queryKey: ['products', 1], // ProductListView의 초기 페이지(1)와 동일한 queryKey
-    queryFn: () =>
-      serverFetch('/api/v1/products?page=1', ProductListDTOSchema, {
-        cache: 'no-store',
-      }),
+    queryFn: () => getProductListServer({ page: 1 }, { cache: 'no-store' }),
   });
 
   return (

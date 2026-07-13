@@ -1,1 +1,1 @@
-export { getBannerList } from './bannerApi';
+export { getBannerList, getBannerListServer } from './bannerApi';

@@ -1,1 +1,5 @@
-export { getEventDetail, type GetEventDetailParams } from './eventDetailApi';
+export {
+  getEventDetail,
+  getEventDetailServer,
+  type GetEventDetailParams,
+} from './eventDetailApi';

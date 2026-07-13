@@ -1,9 +1,8 @@
 export const dynamic = 'force-dynamic';
 
 import { MetadataRoute } from 'next';
-import { EventListDTOSchema } from '@/entities/event/model';
-import { ProductListDTOSchema } from '@/entities/product/model';
-import { serverFetch } from '@/shared/api';
+import { getEventsListServer } from '@/entities/event';
+import { getProductListServer } from '@/entities/product';
 
 /**
  * 검색 엔진 크롤러에게 사이트의 모든 페이지 목록을 제공하는 sitemap.xml 생성
@@ -37,7 +36,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // 행사 목록 전체를 가져와서 각 행사 상세 페이지 URL 생성
   let eventRoutes: MetadataRoute.Sitemap = [];
   try {
-    const response = await serverFetch('/api/v1/events', EventListDTOSchema, {
+    const response = await getEventsListServer('ALL', {
       revalidate: 3600, // 1시간 캐싱 (sitemap은 자주 갱신될 필요 없음)
     });
     eventRoutes = response.data.map((event) => ({
@@ -55,9 +54,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   // TODO: 전체 상품을 sitemap에 포함하려면 totalPages만큼 반복 호출 필요
   let productRoutes: MetadataRoute.Sitemap = [];
   try {
-    const response = await serverFetch(
-      '/api/v1/products?page=1',
-      ProductListDTOSchema,
+    const response = await getProductListServer(
+      { page: 1 },
       { revalidate: 3600 }
     );
     productRoutes = response.data.products.map((product) => ({

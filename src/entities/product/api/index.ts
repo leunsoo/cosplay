@@ -1,6 +1,8 @@
 export {
   getProductList,
+  getProductListServer,
   getProductDetail,
+  getProductDetailServer,
   getProductSearch,
   createProduct,
   uploadProductImages,

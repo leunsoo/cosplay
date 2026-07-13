@@ -1,4 +1,4 @@
-import { apiClient, type ApiResponse } from '@/shared/api';
+import { apiClient, serverFetch, type ApiResponse } from '@/shared/api';
 import {
   ProductListDTOSchema,
   GetProductListParamsSchema,
@@ -75,6 +75,30 @@ export const getProductList = async (
 };
 
 /**
+ * 상품 전체 조회 API (서버 컴포넌트 / prefetchQuery 전용)
+ *
+ * apiClient(axios)는 내부적으로 Zustand(useAuthStore)를 참조해
+ * 서버 컴포넌트에서 사용할 수 없으므로 serverFetch를 사용한다.
+ * options: 호출부마다 캐싱 정책이 다름 (예: sitemap.ts는 revalidate 3600,
+ * market/page.tsx는 cache: 'no-store')
+ */
+export const getProductListServer = async (
+  params: GetProductListParams,
+  options?: { revalidate?: number; cache?: RequestCache }
+): Promise<ApiResponse<ProductListDTO>> => {
+  const validatedParams = GetProductListParamsSchema.parse(params);
+
+  if (IS_DEMO)
+    return { status: 'SUCCESS', message: '성공', data: mockProductList };
+
+  return serverFetch(
+    `/api/v1/products?page=${validatedParams.page}`,
+    ProductListDTOSchema,
+    { revalidate: options?.revalidate, cache: options?.cache }
+  );
+};
+
+/**
  * 상품 상세 조회 API
  *
  * @param params - productId (상품 ID)
@@ -87,22 +111,41 @@ export const getProductList = async (
  *
  * @throws {ZodError} 파라미터가 유효하지 않거나 백엔드 응답이 예상과 다를 경우
  */
+function resolveDemoProductDetail(
+  productId: number
+): ApiResponse<ProductDetailResponseDTO> {
+  const detail = mockProductDetails[productId] ?? mockProductDetails[1];
+  return { status: 'SUCCESS', message: '성공', data: detail };
+}
+
 export const getProductDetail = async (
   params: GetProductDetailParams
 ): Promise<ApiResponse<ProductDetailResponseDTO>> => {
   // 1. 요청 파라미터 검증
   const validatedParams = GetProductDetailParamsSchema.parse(params);
 
-  if (IS_DEMO) {
-    const detail =
-      mockProductDetails[validatedParams.productId] ?? mockProductDetails[1];
-    return { status: 'SUCCESS', message: '성공', data: detail };
-  }
+  if (IS_DEMO) return resolveDemoProductDetail(validatedParams.productId);
 
   // 2. API 호출 및 응답 검증 (path parameter interpolation)
   return apiClient.getWithValidation(
     `/api/v1/products/${validatedParams.productId}`,
     ProductDetailResponseDTOSchema
+  );
+};
+
+// 서버 컴포넌트 / prefetchQuery 전용: apiClient(axios)는 내부적으로
+// Zustand(useAuthStore)를 참조해 서버 컴포넌트에서 사용할 수 없음
+export const getProductDetailServer = async (
+  params: GetProductDetailParams
+): Promise<ApiResponse<ProductDetailResponseDTO>> => {
+  const validatedParams = GetProductDetailParamsSchema.parse(params);
+
+  if (IS_DEMO) return resolveDemoProductDetail(validatedParams.productId);
+
+  return serverFetch(
+    `/api/v1/products/${validatedParams.productId}`,
+    ProductDetailResponseDTOSchema,
+    { revalidate: 300, tags: ['products'] }
   );
 };
 

@@ -5,8 +5,7 @@ import { type Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
-import { serverFetch } from '@/shared/api';
-import { ProductDetailResponseDTOSchema } from '@/entities/product/model';
+import { getProductDetailServer } from '@/entities/product';
 import { ProductDetailView } from '@/views/product-detail';
 import { ProductJsonLd } from './_components/ProductJsonLd';
 
@@ -21,11 +20,7 @@ interface ProductDetailPageProps {
  * Next.js가 자동으로 중복 제거(dedup)합니다. (실제 API 호출은 1번)
  */
 async function fetchProductDetail(id: string) {
-  const response = await serverFetch(
-    `/api/v1/products/${id}`,
-    ProductDetailResponseDTOSchema,
-    { revalidate: 300, tags: ['products'] }
-  );
+  const response = await getProductDetailServer({ productId: Number(id) });
   return response.data;
 }
 
