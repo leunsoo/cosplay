@@ -27,45 +27,24 @@ export class StompClient {
       heartbeatOutgoing: this.config.heartbeatOutgoing,
       reconnectDelay: this.config.reconnectDelay,
 
-      debug: this.config.debug
-        ? (str) => {
-            console.log('[STOMP Debug]', str);
-          }
-        : () => {},
-
       onConnect: (frame: IFrame) => {
-        if (this.config.debug) {
-          console.log('[STOMP] Connected', frame);
-        }
         this.resubscribeAll();
         this.callbacks.onConnect?.(frame);
       },
 
       onDisconnect: (frame: IFrame) => {
-        if (this.config.debug) {
-          console.log('[STOMP] Disconnected', frame);
-        }
         this.callbacks.onDisconnect?.(frame);
       },
 
       onStompError: (frame: IFrame) => {
-        if (this.config.debug) {
-          console.error('[STOMP] Error', frame);
-        }
         this.callbacks.onStompError?.(frame);
       },
 
       onWebSocketError: (event: Event) => {
-        if (this.config.debug) {
-          console.error('[STOMP] WebSocket Error', event);
-        }
         this.callbacks.onWebSocketError?.(event);
       },
 
       onWebSocketClose: (event: CloseEvent) => {
-        if (this.config.debug) {
-          console.log('[STOMP] WebSocket Closed', event);
-        }
         this.callbacks.onWebSocketClose?.(event);
       },
     });

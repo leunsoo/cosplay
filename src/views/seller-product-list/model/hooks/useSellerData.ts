@@ -9,7 +9,6 @@ const PAGE_SIZE = 50;
 export function useSellerData(sellerId: string) {
   const [currentPage, setCurrentPage] = useState(1);
 
-  console.log(sellerId);
   // 판매자 프로필
   const {
     data: sellerData,
@@ -20,8 +19,6 @@ export function useSellerData(sellerId: string) {
     queryFn: () => getSellerProfile({ sellerId }),
     enabled: !!sellerId,
   });
-
-  console.log('profileError:' + profileError);
 
   // 판매자 상품 리스트
   const {
@@ -39,7 +36,6 @@ export function useSellerData(sellerId: string) {
     enabled: !!sellerId,
   });
 
-  console.log('productError:' + productsError);
   // 매핑
   const sellerProfile = sellerData?.data
     ? mapSellerProfileDTOToSellerProfile(sellerData.data)
