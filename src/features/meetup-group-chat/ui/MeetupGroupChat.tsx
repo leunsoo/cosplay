@@ -7,6 +7,7 @@ import { useMeetupGroupChat } from '../model';
 import { GroupChatHeader, GroupMessageInput } from '@/entities/chat';
 import { MeetupGroupMessageList } from './MeetupGroupMessageList';
 import { useMeetupMembers } from '@/views/meetup-detail/model/hooks/useMeetupMembers';
+import { IS_DEMO } from '@/shared/lib/isDemo';
 
 interface MeetupGroupChatProps {
   meetupId: string;
@@ -22,7 +23,7 @@ export function MeetupGroupChat({
   const { isJoined } = useMeetupMembers(Number(meetupId), logined);
 
   const isEnded = meetupStatus === EventStatus.ENDED;
-  const canSend = logined && !isEnded && isJoined;
+  const canSend = logined && !isEnded && isJoined && !IS_DEMO;
 
   const { messages, activeCount, sendMessage, isLoading, isError } =
     useMeetupGroupChat({
@@ -70,7 +71,9 @@ export function MeetupGroupChat({
       ? '채팅에 참여하려면 로그인 후 이용해주세요.'
       : !isJoined
         ? '참여자만 채팅을 이용할 수 있습니다.'
-        : null;
+        : IS_DEMO
+          ? '데모 모드에서는 실시간 채팅이 지원되지 않습니다.'
+          : null;
 
   return (
     <section>

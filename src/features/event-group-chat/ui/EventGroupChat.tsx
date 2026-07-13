@@ -6,6 +6,7 @@ import { EventStatus } from '@/entities/event';
 import { useEventGroupChat } from '../model';
 import { GroupChatHeader, GroupMessageInput } from '@/entities/chat';
 import { GroupMessageList } from './GroupMessageList';
+import { IS_DEMO } from '@/shared/lib/isDemo';
 
 interface EventGroupChatProps {
   eventId: string;
@@ -17,7 +18,7 @@ export function EventGroupChat({ eventId, eventStatus }: EventGroupChatProps) {
   const logined = useLogined();
 
   const isEnded = eventStatus === EventStatus.ENDED;
-  const canSend = logined && !isEnded;
+  const canSend = logined && !isEnded && !IS_DEMO;
 
   const { messages, activeCount, sendMessage, isLoading, isError } =
     useEventGroupChat({
@@ -63,7 +64,9 @@ export function EventGroupChat({ eventId, eventStatus }: EventGroupChatProps) {
     ? '종료된 행사입니다.'
     : !logined
       ? '채팅에 참여하려면 로그인 후 이용해주세요.'
-      : null;
+      : IS_DEMO
+        ? '데모 모드에서는 실시간 채팅이 지원되지 않습니다.'
+        : null;
 
   return (
     <section>

@@ -32,7 +32,7 @@ export function MeetUpParticipants({ meetupId }: MeetUpParticipantsProps) {
         </span>
       </div>
       <div className="p-3">
-        <div className="min-h-[248px] space-y-0.5">
+        <div className="min-h-62 space-y-0.5">
           {paginated.map((member) => (
             <div
               key={member.user.uuid}
