@@ -1,6 +1,9 @@
 'use client';
 
+import { useRouter } from 'next/navigation';
 import { IS_DEMO } from '@/shared/lib/isDemo';
+import { useAuthStore } from '@/shared/store/authStore';
+import { ROUTES } from '@/core/config';
 
 type Provider = 'google' | 'kakao' | 'x';
 
@@ -33,12 +36,18 @@ const PROVIDER_META = {
 const LOGIN_NEXT_KEY = 'login_next_path';
 
 export function LoginBtn({ provider, nextPath }: LoginBtnProps) {
+  const router = useRouter();
+  const setDemoAuthenticated = useAuthStore(
+    (state) => state.setDemoAuthenticated
+  );
   const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL as string | undefined;
   const meta = PROVIDER_META[provider];
 
   const onClick = () => {
     if (IS_DEMO) {
-      alert('데모 모드에서는 로그인을 지원하지 않습니다.');
+      // 데모 모드: 실제 OAuth 리다이렉트 없이 즉시 인증 상태로 전환
+      setDemoAuthenticated();
+      router.replace(nextPath?.trim() || ROUTES.HOME);
       return;
     }
 

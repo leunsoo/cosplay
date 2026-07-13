@@ -37,7 +37,7 @@ export const useAuthStore = create<AuthStore>((set) => ({
   setDemoAuthenticated: () =>
     set({
       userUuid: 'demo-user-uuid-0000',
-      role: 'user',
+      role: 'member',
       accessToken: 'demo-token',
       authStatus: 'authenticated',
     }),
