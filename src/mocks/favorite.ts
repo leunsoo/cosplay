@@ -5,6 +5,7 @@ import type { FavoriteMeetupStatusDTO } from '@/features/favorite-meetup/model/s
 import type { FavoriteListDTO } from '@/features/favorite-product/model/schema/getFavoriteList';
 import type { FavoriteStatusDTO } from '@/features/favorite-product/model/schema/getFavoriteStatus';
 import { mockEventList } from './event';
+import { mockMeetupList } from './meetup';
 
 // 데모 모드 찜 상태 (메모리 유지, 새로고침 시 초기화)
 export const demoFavoriteEventIds = new Set<number>([1, 5]);
@@ -48,26 +49,45 @@ export function removeDemoFavoriteEvent(eventId: number): void {
   demoFavoritedAtByEventId.delete(eventId);
 }
 
-export const mockFavoriteMeetupList: FavoriteMeetupListDTO = {
-  totalCount: 1,
-  meetups: [
-    {
-      meetupId: 1,
-      title: '원피스 코스프레 팬미팅 @ 홍대',
-      thumbnailUrl: 'https://picsum.photos/seed/meetup-onepiece/600/400',
-      scheduledAt: '2025-07-26T14:00:00',
-      location: '서울 홍대 공연장',
-      maxMembers: 20,
-      currentMembers: 13,
-      status: 'ONGOING',
-      favoritedAt: '2025-06-15T09:00:00',
-    },
-  ],
-};
+// 찜한 시각은 실제 값이 중요하지 않으므로 찜한 시점의 현재 시각으로 고정
+const demoFavoritedAtByMeetupId = new Map<number, string>(
+  [...demoFavoriteMeetupIds].map((meetupId) => [
+    meetupId,
+    new Date().toISOString(),
+  ])
+);
 
-export const mockFavoriteMeetupStatus: FavoriteMeetupStatusDTO = {
-  isFavorited: false,
-};
+export function getDemoFavoriteMeetupList(): FavoriteMeetupListDTO {
+  const meetups = mockMeetupList
+    .filter((meetup) => demoFavoriteMeetupIds.has(meetup.meetupId))
+    .map((meetup) => ({
+      ...meetup,
+      thumbnailUrl: meetup.thumbnailUrl ?? '',
+      favoritedAt:
+        demoFavoritedAtByMeetupId.get(meetup.meetupId) ??
+        new Date().toISOString(),
+    }))
+    // 최근 찜한 순으로 정렬 (실제 API의 찜한 시각 최신순 정렬을 재현)
+    .sort((a, b) => b.favoritedAt.localeCompare(a.favoritedAt));
+
+  return { totalCount: meetups.length, meetups };
+}
+
+export function getDemoFavoriteMeetupStatus(
+  meetupId: number
+): FavoriteMeetupStatusDTO {
+  return { isFavorited: demoFavoriteMeetupIds.has(meetupId) };
+}
+
+export function addDemoFavoriteMeetup(meetupId: number): void {
+  demoFavoriteMeetupIds.add(meetupId);
+  demoFavoritedAtByMeetupId.set(meetupId, new Date().toISOString());
+}
+
+export function removeDemoFavoriteMeetup(meetupId: number): void {
+  demoFavoriteMeetupIds.delete(meetupId);
+  demoFavoritedAtByMeetupId.delete(meetupId);
+}
 
 export const mockFavoriteProductList: FavoriteListDTO = {
   totalCount: 2,

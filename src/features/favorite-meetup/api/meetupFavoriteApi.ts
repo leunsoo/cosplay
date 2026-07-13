@@ -19,8 +19,10 @@ import {
 } from '../model';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import {
-  mockFavoriteMeetupList,
-  mockFavoriteMeetupStatus,
+  getDemoFavoriteMeetupList,
+  getDemoFavoriteMeetupStatus,
+  addDemoFavoriteMeetup,
+  removeDemoFavoriteMeetup,
 } from '@/mocks/favorite';
 
 export const getFavoriteMeetupList = async (
@@ -28,7 +30,11 @@ export const getFavoriteMeetupList = async (
 ): Promise<ApiResponse<FavoriteMeetupListDTO>> => {
   const validatedParams = GetFavoriteMeetupListParamsSchema.parse(params);
   if (IS_DEMO)
-    return { status: 'SUCCESS', message: '성공', data: mockFavoriteMeetupList };
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: getDemoFavoriteMeetupList(),
+    };
 
   return apiClient.getWithValidation(
     `/api/v1/users/${validatedParams.uuid}/favorite-meetups`,
@@ -44,7 +50,7 @@ export const getFavoriteMeetupStatus = async (
     return {
       status: 'SUCCESS',
       message: '성공',
-      data: mockFavoriteMeetupStatus,
+      data: getDemoFavoriteMeetupStatus(validatedParams.meetupId),
     };
 
   return apiClient.getWithValidation(
@@ -59,6 +65,19 @@ export const addFavoriteMeetup = async (
 ): Promise<ApiResponse<FavoriteMeetupActionResponse>> => {
   const validatedParams = AddFavoriteMeetupParamsSchema.parse(params);
   const validatedBody = AddFavoriteMeetupBodySchema.parse(body);
+
+  if (IS_DEMO) {
+    addDemoFavoriteMeetup(validatedBody.meetupId);
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: {
+        success: true,
+        totalCount: getDemoFavoriteMeetupList().totalCount,
+      },
+    };
+  }
+
   return apiClient.postWithValidation(
     `/api/v1/users/${validatedParams.uuid}/favorite-meetups`,
     FavoriteMeetupActionResponseSchema,
@@ -70,6 +89,19 @@ export const deleteFavoriteMeetup = async (
   params: DeleteFavoriteMeetupParams
 ): Promise<ApiResponse<FavoriteMeetupActionResponse>> => {
   const validatedParams = DeleteFavoriteMeetupParamsSchema.parse(params);
+
+  if (IS_DEMO) {
+    removeDemoFavoriteMeetup(validatedParams.meetupId);
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: {
+        success: true,
+        totalCount: getDemoFavoriteMeetupList().totalCount,
+      },
+    };
+  }
+
   return apiClient.deleteWithValidation(
     `/api/v1/users/${validatedParams.uuid}/favorite-meetups/${validatedParams.meetupId}`,
     FavoriteMeetupActionResponseSchema
