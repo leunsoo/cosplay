@@ -19,8 +19,10 @@ import {
 } from '../model';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import {
-  mockFavoriteEventList,
-  mockFavoriteEventStatus,
+  getDemoFavoriteEventList,
+  getDemoFavoriteEventStatus,
+  addDemoFavoriteEvent,
+  removeDemoFavoriteEvent,
 } from '@/mocks/favorite';
 
 /**
@@ -44,7 +46,11 @@ export const getFavoriteEventList = async (
 
   // API 호출 및 응답 검증
   if (IS_DEMO)
-    return { status: 'SUCCESS', message: '성공', data: mockFavoriteEventList };
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: getDemoFavoriteEventList(),
+    };
 
   return apiClient.getWithValidation(
     `/api/v1/users/${validatedParams.uuid}/favorite-events`,
@@ -76,7 +82,7 @@ export const getFavoriteEventStatus = async (
     return {
       status: 'SUCCESS',
       message: '성공',
-      data: mockFavoriteEventStatus,
+      data: getDemoFavoriteEventStatus(validatedParams.eventId),
     };
 
   return apiClient.getWithValidation(
@@ -107,6 +113,18 @@ export const addFavoriteEvent = async (
   const validatedParams = AddFavoriteEventParamsSchema.parse(params);
   const validatedBody = AddFavoriteEventBodySchema.parse(body);
 
+  if (IS_DEMO) {
+    addDemoFavoriteEvent(validatedBody.eventId);
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: {
+        success: true,
+        totalCount: getDemoFavoriteEventList().totalCount,
+      },
+    };
+  }
+
   // API 호출 및 응답 검증
   return apiClient.postWithValidation(
     `/api/v1/users/${validatedParams.uuid}/favorite-events`,
@@ -133,6 +151,18 @@ export const deleteFavoriteEvent = async (
 ): Promise<ApiResponse<FavoriteEventActionResponse>> => {
   // 요청 파라미터 검증
   const validatedParams = DeleteFavoriteEventParamsSchema.parse(params);
+
+  if (IS_DEMO) {
+    removeDemoFavoriteEvent(validatedParams.eventId);
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: {
+        success: true,
+        totalCount: getDemoFavoriteEventList().totalCount,
+      },
+    };
+  }
 
   // API 호출 및 응답 검증
   return apiClient.deleteWithValidation(

@@ -4,40 +4,49 @@ import type { FavoriteMeetupListDTO } from '@/features/favorite-meetup/model/sch
 import type { FavoriteMeetupStatusDTO } from '@/features/favorite-meetup/model/schema/getFavoriteMeetupStatus';
 import type { FavoriteListDTO } from '@/features/favorite-product/model/schema/getFavoriteList';
 import type { FavoriteStatusDTO } from '@/features/favorite-product/model/schema/getFavoriteStatus';
+import { mockEventList } from './event';
 
-export const mockFavoriteEventList: FavoriteEventListDTO = {
-  totalCount: 2,
-  events: [
-    {
-      eventId: 1,
-      title: '코믹월드 2025 서울',
-      thumbnailUrl: 'https://picsum.photos/seed/event-comic/600/400',
-      startDate: '2025-08-02',
-      endDate: '2025-08-03',
-      location: '서울 COEX 전시홀',
-      price: 5000,
-      status: 'UPCOMING',
-      category: '코믹',
-      favoritedAt: '2025-06-01T12:00:00',
-    },
-    {
-      eventId: 5,
-      title: '코스프레 그랜드 챔피언십 2025',
-      thumbnailUrl: 'https://picsum.photos/seed/event-champ/600/400',
-      startDate: '2025-09-06',
-      endDate: '2025-09-07',
-      location: '부산 벡스코 오디토리움',
-      price: 10000,
-      status: 'UPCOMING',
-      category: '대회',
-      favoritedAt: '2025-06-05T10:00:00',
-    },
-  ],
-};
+// 데모 모드 찜 상태 (메모리 유지, 새로고침 시 초기화)
+export const demoFavoriteEventIds = new Set<number>([1, 5]);
+export const demoFavoriteMeetupIds = new Set<number>([1]);
 
-export const mockFavoriteEventStatus: FavoriteEventStatusDTO = {
-  isFavorited: false,
-};
+// 찜한 시각은 실제 값이 중요하지 않으므로 찜한 시점의 현재 시각으로 고정
+const demoFavoritedAtByEventId = new Map<number, string>(
+  [...demoFavoriteEventIds].map((eventId) => [
+    eventId,
+    new Date().toISOString(),
+  ])
+);
+
+export function getDemoFavoriteEventList(): FavoriteEventListDTO {
+  const events = mockEventList
+    .filter((event) => demoFavoriteEventIds.has(event.eventId))
+    .map((event) => ({
+      ...event,
+      favoritedAt:
+        demoFavoritedAtByEventId.get(event.eventId) ?? new Date().toISOString(),
+    }))
+    // 최근 찜한 순으로 정렬 (실제 API의 찜한 시각 최신순 정렬을 재현)
+    .sort((a, b) => b.favoritedAt.localeCompare(a.favoritedAt));
+
+  return { totalCount: events.length, events };
+}
+
+export function getDemoFavoriteEventStatus(
+  eventId: number
+): FavoriteEventStatusDTO {
+  return { isFavorited: demoFavoriteEventIds.has(eventId) };
+}
+
+export function addDemoFavoriteEvent(eventId: number): void {
+  demoFavoriteEventIds.add(eventId);
+  demoFavoritedAtByEventId.set(eventId, new Date().toISOString());
+}
+
+export function removeDemoFavoriteEvent(eventId: number): void {
+  demoFavoriteEventIds.delete(eventId);
+  demoFavoritedAtByEventId.delete(eventId);
+}
 
 export const mockFavoriteMeetupList: FavoriteMeetupListDTO = {
   totalCount: 1,
