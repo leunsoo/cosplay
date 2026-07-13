@@ -120,7 +120,7 @@ export const mockProductDetails: Record<number, ProductDetailResponseDTO> = {
       title: '에렌 예거 코스프레 의상 세트 (진격의 거인)',
       price: 35000,
       description:
-        '진격의 거인 에렌 예거 조사병단 의상 세트입니다.\n\n**구성품**\n- 상의 (갈색 재킷)\n- 하의 (베이지 바지)\n- 흰 셔츠\n- 입체기동장치 벨트 (소품)\n\n**사이즈**: M (남성 기준, 키 170-175cm 착용 가능)\n**상태**: 2회 착용, 세탁 완료, 파손 없음\n\n직거래 가능 (서울 강남).',
+        '<p>진격의 거인 에렌 예거 조사병단 의상 세트입니다.</p><p><strong>구성품</strong></p><ul><li><p>상의 (갈색 재킷)</p></li><li><p>하의 (베이지 바지)</p></li><li><p>흰 셔츠</p></li><li><p>입체기동장치 벨트 (소품)</p></li></ul><p><strong>사이즈</strong>: M (남성 기준, 키 170-175cm 착용 가능)</p><p><strong>상태</strong>: 2회 착용, 세탁 완료, 파손 없음</p><p>직거래 가능 (서울 강남).</p>',
       mainImageUrl: 'https://picsum.photos/seed/prod-eren/400/400',
       status: 'SELLING',
       shippingType: 'BOTH',
@@ -173,7 +173,7 @@ export const mockProductDetails: Record<number, ProductDetailResponseDTO> = {
       title: '제로투 공주 드레스 풀세트 (다링 인 더 프랑스)',
       price: 58000,
       description:
-        '다링 인 더 프랑스 제로투 공주 드레스 풀세트입니다.\n\n**구성품**\n- 빨간 드레스 (원피스형)\n- 흰 장갑\n- 뿔 헤어밴드\n- 프릴 스타킹\n\n**사이즈**: S/M 겸용, 허리 조절 가능\n**상태**: 1회 착용, 세탁 완료, 양호\n\n배송비 포함 가격입니다.',
+        '<p>다링 인 더 프랑스 제로투 공주 드레스 풀세트입니다.</p><p><strong>구성품</strong></p><ul><li><p>빨간 드레스 (원피스형)</p></li><li><p>흰 장갑</p></li><li><p>뿔 헤어밴드</p></li><li><p>프릴 스타킹</p></li></ul><p><strong>사이즈</strong>: S/M 겸용, 허리 조절 가능</p><p><strong>상태</strong>: 1회 착용, 세탁 완료, 양호</p><p>배송비 포함 가격입니다.</p>',
       mainImageUrl: 'https://picsum.photos/seed/prod-zerotwo/400/400',
       status: 'SELLING',
       shippingType: 'DELIVERY',
