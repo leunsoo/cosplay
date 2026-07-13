@@ -1,7 +1,7 @@
 import { apiClient, serverFetch, type ApiResponse } from '@/shared/api';
 import { BannersDTOSchema, type BannersDTO } from '../model';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockBanners } from '@/mocks/banner';
+import { mockBanners } from '@/mocks';
 
 /**
  * 배너 목록 조회 API

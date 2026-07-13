@@ -14,7 +14,7 @@ import {
   MOCK_SELLER_UUID,
   mockSellerProfiles,
   mockSellerProducts,
-} from '@/mocks/seller';
+} from '@/mocks';
 
 /**
  * 판매자 프로필 정보 조회 API

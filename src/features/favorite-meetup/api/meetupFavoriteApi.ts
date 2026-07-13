@@ -23,7 +23,7 @@ import {
   getDemoFavoriteMeetupStatus,
   addDemoFavoriteMeetup,
   removeDemoFavoriteMeetup,
-} from '@/mocks/favorite';
+} from '@/mocks';
 
 export const getFavoriteMeetupList = async (
   params: GetFavoriteMeetupListParams

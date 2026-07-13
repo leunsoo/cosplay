@@ -4,7 +4,7 @@ import {
   type MeetupListDTO,
 } from '../model/schema/getMeetupList';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockMeetupList } from '@/mocks/meetup';
+import { mockMeetupList } from '@/mocks';
 
 export type MeetupStatus = 'ALL' | 'ONGOING' | 'CLOSED';
 

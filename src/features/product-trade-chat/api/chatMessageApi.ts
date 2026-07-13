@@ -14,7 +14,7 @@ import {
   type UploadChatImageDTO,
 } from '../model/schema';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockChatMessages } from '@/mocks/chat';
+import { mockChatMessages } from '@/mocks';
 
 /**
  * 채팅방 메시지 목록 조회 API

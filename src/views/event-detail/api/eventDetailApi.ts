@@ -1,7 +1,7 @@
 import { apiClient, serverFetch, type ApiResponse } from '@/shared/api';
 import { EventDetailDTOSchema, type EventDetailDTO } from '../model';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockEventDetails } from '@/mocks/event';
+import { mockEventDetails } from '@/mocks';
 
 export interface GetEventDetailParams {
   eventId: number;

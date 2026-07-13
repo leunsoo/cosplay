@@ -1,7 +1,7 @@
 import { apiClient, serverFetch, type ApiResponse } from '@/shared/api';
 import { EventListDTOSchema, type EventListDTO } from '../model';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockEventList } from '@/mocks/event';
+import { mockEventList } from '@/mocks';
 
 export type EventStatusParam = 'ALL' | 'UPCOMING' | 'ONGOING' | 'CLOSED';
 

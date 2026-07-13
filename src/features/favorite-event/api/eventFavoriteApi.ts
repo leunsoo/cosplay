@@ -23,7 +23,7 @@ import {
   getDemoFavoriteEventStatus,
   addDemoFavoriteEvent,
   removeDemoFavoriteEvent,
-} from '@/mocks/favorite';
+} from '@/mocks';
 
 /**
  * 찜한 행사 목록 조회 API

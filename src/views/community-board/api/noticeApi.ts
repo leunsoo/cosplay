@@ -6,7 +6,7 @@ import {
   type NoticeDetailDTO,
 } from '../model/schema/noticeSchema';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockNoticeList, mockNoticeDetails } from '@/mocks/community';
+import { mockNoticeList, mockNoticeDetails } from '@/mocks';
 
 export const getNoticeList = async (): Promise<ApiResponse<NoticeListDTO>> => {
   if (IS_DEMO)

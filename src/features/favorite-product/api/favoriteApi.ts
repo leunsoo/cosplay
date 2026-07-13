@@ -18,10 +18,7 @@ import {
   type FavoriteActionResponse,
 } from '../model';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import {
-  mockFavoriteProductList,
-  mockFavoriteProductStatus,
-} from '@/mocks/favorite';
+import { mockFavoriteProductList, mockFavoriteProductStatus } from '@/mocks';
 
 /**
  * 찜한 상품 목록 조회 API

@@ -26,7 +26,7 @@ import {
   mockChatRoomList,
   mockChatRoomDetails,
   mockResolveChatRoom,
-} from '@/mocks/chat';
+} from '@/mocks';
 
 /**
  * 채팅방 목록 조회 API

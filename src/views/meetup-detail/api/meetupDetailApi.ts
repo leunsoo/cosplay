@@ -9,7 +9,7 @@ import {
   type MeetupMembersDTO,
 } from '../model/schema/getMeetupMembers';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockMeetupDetails, mockMeetupMembers } from '@/mocks/meetup';
+import { mockMeetupDetails, mockMeetupMembers } from '@/mocks';
 
 export const getMeetupDetail = async (
   meetupId: number

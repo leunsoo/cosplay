@@ -18,7 +18,7 @@ import {
   mockEventChatRoom,
   mockEventChatMessages,
   mockEventChatActiveCount,
-} from '@/mocks/group-chat';
+} from '@/mocks';
 
 /**
  * 행사 채팅방 조회 API

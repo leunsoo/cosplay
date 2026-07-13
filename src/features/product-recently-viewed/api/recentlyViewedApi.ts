@@ -13,7 +13,7 @@ import {
   type DeleteAllRecentlyViewedDTO,
 } from '../model';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockRecentlyViewedList } from '@/mocks/recently-viewed';
+import { mockRecentlyViewedList } from '@/mocks';
 
 /**
  * 최근 본 상품 목록 조회 API

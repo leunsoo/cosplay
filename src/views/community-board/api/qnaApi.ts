@@ -6,7 +6,7 @@ import {
   type QnaPostDetailDTO,
 } from '../model/schema/qnaSchema';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockQnaList, mockQnaDetails } from '@/mocks/community';
+import { mockQnaList, mockQnaDetails } from '@/mocks';
 
 export const getQnaList = async (): Promise<ApiResponse<QnaPostListDTO>> => {
   if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockQnaList };

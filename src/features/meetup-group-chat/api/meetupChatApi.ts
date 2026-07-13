@@ -18,7 +18,7 @@ import {
   mockMeetupChatRoom,
   mockMeetupChatMessages,
   mockMeetupChatActiveCount,
-} from '@/mocks/group-chat';
+} from '@/mocks';
 
 export const getMeetupChatRoom = async (
   params: GetMeetupChatRoomParams

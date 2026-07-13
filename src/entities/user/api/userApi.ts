@@ -22,7 +22,7 @@ import {
   type UpdateMyProfileDTO,
 } from '../model/schema';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockMyProfile } from '@/mocks/user';
+import { mockMyProfile } from '@/mocks';
 
 interface RegisterUserParams {
   body: RegisterUserBody;

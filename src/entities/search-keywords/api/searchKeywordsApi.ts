@@ -14,7 +14,7 @@ import {
   type DeleteSearchKeywordDTO,
 } from '../model';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockSearchKeywords } from '@/mocks/search-keywords';
+import { mockSearchKeywords } from '@/mocks';
 
 /**
  * 최근 검색 키워드 조회 API
