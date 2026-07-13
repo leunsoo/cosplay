@@ -1,6 +1,7 @@
 import type { MeetupListDTO } from '@/views/event-list/model/schema/getMeetupList';
 import type { MeetupDetailDTO } from '@/views/meetup-detail/model/schema/getMeetupDetail';
 import type { MeetupMembersDTO } from '@/views/meetup-detail/model/schema/getMeetupMembers';
+import { DEMO_USER_UUID, mockMyProfile } from './user';
 
 export const mockMeetupList: MeetupListDTO = [
   {
@@ -310,3 +311,30 @@ export const mockMeetupMembers: Record<number, MeetupMembersDTO> = {
     },
   ],
 };
+
+export function getDemoMeetupMembers(meetupId: number): MeetupMembersDTO {
+  return mockMeetupMembers[meetupId] ?? [];
+}
+
+export function joinDemoMeetup(meetupId: number): void {
+  const members = (mockMeetupMembers[meetupId] ??= []);
+  if (members.some((m) => m.user.uuid === DEMO_USER_UUID)) return;
+
+  members.push({
+    user: {
+      uuid: DEMO_USER_UUID,
+      nickname: mockMyProfile.nickname ?? '데모유저',
+      profileImageUrl: mockMyProfile.profileImageUri ?? null,
+    },
+    joinedAt: new Date().toISOString(),
+  });
+}
+
+export function leaveDemoMeetup(meetupId: number): void {
+  const members = mockMeetupMembers[meetupId];
+  if (!members) return;
+
+  mockMeetupMembers[meetupId] = members.filter(
+    (m) => m.user.uuid !== DEMO_USER_UUID
+  );
+}

@@ -9,7 +9,12 @@ import {
   type MeetupMembersDTO,
 } from '../model/schema/getMeetupMembers';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockMeetupDetails, mockMeetupMembers } from '@/mocks';
+import {
+  mockMeetupDetails,
+  getDemoMeetupMembers,
+  joinDemoMeetup,
+  leaveDemoMeetup,
+} from '@/mocks';
 
 export const getMeetupDetail = async (
   meetupId: number
@@ -28,8 +33,11 @@ export const getMeetupMembers = async (
   meetupId: number
 ): Promise<ApiResponse<MeetupMembersDTO>> => {
   if (IS_DEMO) {
-    const members = mockMeetupMembers[meetupId] ?? [];
-    return { status: 'SUCCESS', message: '성공', data: members };
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: getDemoMeetupMembers(meetupId),
+    };
   }
   return apiClient.getWithValidation(
     `/api/v1/meetups/${meetupId}/members`,
@@ -40,8 +48,26 @@ export const getMeetupMembers = async (
 export const deleteMeetup = (meetupId: number): Promise<ApiResponse<void>> =>
   apiClient.delete(`/api/v1/meetups/${meetupId}`);
 
-export const joinMeetup = (meetupId: number): Promise<ApiResponse<void>> =>
-  apiClient.post(`/api/v1/meetups/${meetupId}/join`);
+export const joinMeetup = (meetupId: number): Promise<ApiResponse<void>> => {
+  if (IS_DEMO) {
+    joinDemoMeetup(meetupId);
+    return Promise.resolve({
+      status: 'SUCCESS',
+      message: '성공',
+      data: undefined,
+    });
+  }
+  return apiClient.post(`/api/v1/meetups/${meetupId}/join`);
+};
 
-export const leaveMeetup = (meetupId: number): Promise<ApiResponse<void>> =>
-  apiClient.delete(`/api/v1/meetups/${meetupId}/join`);
+export const leaveMeetup = (meetupId: number): Promise<ApiResponse<void>> => {
+  if (IS_DEMO) {
+    leaveDemoMeetup(meetupId);
+    return Promise.resolve({
+      status: 'SUCCESS',
+      message: '성공',
+      data: undefined,
+    });
+  }
+  return apiClient.delete(`/api/v1/meetups/${meetupId}/join`);
+};
