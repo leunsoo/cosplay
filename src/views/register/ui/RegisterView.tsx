@@ -11,6 +11,11 @@ import {
   registerUser,
 } from '@/entities/user';
 import { useAuthStore } from '@/shared/store/authStore';
+import { IS_DEMO } from '@/shared/lib/isDemo';
+import {
+  DEMO_REGISTERED_KEY,
+  LOGIN_NEXT_KEY,
+} from '@/shared/lib/demoAuthSession';
 import {
   type UserProfileFormValues,
   UserProfileFormFields,
@@ -37,6 +42,9 @@ const revokePreviewUrl = (url: string) => {
 export function RegisterView() {
   const router = useRouter();
   const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
+  const setDemoAuthenticated = useAuthStore(
+    (state) => state.setDemoAuthenticated
+  );
   const [formValues, setFormValues] = useState<UserProfileFormValues>(
     INITIAL_REGISTER_VALUES
   );
@@ -47,23 +55,29 @@ export function RegisterView() {
       let profileImageUrl = '';
 
       if (profileImageFile) {
-        const uploadUrlRes = await generateProfileImageUploadUrl({
-          filename: profileImageFile.name,
-        });
-        const { uploadUrl, imageUrl } = uploadUrlRes.data;
-        const uploadRes = await fetch(uploadUrl, {
-          method: 'PUT',
-          body: profileImageFile,
-          headers: {
-            'Content-Type': profileImageFile.type || 'application/octet-stream',
-          },
-        });
+        if (IS_DEMO) {
+          // 데모 모드: 실제 업로드 없이 이미 만들어둔 로컬 미리보기 URL을 그대로 사용
+          profileImageUrl = formValues.profileImageUrl;
+        } else {
+          const uploadUrlRes = await generateProfileImageUploadUrl({
+            filename: profileImageFile.name,
+          });
+          const { uploadUrl, imageUrl } = uploadUrlRes.data;
+          const uploadRes = await fetch(uploadUrl, {
+            method: 'PUT',
+            body: profileImageFile,
+            headers: {
+              'Content-Type':
+                profileImageFile.type || 'application/octet-stream',
+            },
+          });
 
-        if (!uploadRes.ok) {
-          throw new Error('Failed to upload profile image');
+          if (!uploadRes.ok) {
+            throw new Error('Failed to upload profile image');
+          }
+
+          profileImageUrl = imageUrl;
         }
-
-        profileImageUrl = imageUrl;
       }
 
       return registerUser({
@@ -74,9 +88,16 @@ export function RegisterView() {
       });
     },
     onSuccess: (response) => {
-      setAuthenticated(response.data.accessToken);
+      if (IS_DEMO) {
+        sessionStorage.setItem(DEMO_REGISTERED_KEY, 'true');
+        setDemoAuthenticated();
+      } else {
+        setAuthenticated(response.data.accessToken);
+      }
       alert('회원가입이 완료되었습니다.');
-      router.push(ROUTES.HOME);
+      const next = sessionStorage.getItem(LOGIN_NEXT_KEY);
+      sessionStorage.removeItem(LOGIN_NEXT_KEY);
+      router.push(next || ROUTES.HOME);
     },
     onError: (error) => {
       console.error('회원가입 실패:', error);

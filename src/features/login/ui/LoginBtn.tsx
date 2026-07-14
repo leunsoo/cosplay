@@ -4,6 +4,10 @@ import { useRouter } from 'next/navigation';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import { useAuthStore } from '@/shared/store/authStore';
 import { ROUTES } from '@/core/config';
+import {
+  DEMO_REGISTERED_KEY,
+  LOGIN_NEXT_KEY,
+} from '@/shared/lib/demoAuthSession';
 
 type Provider = 'google' | 'kakao' | 'x';
 
@@ -33,21 +37,39 @@ const PROVIDER_META = {
   },
 } as const;
 
-const LOGIN_NEXT_KEY = 'login_next_path';
-
 export function LoginBtn({ provider, nextPath }: LoginBtnProps) {
   const router = useRouter();
   const setDemoAuthenticated = useAuthStore(
     (state) => state.setDemoAuthenticated
+  );
+  const setDemoTempAuthenticated = useAuthStore(
+    (state) => state.setDemoTempAuthenticated
   );
   const baseURL = process.env.NEXT_PUBLIC_API_BASE_URL as string | undefined;
   const meta = PROVIDER_META[provider];
 
   const onClick = () => {
     if (IS_DEMO) {
-      // 데모 모드: 실제 OAuth 리다이렉트 없이 즉시 인증 상태로 전환
-      setDemoAuthenticated();
-      router.replace(nextPath?.trim() || ROUTES.HOME);
+      // 데모 모드: 실제 OAuth 리다이렉트 없이 인증 흐름을 재현한다.
+      const alreadyRegistered =
+        sessionStorage.getItem(DEMO_REGISTERED_KEY) === 'true';
+
+      if (alreadyRegistered) {
+        // 이번 세션에서 이미 회원가입을 완료한 적 있으면 곧바로 로그인
+        setDemoAuthenticated();
+        router.replace(nextPath?.trim() || ROUTES.HOME);
+        return;
+      }
+
+      // 신규 유저처럼 임시 인증 후 회원가입 페이지로 이동
+      const next = nextPath?.trim();
+      if (next) {
+        sessionStorage.setItem(LOGIN_NEXT_KEY, next);
+      } else {
+        sessionStorage.removeItem(LOGIN_NEXT_KEY);
+      }
+      setDemoTempAuthenticated();
+      router.push(ROUTES.REGISTER);
       return;
     }
 

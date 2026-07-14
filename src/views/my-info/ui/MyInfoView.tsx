@@ -13,6 +13,7 @@ import {
   updateMyProfile,
 } from '@/entities/user';
 import { useAuthStore } from '@/shared/store/authStore';
+import { IS_DEMO } from '@/shared/lib/isDemo';
 import {
   type UserProfileFormValues,
   UserProfileFormFields,
@@ -42,6 +43,7 @@ export function MyInfoView() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const userUuid = useAuthStore((state) => state.userUuid);
+  const setUnauthenticated = useAuthStore((state) => state.setUnauthenticated);
 
   const [isEditMode, setIsEditMode] = useState(false);
   const [draftInfo, setDraftInfo] =
@@ -67,23 +69,29 @@ export function MyInfoView() {
       let nextProfileImageUrl = draftInfo.profileImageUrl;
 
       if (profileImageFile) {
-        const uploadUrlRes = await generateProfileImageUploadUrl({
-          filename: profileImageFile.name,
-        });
-        const { uploadUrl, imageUrl } = uploadUrlRes.data;
-        const uploadRes = await fetch(uploadUrl, {
-          method: 'PUT',
-          body: profileImageFile,
-          headers: {
-            'Content-Type': profileImageFile.type || 'application/octet-stream',
-          },
-        });
+        if (IS_DEMO) {
+          // 데모 모드: 실제 업로드 없이 이미 만들어둔 로컬 미리보기 URL을 그대로 사용
+          nextProfileImageUrl = draftInfo.profileImageUrl;
+        } else {
+          const uploadUrlRes = await generateProfileImageUploadUrl({
+            filename: profileImageFile.name,
+          });
+          const { uploadUrl, imageUrl } = uploadUrlRes.data;
+          const uploadRes = await fetch(uploadUrl, {
+            method: 'PUT',
+            body: profileImageFile,
+            headers: {
+              'Content-Type':
+                profileImageFile.type || 'application/octet-stream',
+            },
+          });
 
-        if (!uploadRes.ok) {
-          throw new Error('Failed to upload profile image');
+          if (!uploadRes.ok) {
+            throw new Error('Failed to upload profile image');
+          }
+
+          nextProfileImageUrl = imageUrl;
         }
-
-        nextProfileImageUrl = imageUrl;
       }
 
       return updateMyProfile({
@@ -114,6 +122,7 @@ export function MyInfoView() {
   const deleteAccountMutation = useMutation({
     mutationFn: () => deleteMyAccount({ uuid: userUuid }),
     onSuccess: () => {
+      setUnauthenticated();
       alert('회원 탈퇴가 완료되었습니다.');
       router.push(ROUTES.HOME);
     },

@@ -7,6 +7,7 @@ interface AuthActions {
   setAuthChecking: () => void;
   setAuthenticated: (accessToken: string) => void;
   setDemoAuthenticated: () => void;
+  setDemoTempAuthenticated: () => void;
   setUnauthenticated: () => void;
 }
 
@@ -39,6 +40,14 @@ export const useAuthStore = create<AuthStore>((set) => ({
       userUuid: 'demo-user-uuid-0000',
       role: 'member',
       accessToken: 'demo-token',
+      authStatus: 'authenticated',
+    }),
+  // 데모 모드에서 OAuth 로그인 → 신규 유저 회원가입 흐름 재현용 (role: 'temp')
+  setDemoTempAuthenticated: () =>
+    set({
+      userUuid: 'demo-user-uuid-0000',
+      role: 'temp',
+      accessToken: 'demo-temp-token',
       authStatus: 'authenticated',
     }),
   setUnauthenticated: () =>

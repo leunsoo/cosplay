@@ -15,3 +15,9 @@ export const mockMyProfile: MyProfileDTO = {
     '코스프레를 사랑하는 데모 유저입니다. 주로 원피스, 진격의 거인 캐릭터를 코스합니다.',
   socialLink: null,
 };
+
+export function updateDemoMyProfile(
+  fields: Partial<Omit<MyProfileDTO, 'uuid'>>
+): void {
+  Object.assign(mockMyProfile, fields);
+}
