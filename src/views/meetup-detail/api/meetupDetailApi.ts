@@ -14,6 +14,8 @@ import {
   getDemoMeetupMembers,
   joinDemoMeetup,
   leaveDemoMeetup,
+  deleteDemoMeetup,
+  removeDemoFavoriteMeetup,
 } from '@/mocks';
 
 export const getMeetupDetail = async (
@@ -45,8 +47,18 @@ export const getMeetupMembers = async (
   );
 };
 
-export const deleteMeetup = (meetupId: number): Promise<ApiResponse<void>> =>
-  apiClient.delete(`/api/v1/meetups/${meetupId}`);
+export const deleteMeetup = (meetupId: number): Promise<ApiResponse<void>> => {
+  if (IS_DEMO) {
+    deleteDemoMeetup(meetupId);
+    removeDemoFavoriteMeetup(meetupId);
+    return Promise.resolve({
+      status: 'SUCCESS',
+      message: '성공',
+      data: undefined,
+    });
+  }
+  return apiClient.delete(`/api/v1/meetups/${meetupId}`);
+};
 
 export const joinMeetup = (meetupId: number): Promise<ApiResponse<void>> => {
   if (IS_DEMO) {

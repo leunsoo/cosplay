@@ -420,3 +420,13 @@ export function updateDemoMeetup(
     };
   }
 }
+
+export function deleteDemoMeetup(meetupId: number): void {
+  delete mockMeetupDetails[meetupId];
+  delete mockMeetupMembers[meetupId];
+
+  const listIndex = mockMeetupList.findIndex((m) => m.meetupId === meetupId);
+  if (listIndex !== -1) {
+    mockMeetupList.splice(listIndex, 1);
+  }
+}
