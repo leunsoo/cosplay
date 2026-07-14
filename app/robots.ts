@@ -9,6 +9,8 @@ import { MetadataRoute } from 'next';
  * 접근 경로: /robots.txt
  */
 export default function robots(): MetadataRoute.Robots {
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
+
   return {
     rules: {
       userAgent: '*', // 모든 크롤러에 적용
@@ -24,6 +26,6 @@ export default function robots(): MetadataRoute.Robots {
         '/meetup/register',
       ],
     },
-    sitemap: 'https://llowa.kr/sitemap.xml',
+    sitemap: `${BASE_URL}/sitemap.xml`,
   };
 }

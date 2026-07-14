@@ -9,6 +9,8 @@ import { getEventsListServer } from '@/entities/event';
 import { getBannerListServer } from '@/entities/banner';
 import { EventListView } from '@/views/event-list';
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
+
 /**
  * 행사 목록 페이지 메타데이터
  * layout.tsx의 title.template에 의해 "코스프레 행사 일정 | LLOWA" 로 완성됨
@@ -20,10 +22,10 @@ export const metadata: Metadata = {
   openGraph: {
     title: '코스프레 행사 일정 | LLOWA',
     description: '국내 코스프레 공식 및 개인 행사 일정을 한눈에 확인하세요.',
-    url: 'https://llowa.kr/event',
+    url: `${BASE_URL}/event`,
   },
   alternates: {
-    canonical: 'https://llowa.kr/event',
+    canonical: `${BASE_URL}/event`,
   },
 };
 

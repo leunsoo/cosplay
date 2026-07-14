@@ -14,6 +14,8 @@ interface EventJsonLdProps {
  * 구글이 이 데이터를 인식하면 검색 결과에 날짜/장소 리치 스니펫이 표시됩니다.
  */
 export function EventJsonLd({ event, eventId }: EventJsonLdProps) {
+  const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
+
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Event',
@@ -26,12 +28,12 @@ export function EventJsonLd({ event, eventId }: EventJsonLdProps) {
       name: event.location,
     },
     image: event.thumbnailUrl,
-    url: `https://llowa.kr/event/${eventId}`,
+    url: `${BASE_URL}/event/${eventId}`,
     eventStatus: 'https://schema.org/EventScheduled',
     organizer: {
       '@type': 'Organization',
       name: 'LLOWA',
-      url: 'https://llowa.kr',
+      url: BASE_URL,
     },
   };
 

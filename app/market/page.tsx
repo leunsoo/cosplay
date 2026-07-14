@@ -7,6 +7,8 @@ import { getQueryClient } from '@/shared/lib/getQueryClient';
 import { getProductListServer } from '@/entities/product';
 import { ProductListView } from '@/views/product-list';
 
+const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
+
 /**
  * 코스마켓 목록 페이지 메타데이터
  * layout.tsx의 title.template에 의해 "코스마켓 | LLOWA" 로 완성됨
@@ -19,10 +21,10 @@ export const metadata: Metadata = {
     title: '코스마켓 | LLOWA',
     description:
       '코스프레 의상, 소품, 가발 등을 사고 팔 수 있는 코스프레 중고 거래 마켓입니다.',
-    url: 'https://llowa.kr/market',
+    url: `${BASE_URL}/market`,
   },
   alternates: {
-    canonical: 'https://llowa.kr/market',
+    canonical: `${BASE_URL}/market`,
   },
 };
 

@@ -20,7 +20,7 @@ export function ProductJsonLd({ product, id }: ProductJsonLdProps) {
     name: product.title,
     description: product.description ?? product.title,
     image: product.mainImageUrl,
-    url: `https://llowa.kr/market/products/${id}`,
+    url: `${process.env.NEXT_PUBLIC_BASE_URL}/market/products/${id}`,
     offers: {
       '@type': 'Offer',
       price: product.price,

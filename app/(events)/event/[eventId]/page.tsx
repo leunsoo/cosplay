@@ -52,10 +52,10 @@ export async function generateMetadata({
           event.description ??
           `${event.title} - ${event.location} (${event.startDate} ~ ${event.endDate})`,
         images: [{ url: event.thumbnailUrl, alt: event.title }],
-        url: `https://llowa.kr/event/${eventId}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/event/${eventId}`,
       },
       alternates: {
-        canonical: `https://llowa.kr/event/${eventId}`,
+        canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/event/${eventId}`,
       },
     };
   } catch {

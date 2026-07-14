@@ -53,10 +53,10 @@ export async function generateMetadata({
           product.description ??
           `${product.title} - ${product.price.toLocaleString()}원`,
         images: [{ url: product.mainImageUrl, alt: product.title }],
-        url: `https://llowa.kr/market/products/${id}`,
+        url: `${process.env.NEXT_PUBLIC_BASE_URL}/market/products/${id}`,
       },
       alternates: {
-        canonical: `https://llowa.kr/market/products/${id}`,
+        canonical: `${process.env.NEXT_PUBLIC_BASE_URL}/market/products/${id}`,
       },
     };
   } catch {
