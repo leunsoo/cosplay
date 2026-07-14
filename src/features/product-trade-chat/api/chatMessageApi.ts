@@ -14,7 +14,7 @@ import {
   type UploadChatImageDTO,
 } from '../model/schema';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockChatMessages } from '@/mocks';
+import { mockChatMessages, markDemoMessagesAsRead } from '@/mocks';
 
 /**
  * 채팅방 메시지 목록 조회 API
@@ -49,6 +49,15 @@ export const markMessagesAsRead = async (
   body: MarkMessagesAsReadBody
 ): Promise<ApiResponse<MarkMessagesAsReadDTO>> => {
   const validatedBody = MarkMessagesAsReadBodySchema.parse(body);
+
+  if (IS_DEMO) {
+    const updatedCount = markDemoMessagesAsRead(validatedBody.roomId);
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: { ...validatedBody, updatedCount },
+    };
+  }
 
   return apiClient.patchWithValidation(
     '/api/v1/chat/messages/read',

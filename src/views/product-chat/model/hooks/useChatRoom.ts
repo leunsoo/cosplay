@@ -11,7 +11,12 @@ import {
   type ChatRoom,
   type Message,
   type StompReceivePayload,
+  type StompMessagePayload,
 } from '@/features/product-trade-chat';
+import { IS_DEMO } from '@/shared/lib/isDemo';
+import { sendDemoMessage } from '@/mocks';
+
+let demoMessageIdCounter = 0;
 
 interface UseChatRoomParams {
   userUuid: string;
@@ -62,12 +67,33 @@ export function useChatRoom({ userUuid, chatRooms }: UseChatRoomParams) {
   }, [queryClient, userUuid]);
 
   // useChatStomp 연결
-  const { sendMessage } = useChatStomp({
+  const { sendMessage: publishMessage } = useChatStomp({
     userUuid,
     selectedRoomId,
     onRoomMessage: handleRoomMessage,
     onListUpdate: handleListUpdate,
   });
+
+  // 데모 모드에서는 STOMP publish가 no-op이므로, 보낸 메시지를 로컬에 즉시 반영한다
+  const sendMessage = useCallback(
+    (roomId: number, payload: StompMessagePayload) => {
+      publishMessage(roomId, payload);
+
+      if (IS_DEMO) {
+        sendDemoMessage(roomId, payload);
+        handleRoomMessage({
+          id: --demoMessageIdCounter,
+          roomId,
+          senderUuid: payload.senderUuid,
+          message: payload.message,
+          type: payload.type,
+          isRead: false,
+          createdAt: new Date().toISOString(),
+        });
+      }
+    },
+    [publishMessage, handleRoomMessage]
+  );
 
   // 방 진입 시 기존 메시지 로드
   useEffect(() => {

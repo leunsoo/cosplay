@@ -25,7 +25,9 @@ import { IS_DEMO } from '@/shared/lib/isDemo';
 import {
   mockChatRoomList,
   mockChatRoomDetails,
-  mockResolveChatRoom,
+  resolveDemoChatRoom,
+  createDemoChatRoom,
+  leaveDemoChatRoom,
 } from '@/mocks';
 
 /**
@@ -59,6 +61,14 @@ export const createChatRoom = async (
   body: CreateChatRoomBody
 ): Promise<ApiResponse<CreateChatRoomDTO>> => {
   const validatedBody = CreateChatRoomBodySchema.parse(body);
+
+  if (IS_DEMO) {
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: createDemoChatRoom(validatedBody),
+    };
+  }
 
   return apiClient.postWithValidation(
     '/api/v1/chat/rooms',
@@ -103,7 +113,11 @@ export const resolveChatRoom = async (
   const validatedParams = ResolveChatRoomParamsSchema.parse(params);
 
   if (IS_DEMO)
-    return { status: 'SUCCESS', message: '성공', data: mockResolveChatRoom };
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: resolveDemoChatRoom(validatedParams.productId),
+    };
 
   return apiClient.getWithValidation(
     '/api/v1/chat/rooms/resolve',
@@ -125,6 +139,11 @@ export const leaveChatRoom = async (
 ): Promise<void> => {
   const validatedParams = LeaveChatRoomParamsSchema.parse(params);
   const validatedBody = LeaveChatRoomBodySchema.parse(body);
+
+  if (IS_DEMO) {
+    leaveDemoChatRoom(validatedParams.roomId);
+    return;
+  }
 
   await apiClient.post(
     `/api/v1/chat/rooms/${validatedParams.roomId}/leave`,

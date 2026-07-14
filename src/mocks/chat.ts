@@ -2,7 +2,9 @@ import type { ChatRoomListDTO } from '@/features/product-trade-chat/model/schema
 import type { ChatRoomDetailDTO } from '@/features/product-trade-chat/model/schema/getChatRoom';
 import type { ResolveChatRoomDTO } from '@/features/product-trade-chat/model/schema/resolveChatRoom';
 import type { MessageListDTO } from '@/features/product-trade-chat/model/schema/getChatMessages';
+import type { CreateChatRoomBody } from '@/features/product-trade-chat/model/schema/createChatRoom';
 import { DEMO_USER_UUID } from './user';
+import { mockProductDetails } from './product';
 
 export const mockChatRoomList: ChatRoomListDTO = [
   {
@@ -117,3 +119,144 @@ export const mockChatMessages: Record<number, MessageListDTO> = {
     },
   ],
 };
+
+function getNextDemoChatRoomId(): number {
+  const ids = mockChatRoomList.map((room) => room.roomId);
+  return (ids.length > 0 ? Math.max(...ids) : 0) + 1;
+}
+
+export function resolveDemoChatRoom(productId: number): ResolveChatRoomDTO {
+  const existing = Object.values(mockChatRoomDetails).find(
+    (room) => room.productId === productId
+  );
+  return existing
+    ? { exists: true, roomId: existing.roomId }
+    : { exists: false, roomId: null };
+}
+
+export function createDemoChatRoom(body: CreateChatRoomBody): {
+  id: number;
+  productId: number;
+  buyerUuid: string;
+  sellerUuid: string;
+  createdAt: string;
+  updatedAt: string;
+} {
+  const existing = resolveDemoChatRoom(body.productId);
+  if (existing.exists && existing.roomId !== null) {
+    const now = new Date().toISOString();
+    return {
+      id: existing.roomId,
+      productId: body.productId,
+      buyerUuid: body.buyerUuid,
+      sellerUuid: body.sellerUuid,
+      createdAt: now,
+      updatedAt: now,
+    };
+  }
+
+  const roomId = getNextDemoChatRoomId();
+  const now = new Date().toISOString();
+  const product = mockProductDetails[body.productId]?.product;
+  const seller = mockProductDetails[body.productId]?.seller;
+
+  const detail: ChatRoomDetailDTO = {
+    roomId,
+    opponentNickname: seller?.name ?? '판매자',
+    opponentProfileImageUri: seller?.avatar ?? null,
+    opponentUuid: body.sellerUuid,
+    productId: body.productId,
+    productPhotoUrl: product?.mainImageUrl ?? '',
+    productTitle: product?.title ?? '',
+    productPrice: product?.price ?? 0,
+    productStatus: product?.status ?? 'SELLING',
+  };
+
+  mockChatRoomDetails[roomId] = detail;
+  mockChatRoomList.unshift({
+    roomId,
+    opponentNickname: detail.opponentNickname,
+    opponentProfileImageUri: detail.opponentProfileImageUri,
+    productPhotoUrl: detail.productPhotoUrl,
+    productTitle: detail.productTitle,
+    lastMessage: '',
+    lastMessageType: 'TEXT',
+    unreadCount: 0,
+  });
+  mockChatMessages[roomId] = [];
+
+  return {
+    id: roomId,
+    productId: body.productId,
+    buyerUuid: body.buyerUuid,
+    sellerUuid: body.sellerUuid,
+    createdAt: now,
+    updatedAt: now,
+  };
+}
+
+export function leaveDemoChatRoom(roomId: number): void {
+  delete mockChatRoomDetails[roomId];
+  delete mockChatMessages[roomId];
+
+  const listIndex = mockChatRoomList.findIndex(
+    (room) => room.roomId === roomId
+  );
+  if (listIndex !== -1) mockChatRoomList.splice(listIndex, 1);
+}
+
+export function sendDemoMessage(
+  roomId: number,
+  message: { senderUuid: string; message: string; type: 'TEXT' | 'IMAGE' }
+): void {
+  const messages = (mockChatMessages[roomId] ??= []);
+  const nextId = messages.length > 0 ? messages[messages.length - 1].id + 1 : 1;
+
+  messages.push({
+    id: nextId,
+    roomId,
+    senderUuid: message.senderUuid,
+    message: message.message,
+    type: message.type,
+    isRead: true,
+    createdAt: new Date().toISOString(),
+  });
+
+  const listIndex = mockChatRoomList.findIndex(
+    (room) => room.roomId === roomId
+  );
+  if (listIndex !== -1) {
+    mockChatRoomList[listIndex] = {
+      ...mockChatRoomList[listIndex],
+      lastMessage:
+        message.type === 'IMAGE' ? '사진을 보냈습니다.' : message.message,
+      lastMessageType: message.type,
+    };
+  }
+}
+
+export function markDemoMessagesAsRead(roomId: number): number {
+  const messages = mockChatMessages[roomId];
+  if (!messages) return 0;
+
+  let updatedCount = 0;
+  mockChatMessages[roomId] = messages.map((message) => {
+    if (!message.isRead && message.senderUuid !== DEMO_USER_UUID) {
+      updatedCount += 1;
+      return { ...message, isRead: true };
+    }
+    return message;
+  });
+
+  const listIndex = mockChatRoomList.findIndex(
+    (room) => room.roomId === roomId
+  );
+  if (listIndex !== -1) {
+    mockChatRoomList[listIndex] = {
+      ...mockChatRoomList[listIndex],
+      unreadCount: 0,
+    };
+  }
+
+  return updatedCount;
+}
