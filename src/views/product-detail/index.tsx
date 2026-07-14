@@ -11,7 +11,8 @@ import {
 import { useProductDetail } from '@/entities/product';
 import { useAddRecentlyViewed } from '@/features/product-recently-viewed';
 import { useAuthStore } from '@/shared/store/authStore';
-import { isMe } from '@/entities/auth';
+import { isMe, useLogined } from '@/entities/auth';
+import { ROUTES } from '@/core/config';
 
 interface ProductDetailViewProps {
   productId: number;
@@ -20,6 +21,7 @@ interface ProductDetailViewProps {
 export function ProductDetailView({ productId }: ProductDetailViewProps) {
   const router = useRouter();
   const userUuid = useAuthStore((state) => state.userUuid);
+  const logined = useLogined();
 
   const { productDetail, isLoading, error } = useProductDetail(productId);
 
@@ -29,7 +31,14 @@ export function ProductDetailView({ productId }: ProductDetailViewProps) {
   // 채팅하기 버튼 클릭 핸들러
   const handleChatClick = () => {
     const sellerUuid = productDetail?.seller.id ?? '';
-    router.push(`/market/chat?productId=${productId}&sellerUuid=${sellerUuid}`);
+    const chatPath = `/market/chat?productId=${productId}&sellerUuid=${sellerUuid}`;
+
+    if (!logined) {
+      router.push(`${ROUTES.LOGIN}?next=${encodeURIComponent(chatPath)}`);
+      return;
+    }
+
+    router.push(chatPath);
   };
 
   if (isLoading || !productDetail) {
