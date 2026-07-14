@@ -77,6 +77,7 @@ export function ProductInfo({
   const { mutate: removeProduct, isPending: isDeletePending } = useMutation({
     mutationFn: () => deleteProduct({ uuid: userUuid, productId }),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
       queryClient.invalidateQueries({ queryKey: ['favorite', userUuid] });
       queryClient.invalidateQueries({
         queryKey: ['recently-viewed', userUuid],

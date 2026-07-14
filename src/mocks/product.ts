@@ -1,6 +1,9 @@
 import type { ProductListDTO } from '@/entities/product/model';
 import type { ProductDetailResponseDTO } from '@/entities/product/model/schema/getProductDetail';
 import type { ProductSearchDTO } from '@/entities/product/model/schema/getProductSearch';
+import type { CreateProductBody } from '@/entities/product/model/schema/createProduct';
+import type { UpdateProductBody } from '@/entities/product/model/schema/updateProduct';
+import { DEMO_USER_UUID, mockMyProfile } from './user';
 
 const SELLER_UUID = 'demo-seller-uuid-0001';
 
@@ -217,3 +220,155 @@ export const mockProductSearch: ProductSearchDTO = {
     hasPrevious: false,
   },
 };
+
+function getNextDemoProductId(): number {
+  const ids = mockProductList.products.map((product) => product.id);
+  return (ids.length > 0 ? Math.max(...ids) : 0) + 1;
+}
+
+export function createDemoProduct(body: CreateProductBody): {
+  id: number;
+  title: string;
+  price: number;
+  status: string;
+  createdAt: string;
+} {
+  const id = getNextDemoProductId();
+  const now = new Date().toISOString();
+
+  const detail: ProductDetailResponseDTO = {
+    product: {
+      id,
+      title: body.title,
+      price: body.price,
+      description: body.description,
+      mainImageUrl: body.mainImageUrl,
+      status: 'SELLING',
+      shippingType: body.shippingType === 'included' ? 'DELIVERY' : 'BOTH',
+      standardShipping: body.standardShipping,
+      economyShippingAvailable: false,
+      directTradeEnabled: body.directTradeEnabled === 'possible',
+      directTradeLocation: body.directTradeLocation || null,
+      directTradePlace: body.directTradePlace || null,
+      priceNegotiable: body.priceNegotiable,
+      viewCount: 0,
+      favoriteCount: 0,
+      deliveryMethod:
+        body.directTradeEnabled === 'possible' ? '택배 또는 직거래' : '택배',
+      createdAt: now,
+    },
+    seller: {
+      uuid: DEMO_USER_UUID,
+      name: mockMyProfile.nickname ?? '데모유저',
+      avatar: mockMyProfile.profileImageUri ?? null,
+    },
+    sellerOtherProducts: [],
+  };
+
+  mockProductDetails[id] = detail;
+  mockProductList.products.unshift({
+    id,
+    title: detail.product.title,
+    price: detail.product.price,
+    mainImageUrl: detail.product.mainImageUrl,
+    createdAt: detail.product.createdAt,
+    badges: [],
+  });
+  mockProductList.pagination.totalElements += 1;
+
+  return {
+    id,
+    title: detail.product.title,
+    price: detail.product.price,
+    status: detail.product.status,
+    createdAt: now,
+  };
+}
+
+export function updateDemoProduct(
+  productId: number,
+  body: UpdateProductBody
+): {
+  id: number;
+  title: string;
+  price: number;
+  status: string;
+  updatedAt: string;
+} {
+  const existing = mockProductDetails[productId];
+  const now = new Date().toISOString();
+  const status = existing?.product.status ?? 'SELLING';
+
+  if (existing) {
+    mockProductDetails[productId] = {
+      ...existing,
+      product: {
+        ...existing.product,
+        title: body.title,
+        price: body.price,
+        description: body.description,
+        mainImageUrl: body.mainImageUrl,
+        priceNegotiable: body.priceNegotiable,
+        shippingType: body.shippingType === 'included' ? 'DELIVERY' : 'BOTH',
+        standardShipping: body.standardShipping,
+        directTradeEnabled: body.directTradeEnabled === 'possible',
+        directTradeLocation: body.directTradeLocation || null,
+        directTradePlace: body.directTradePlace || null,
+      },
+    };
+  }
+
+  const listIndex = mockProductList.products.findIndex(
+    (p) => p.id === productId
+  );
+  if (listIndex !== -1) {
+    mockProductList.products[listIndex] = {
+      ...mockProductList.products[listIndex],
+      title: body.title,
+      price: body.price,
+      mainImageUrl: body.mainImageUrl,
+    };
+  }
+
+  return {
+    id: productId,
+    title: body.title,
+    price: body.price,
+    status,
+    updatedAt: now,
+  };
+}
+
+export function deleteDemoProduct(productId: number): {
+  productId: number;
+  status: string;
+} {
+  delete mockProductDetails[productId];
+
+  const listIndex = mockProductList.products.findIndex(
+    (p) => p.id === productId
+  );
+  if (listIndex !== -1) {
+    mockProductList.products.splice(listIndex, 1);
+    mockProductList.pagination.totalElements -= 1;
+  }
+
+  return { productId, status: 'DELETED' };
+}
+
+export function updateDemoProductStatus(
+  productId: number,
+  status: 'SELLING' | 'RESERVED' | 'SOLD'
+): { productId: number; status: string; updatedAt: string } {
+  const existing = mockProductDetails[productId];
+  const updatedAt = new Date().toISOString();
+
+  if (existing) {
+    mockProductDetails[productId] = {
+      ...existing,
+      product: { ...existing.product, status },
+    };
+  }
+
+  return { productId, status, updatedAt };
+}

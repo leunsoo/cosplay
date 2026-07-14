@@ -44,6 +44,10 @@ import {
   mockProductList,
   mockProductDetails,
   mockProductSearch,
+  createDemoProduct,
+  updateDemoProduct,
+  deleteDemoProduct,
+  updateDemoProductStatus,
 } from '@/mocks';
 
 /**
@@ -199,6 +203,14 @@ export const createProduct = async (
   const validatedParams = CreateProductParamsSchema.parse(params);
   const validatedBody = CreateProductBodySchema.parse(body);
 
+  if (IS_DEMO) {
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: createDemoProduct(validatedBody),
+    };
+  }
+
   // 2. API 호출 및 응답 검증
   return apiClient.postWithValidation(
     '/api/v1/products',
@@ -247,6 +259,14 @@ export const updateProduct = async (
   const { productId, ...queryParams } = UpdateProductParamsSchema.parse(params);
   const validatedBody = UpdateProductBodySchema.parse(body);
 
+  if (IS_DEMO) {
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: updateDemoProduct(productId, validatedBody),
+    };
+  }
+
   // 2. API 호출 및 응답 검증
   return apiClient.putWithValidation(
     `/api/v1/products/${productId}`,
@@ -269,6 +289,14 @@ export const deleteProduct = async (
 ): Promise<ApiResponse<DeleteProductDTO>> => {
   // 1. 요청 파라미터 검증
   const { productId, ...queryParams } = DeleteProductParamsSchema.parse(params);
+
+  if (IS_DEMO) {
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: deleteDemoProduct(productId),
+    };
+  }
 
   // 2. API 호출 및 응답 검증
   return apiClient.deleteWithValidation(
@@ -295,6 +323,14 @@ export const updateProductStatus = async (
   const { productId, ...queryParams } =
     UpdateProductStatusParamsSchema.parse(params);
   const validatedBody = UpdateProductStatusBodySchema.parse(body);
+
+  if (IS_DEMO) {
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: updateDemoProductStatus(productId, validatedBody.status),
+    };
+  }
 
   // 2. API 호출 및 응답 검증
   return apiClient.patchWithValidation(

@@ -12,6 +12,7 @@ import {
   convertToWebp,
   uploadToS3,
 } from '@/shared/lib/imageUpload';
+import { IS_DEMO } from '@/shared/lib/isDemo';
 import type { ProductFormData } from '@/views/product-regist/model/types';
 
 interface UseProductRegistOptions {
@@ -44,16 +45,21 @@ export function useProductRegist({
       let mainImageUrl: string;
 
       if (formData.mainImageFile) {
-        // 새 파일 선택 → S3 업로드
-        const mainUrlRes = await uploadProductImages({
-          imageType: 'main',
-          imageCount: 1,
-        });
-        const { uploadUrl: mainUploadUrl, imageUrl } =
-          mainUrlRes.data.uploadUrls[0];
-        const mainWebp = await convertToWebp(formData.mainImageFile);
-        await uploadToS3(mainUploadUrl, mainWebp);
-        mainImageUrl = imageUrl;
+        if (IS_DEMO) {
+          // 데모 모드: 실제 업로드 없이 로컬 미리보기 URL 사용
+          mainImageUrl = URL.createObjectURL(formData.mainImageFile);
+        } else {
+          // 새 파일 선택 → S3 업로드
+          const mainUrlRes = await uploadProductImages({
+            imageType: 'main',
+            imageCount: 1,
+          });
+          const { uploadUrl: mainUploadUrl, imageUrl } =
+            mainUrlRes.data.uploadUrls[0];
+          const mainWebp = await convertToWebp(formData.mainImageFile);
+          await uploadToS3(mainUploadUrl, mainWebp);
+          mainImageUrl = imageUrl;
+        }
       } else if (isEditMode && initialImageUrl) {
         // 수정 모드 + 이미지 미변경 → 기존 URL 유지
         mainImageUrl = initialImageUrl;
@@ -61,33 +67,42 @@ export function useProductRegist({
         throw new Error('메인 이미지를 등록해주세요.');
       }
 
-      // 3. Pre-signed URL 발급 (detail 병렬)
-      const detailUrlRes = hasDetailImages
-        ? await uploadProductImages({
+      // 3. detail 이미지 업로드 URL 목록 결정
+      let detailUploadItems: { uploadUrl: string; imageUrl: string }[] = [];
+
+      if (hasDetailImages) {
+        if (IS_DEMO) {
+          // 데모 모드: 실제 업로드 없이 로컬 미리보기 URL 사용
+          detailUploadItems = base64Images.map((base64) => ({
+            uploadUrl: '',
+            imageUrl: URL.createObjectURL(base64ToBlob(base64)),
+          }));
+        } else {
+          // Pre-signed URL 발급 (detail 병렬)
+          const detailUrlRes = await uploadProductImages({
             imageType: 'detail',
             imageCount: base64Images.length,
-          })
-        : null;
-      const detailUploadItems = detailUrlRes?.data.uploadUrls ?? [];
+          });
+          detailUploadItems = detailUrlRes.data.uploadUrls;
 
-      // 4. detail 이미지 webp 변환 + S3 업로드 병렬
-      if (hasDetailImages) {
-        const detailWebps = await Promise.all(
-          base64Images.map((b64) => convertToWebp(base64ToBlob(b64)))
-        );
-        const uploadResults = await Promise.allSettled(
-          detailUploadItems.map((item, i) =>
-            uploadToS3(item.uploadUrl, detailWebps[i])
-          )
-        );
-        const failed = uploadResults.some((r) => r.status === 'rejected');
-        if (failed) {
-          alert('이미지 업로드에 실패했습니다.');
-          throw new Error('S3 upload failed');
+          // detail 이미지 webp 변환 + S3 업로드 병렬
+          const detailWebps = await Promise.all(
+            base64Images.map((b64) => convertToWebp(base64ToBlob(b64)))
+          );
+          const uploadResults = await Promise.allSettled(
+            detailUploadItems.map((item, i) =>
+              uploadToS3(item.uploadUrl, detailWebps[i])
+            )
+          );
+          const failed = uploadResults.some((r) => r.status === 'rejected');
+          if (failed) {
+            alert('이미지 업로드에 실패했습니다.');
+            throw new Error('S3 upload failed');
+          }
         }
       }
 
-      // 5. description의 base64를 S3 imageUrl로 교체
+      // 4. description의 base64를 imageUrl로 교체
       let processedDescription = formData.description;
       base64Images.forEach((base64, i) => {
         processedDescription = processedDescription.replace(
@@ -109,13 +124,14 @@ export function useProductRegist({
         mainImageUrl,
       };
 
-      // 6. 등록 or 수정
+      // 5. 등록 or 수정
       if (isEditMode) {
         return updateProduct({ uuid: userUuid, productId }, productBody);
       }
       return createProduct({ uuid: userUuid }, productBody);
     },
     onSuccess: (response) => {
+      queryClient.invalidateQueries({ queryKey: ['products'] });
       if (isEditMode) {
         queryClient.invalidateQueries({ queryKey: ['favorite', userUuid] });
         queryClient.invalidateQueries({
