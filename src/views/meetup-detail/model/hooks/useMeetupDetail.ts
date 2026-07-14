@@ -1,4 +1,4 @@
-import { useQuery, useMutation } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/shared/store/authStore';
 import { ROUTES } from '@/core/config';
@@ -6,6 +6,7 @@ import { getMeetupDetail, deleteMeetup } from '../../api/meetupDetailApi';
 
 export function useMeetupDetail(meetupId: number) {
   const router = useRouter();
+  const queryClient = useQueryClient();
   const currentUuid = useAuthStore((state) => state.userUuid);
 
   const {
@@ -23,6 +24,7 @@ export function useMeetupDetail(meetupId: number) {
   const { mutate: handleDelete, isPending: isDeleting } = useMutation({
     mutationFn: () => deleteMeetup(meetupId),
     onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['meetups'] });
       router.push(ROUTES.HOME);
     },
   });

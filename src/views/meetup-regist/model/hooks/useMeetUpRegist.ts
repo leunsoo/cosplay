@@ -1,4 +1,4 @@
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/core/config/routes';
 import { convertToWebp, uploadToS3 } from '@/shared/lib/imageUpload';
@@ -9,6 +9,7 @@ import { IS_DEMO } from '@/shared/lib/isDemo';
 
 export function useMeetUpRegist() {
   const router = useRouter();
+  const queryClient = useQueryClient();
 
   const { mutate: submit, isPending } = useMutation({
     mutationFn: async (formData: MeetupFormData) => {
@@ -31,6 +32,7 @@ export function useMeetUpRegist() {
       return createMeetup(body);
     },
     onSuccess: (res) => {
+      queryClient.invalidateQueries({ queryKey: ['meetups'] });
       alert('모임이 등록되었습니다.');
       router.push(ROUTES.MEETUP.DETAIL(res.data));
     },

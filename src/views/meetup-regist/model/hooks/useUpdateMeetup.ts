@@ -40,6 +40,7 @@ export function useUpdateMeetup(meetupId?: number) {
     onSuccess: () => {
       if (!meetupId) return;
       queryClient.invalidateQueries({ queryKey: ['meetup-detail', meetupId] });
+      queryClient.invalidateQueries({ queryKey: ['meetups'] });
       alert('모임이 수정되었습니다.');
       router.push(ROUTES.MEETUP.DETAIL(meetupId));
     },
