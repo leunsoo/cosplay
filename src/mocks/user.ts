@@ -2,7 +2,7 @@ import type { MyProfileDTO } from '@/entities/user/model/schema/getMyProfile';
 
 export const DEMO_USER_UUID = 'demo-user-uuid-0000';
 
-export const mockMyProfile: MyProfileDTO = {
+const DEFAULT_MY_PROFILE: MyProfileDTO = {
   uuid: DEMO_USER_UUID,
   nickname: '데모유저',
   name: '홍길동',
@@ -16,8 +16,37 @@ export const mockMyProfile: MyProfileDTO = {
   socialLink: null,
 };
 
+// 회원가입/정보수정으로 변경된 프로필은 세션 동안 유지되도록 sessionStorage에 백업한다.
+// (mockMyProfile 자체는 모듈 메모리라 새로고침 시 초기화되므로, 로그인 유지 여부와
+// 프로필 데이터가 서로 어긋나지 않게 하기 위함)
+const MY_PROFILE_STORAGE_KEY = 'demo-my-profile';
+
+function loadPersistedMyProfile(): MyProfileDTO {
+  if (typeof window === 'undefined') return { ...DEFAULT_MY_PROFILE };
+
+  try {
+    const raw = sessionStorage.getItem(MY_PROFILE_STORAGE_KEY);
+    if (!raw) return { ...DEFAULT_MY_PROFILE };
+    return { ...DEFAULT_MY_PROFILE, ...JSON.parse(raw) };
+  } catch {
+    return { ...DEFAULT_MY_PROFILE };
+  }
+}
+
+export const mockMyProfile: MyProfileDTO = loadPersistedMyProfile();
+
 export function updateDemoMyProfile(
   fields: Partial<Omit<MyProfileDTO, 'uuid'>>
 ): void {
   Object.assign(mockMyProfile, fields);
+
+  if (typeof window === 'undefined') return;
+  try {
+    sessionStorage.setItem(
+      MY_PROFILE_STORAGE_KEY,
+      JSON.stringify(mockMyProfile)
+    );
+  } catch {
+    // sessionStorage 접근 실패 시 메모리 상태만 유지
+  }
 }

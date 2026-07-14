@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import { useMutation } from '@tanstack/react-query';
+import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ROUTES } from '@/core/config';
 import {
   generateProfileImageUploadUrl,
@@ -41,6 +41,8 @@ const revokePreviewUrl = (url: string) => {
 
 export function RegisterView() {
   const router = useRouter();
+  const queryClient = useQueryClient();
+  const userUuid = useAuthStore((state) => state.userUuid);
   const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
   const setDemoAuthenticated = useAuthStore(
     (state) => state.setDemoAuthenticated
@@ -94,6 +96,7 @@ export function RegisterView() {
       } else {
         setAuthenticated(response.data.accessToken);
       }
+      queryClient.invalidateQueries({ queryKey: ['my-profile', userUuid] });
       alert('회원가입이 완료되었습니다.');
       const next = sessionStorage.getItem(LOGIN_NEXT_KEY);
       sessionStorage.removeItem(LOGIN_NEXT_KEY);
