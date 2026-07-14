@@ -1,83 +1,72 @@
 import type { SellerProfileDTO } from '@/views/seller-product-list/model/schema/getSellerProfile';
 import type { SellerProductsDTO } from '@/views/seller-product-list/model/schema/getSellerProducts';
+import { DEMO_USER_UUID, mockMyProfile } from './user';
+import { mockProductList, mockProductDetails } from './product';
 
 export const MOCK_SELLER_UUID = 'demo-seller-uuid-0001';
+const OTHER_SELLER_UUID = 'demo-seller-uuid-0002';
 
-export const mockSellerProfiles: Record<string, SellerProfileDTO> = {
+// 데모 유저 이외의 고정 판매자 프로필 (상품 자체는 mockProductDetails에서 동적으로 집계)
+const staticSellerProfiles: Record<string, Omit<SellerProfileDTO, 'uuid'>> = {
   [MOCK_SELLER_UUID]: {
-    uuid: MOCK_SELLER_UUID,
     name: '코스마켓',
     profileImageUrl: 'https://picsum.photos/seed/seller-main/100/100',
     introduction:
       '코스프레 의상 전문 판매자입니다. 직접 제작하거나 1-2회 착용 후 판매합니다. 문의는 채팅으로 주세요!',
   },
-  'demo-seller-uuid-0002': {
-    uuid: 'demo-seller-uuid-0002',
+  [OTHER_SELLER_UUID]: {
     name: '애니코스',
     profileImageUrl: null,
     introduction: '애니메이션 코스프레 의상 전문 판매 계정입니다.',
   },
 };
 
-export const mockSellerProducts: Record<string, SellerProductsDTO> = {
-  [MOCK_SELLER_UUID]: {
-    products: [
-      {
-        id: 1,
-        title: '에렌 예거 코스프레 의상 세트 (진격의 거인)',
-        price: 35000,
-        mainImageUrl: 'https://picsum.photos/seed/prod-eren/400/400',
-        createdAt: '2025-05-01T00:00:00',
-        badges: [{ label: '거래제안가능' }],
-      },
-      {
-        id: 3,
-        title: '나루토 코스프레 세트 (나루토 질풍전)',
-        price: 42000,
-        mainImageUrl: 'https://picsum.photos/seed/prod-naruto/400/400',
-        createdAt: '2025-05-05T00:00:00',
-        badges: [{ label: '거래제안가능' }, { label: '직거래가능' }],
-      },
-      {
-        id: 5,
-        title: '귀멸의 칼날 탄지로 코스프레 의상',
-        price: 38000,
-        mainImageUrl: 'https://picsum.photos/seed/prod-tanjiro/400/400',
-        createdAt: '2025-05-10T00:00:00',
-        badges: [],
-      },
-      {
-        id: 7,
-        title: '루피 밀짚모자 + 코스프레 의상 (원피스)',
-        price: 28000,
-        mainImageUrl: 'https://picsum.photos/seed/prod-luffy/400/400',
-        createdAt: '2025-05-15T00:00:00',
-        badges: [{ label: '직거래가능' }],
-      },
-      {
-        id: 8,
-        title: '고죠 사토루 안대 & 교복 (주술회전)',
-        price: 32000,
-        mainImageUrl: 'https://picsum.photos/seed/prod-gojo/400/400',
-        createdAt: '2025-05-18T00:00:00',
-        badges: [{ label: '거래제안가능' }],
-      },
-      {
-        id: 11,
-        title: '야스오 투구 & 갑옷 소품 세트 (LOL)',
-        price: 9500,
-        mainImageUrl: 'https://picsum.photos/seed/prod-yasuo/400/400',
-        createdAt: '2025-05-25T00:00:00',
-        badges: [{ label: '거래제안가능' }],
-      },
-    ],
+export function getDemoSellerProfile(sellerUuid: string): SellerProfileDTO {
+  if (sellerUuid === DEMO_USER_UUID) {
+    return {
+      uuid: DEMO_USER_UUID,
+      name: mockMyProfile.nickname ?? '데모유저',
+      profileImageUrl: mockMyProfile.profileImageUri ?? null,
+      introduction: mockMyProfile.introduction ?? null,
+    };
+  }
+
+  const staticProfile = staticSellerProfiles[sellerUuid];
+  if (staticProfile) return { uuid: sellerUuid, ...staticProfile };
+
+  // 알 수 없는 판매자는 코스마켓으로 폴백
+  return { uuid: MOCK_SELLER_UUID, ...staticSellerProfiles[MOCK_SELLER_UUID] };
+}
+
+export function getDemoSellerProducts(
+  sellerUuid: string,
+  page = 1,
+  size = 8
+): SellerProductsDTO {
+  const sellerProductIds = new Set(
+    Object.values(mockProductDetails)
+      .filter((detail) => detail.seller.uuid === sellerUuid)
+      .map((detail) => detail.product.id)
+  );
+
+  const allProducts = mockProductList.products.filter((product) =>
+    sellerProductIds.has(product.id)
+  );
+
+  const totalElements = allProducts.length;
+  const totalPages = Math.max(1, Math.ceil(totalElements / size));
+  const start = (page - 1) * size;
+  const products = allProducts.slice(start, start + size);
+
+  return {
+    products,
     pagination: {
-      currentPage: 1,
-      totalPages: 1,
-      totalElements: 6,
-      pageSize: 8,
-      hasNext: false,
-      hasPrevious: false,
+      currentPage: page,
+      totalPages,
+      totalElements,
+      pageSize: size,
+      hasNext: page < totalPages,
+      hasPrevious: page > 1,
     },
-  },
-};
+  };
+}
