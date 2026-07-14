@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { getChatImageUploadUrl } from '../api/chatMessageApi';
 import { uploadToS3 } from '@/shared/lib/imageUpload';
+import { IS_DEMO } from '@/shared/lib/isDemo';
 import { ChatImageCropModal } from './ChatImageCropModal';
 
 interface MessageInputProps {
@@ -28,7 +29,7 @@ export function MessageInput({
   };
 
   const handleKeyDown = (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
+    if (e.key === 'Enter' && !e.shiftKey && !e.nativeEvent.isComposing) {
       e.preventDefault();
       handleSend();
     }
@@ -47,6 +48,11 @@ export function MessageInput({
     setCropImageSrc(null);
     setIsUploadingImage(true);
     try {
+      if (IS_DEMO) {
+        // 데모 모드: 실제 업로드 없이 로컬 미리보기 URL 사용
+        onSendImage?.(URL.createObjectURL(croppedBlob));
+        return;
+      }
       const { data } = await getChatImageUploadUrl({ filename: 'chat.webp' });
       await uploadToS3(data.uploadUrl, croppedBlob);
       onSendImage?.(data.imageUrl);
