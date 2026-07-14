@@ -18,7 +18,12 @@ import {
   type FavoriteActionResponse,
 } from '../model';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockFavoriteProductList, mockFavoriteProductStatus } from '@/mocks';
+import {
+  getDemoFavoriteProductList,
+  getDemoFavoriteStatus,
+  addDemoFavoriteProduct,
+  removeDemoFavoriteProduct,
+} from '@/mocks';
 
 /**
  * 찜한 상품 목록 조회 API
@@ -44,7 +49,7 @@ export const getFavoriteList = async (
     return {
       status: 'SUCCESS',
       message: '성공',
-      data: mockFavoriteProductList,
+      data: getDemoFavoriteProductList(),
     };
 
   return apiClient.getWithValidation(
@@ -77,7 +82,7 @@ export const getFavoriteStatus = async (
     return {
       status: 'SUCCESS',
       message: '성공',
-      data: mockFavoriteProductStatus,
+      data: getDemoFavoriteStatus(validatedParams.productId),
     };
 
   return apiClient.getWithValidation(
@@ -108,6 +113,18 @@ export const addFavorite = async (
   const validatedParams = AddFavoriteParamsSchema.parse(params);
   const validatedBody = AddFavoriteBodySchema.parse(body);
 
+  if (IS_DEMO) {
+    addDemoFavoriteProduct(Number(validatedBody.productId));
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: {
+        success: true,
+        totalCount: getDemoFavoriteProductList().totalCount,
+      },
+    };
+  }
+
   // API 호출 및 응답 검증
   return apiClient.postWithValidation(
     `/api/v1/users/${validatedParams.uuid}/favorites`,
@@ -134,6 +151,18 @@ export const deleteFavorite = async (
 ): Promise<ApiResponse<FavoriteActionResponse>> => {
   // 요청 파라미터 검증
   const validatedParams = DeleteFavoriteParamsSchema.parse(params);
+
+  if (IS_DEMO) {
+    removeDemoFavoriteProduct(validatedParams.productId);
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: {
+        success: true,
+        totalCount: getDemoFavoriteProductList().totalCount,
+      },
+    };
+  }
 
   // API 호출 및 응답 검증
   return apiClient.deleteWithValidation(
