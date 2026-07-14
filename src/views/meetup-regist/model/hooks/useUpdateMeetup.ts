@@ -5,6 +5,7 @@ import { convertToWebp, uploadToS3 } from '@/shared/lib/imageUpload';
 import { mapFormDataToCreateMeetupBody } from '../mapper';
 import { getMeetupPresignedUrl, updateMeetup } from '../../api';
 import type { MeetupFormData } from '../types';
+import { IS_DEMO } from '@/shared/lib/isDemo';
 
 export function useUpdateMeetup(meetupId?: number) {
   const router = useRouter();
@@ -17,11 +18,16 @@ export function useUpdateMeetup(meetupId?: number) {
       let thumbnailUrl: string | undefined;
 
       if (formData.thumbnailFile) {
-        const res = await getMeetupPresignedUrl('thumbnail.webp');
-        const { uploadUrl, imageUrl } = res.data;
-        const webp = await convertToWebp(formData.thumbnailFile);
-        await uploadToS3(uploadUrl, webp);
-        thumbnailUrl = imageUrl;
+        if (IS_DEMO) {
+          // 데모 모드: 실제 업로드 없이 로컬 미리보기 URL 사용
+          thumbnailUrl = URL.createObjectURL(formData.thumbnailFile);
+        } else {
+          const res = await getMeetupPresignedUrl('thumbnail.webp');
+          const { uploadUrl, imageUrl } = res.data;
+          const webp = await convertToWebp(formData.thumbnailFile);
+          await uploadToS3(uploadUrl, webp);
+          thumbnailUrl = imageUrl;
+        }
       }
 
       const body = mapFormDataToCreateMeetupBody(formData, thumbnailUrl);

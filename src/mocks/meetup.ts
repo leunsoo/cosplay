@@ -1,6 +1,7 @@
 import type { MeetupListDTO } from '@/views/event-list/model/schema/getMeetupList';
 import type { MeetupDetailDTO } from '@/views/meetup-detail/model/schema/getMeetupDetail';
 import type { MeetupMembersDTO } from '@/views/meetup-detail/model/schema/getMeetupMembers';
+import type { CreateMeetupBody } from '@/views/meetup-regist/model';
 import { DEMO_USER_UUID, mockMyProfile } from './user';
 
 export const mockMeetupList: MeetupListDTO = [
@@ -337,4 +338,85 @@ export function leaveDemoMeetup(meetupId: number): void {
   mockMeetupMembers[meetupId] = members.filter(
     (m) => m.user.uuid !== DEMO_USER_UUID
   );
+}
+
+function getNextDemoMeetupId(): number {
+  const ids = mockMeetupList.map((meetup) => meetup.meetupId);
+  return (ids.length > 0 ? Math.max(...ids) : 0) + 1;
+}
+
+export function createDemoMeetup(body: CreateMeetupBody): number {
+  const meetupId = getNextDemoMeetupId();
+  const now = new Date().toISOString();
+
+  const detail: MeetupDetailDTO = {
+    meetupId,
+    host: {
+      uuid: DEMO_USER_UUID,
+      nickname: mockMyProfile.nickname ?? '데모유저',
+      profileImageUrl: mockMyProfile.profileImageUri ?? null,
+    },
+    title: body.title,
+    description: body.description,
+    scheduledAt: body.scheduledAt,
+    location: body.location,
+    locationDetail: body.locationDetail,
+    maxMembers: body.maxMembers,
+    currentMembers: 1,
+    status: 'ONGOING',
+    thumbnailUrl: body.thumbnailUrl ?? null,
+    createdAt: now,
+  };
+
+  mockMeetupDetails[meetupId] = detail;
+  mockMeetupList.push({
+    meetupId,
+    title: detail.title,
+    thumbnailUrl: detail.thumbnailUrl ?? null,
+    scheduledAt: detail.scheduledAt,
+    location: detail.location,
+    maxMembers: detail.maxMembers,
+    currentMembers: detail.currentMembers,
+    status: 'ONGOING',
+  });
+  mockMeetupMembers[meetupId] = [
+    {
+      user: detail.host,
+      joinedAt: now,
+    },
+  ];
+
+  return meetupId;
+}
+
+export function updateDemoMeetup(
+  meetupId: number,
+  body: CreateMeetupBody & { thumbnailUrl: string; locationDetail: string }
+): void {
+  const existing = mockMeetupDetails[meetupId];
+  if (!existing) return;
+
+  const updated: MeetupDetailDTO = {
+    ...existing,
+    title: body.title,
+    description: body.description,
+    scheduledAt: body.scheduledAt,
+    location: body.location,
+    locationDetail: body.locationDetail,
+    maxMembers: body.maxMembers,
+    thumbnailUrl: body.thumbnailUrl,
+  };
+  mockMeetupDetails[meetupId] = updated;
+
+  const listIndex = mockMeetupList.findIndex((m) => m.meetupId === meetupId);
+  if (listIndex !== -1) {
+    mockMeetupList[listIndex] = {
+      ...mockMeetupList[listIndex],
+      title: updated.title,
+      thumbnailUrl: updated.thumbnailUrl ?? null,
+      scheduledAt: updated.scheduledAt,
+      location: updated.location,
+      maxMembers: updated.maxMembers,
+    };
+  }
 }
