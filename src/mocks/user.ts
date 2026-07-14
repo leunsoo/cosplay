@@ -50,3 +50,15 @@ export function updateDemoMyProfile(
     // sessionStorage 접근 실패 시 메모리 상태만 유지
   }
 }
+
+// 회원 탈퇴 시 호출: 세션에 백업된 프로필을 지우고 메모리 상태도 기본값으로 되돌린다.
+export function resetDemoMyProfile(): void {
+  Object.assign(mockMyProfile, DEFAULT_MY_PROFILE);
+
+  if (typeof window === 'undefined') return;
+  try {
+    sessionStorage.removeItem(MY_PROFILE_STORAGE_KEY);
+  } catch {
+    // sessionStorage 접근 실패 시 무시
+  }
+}
