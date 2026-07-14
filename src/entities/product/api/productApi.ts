@@ -43,11 +43,11 @@ import { IS_DEMO } from '@/shared/lib/isDemo';
 import {
   mockProductList,
   mockProductDetails,
-  mockProductSearch,
   createDemoProduct,
   updateDemoProduct,
   deleteDemoProduct,
   updateDemoProductStatus,
+  addDemoSearchKeyword,
 } from '@/mocks';
 
 /**
@@ -173,7 +173,36 @@ export const getProductSearch = async (
   const validatedParams = GetProductSearchParamsSchema.parse(params);
 
   if (IS_DEMO) {
-    return { status: 'SUCCESS', message: '성공', data: mockProductSearch };
+    if (validatedParams.uuid) {
+      addDemoSearchKeyword(validatedParams.keyword);
+    }
+
+    const PAGE_SIZE = 10;
+    const matched = mockProductList.products.filter((product) =>
+      product.title
+        .toLowerCase()
+        .includes(validatedParams.keyword.toLowerCase())
+    );
+    const totalElements = matched.length;
+    const totalPages = Math.max(1, Math.ceil(totalElements / PAGE_SIZE));
+    const start = (validatedParams.page - 1) * PAGE_SIZE;
+    const products = matched.slice(start, start + PAGE_SIZE);
+
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: {
+        products,
+        pagination: {
+          currentPage: validatedParams.page,
+          totalPages,
+          totalElements,
+          pageSize: PAGE_SIZE,
+          hasNext: validatedParams.page < totalPages,
+          hasPrevious: validatedParams.page > 1,
+        },
+      },
+    };
   }
 
   // 2. API 호출 및 응답 검증

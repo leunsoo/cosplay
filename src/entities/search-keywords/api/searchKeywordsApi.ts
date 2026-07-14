@@ -14,7 +14,11 @@ import {
   type DeleteSearchKeywordDTO,
 } from '../model';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockSearchKeywords } from '@/mocks';
+import {
+  getDemoSearchKeywords,
+  removeDemoSearchKeyword,
+  clearDemoSearchKeywords,
+} from '@/mocks';
 
 /**
  * 최근 검색 키워드 조회 API
@@ -37,7 +41,11 @@ export const getSearchKeywords = async (
 
   // 2. API 호출 및 응답 검증
   if (IS_DEMO)
-    return { status: 'SUCCESS', message: '성공', data: mockSearchKeywords };
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: getDemoSearchKeywords(),
+    };
 
   return apiClient.getWithValidation(
     '/api/v1/search-keywords',
@@ -67,6 +75,15 @@ export const deleteAllSearchKeywords = async (
   // 1. 요청 파라미터 검증
   const validatedParams = DeleteAllSearchKeywordsParamsSchema.parse(params);
 
+  if (IS_DEMO) {
+    clearDemoSearchKeywords();
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: { message: '전체 삭제되었습니다.' },
+    };
+  }
+
   // 2. API 호출 및 응답 검증
   return apiClient.deleteWithValidation(
     '/api/v1/search-keywords',
@@ -95,6 +112,18 @@ export const deleteSearchKeyword = async (
 ): Promise<ApiResponse<DeleteSearchKeywordDTO>> => {
   // 1. 요청 파라미터 검증
   const validatedParams = DeleteSearchKeywordParamsSchema.parse(params);
+
+  if (IS_DEMO) {
+    removeDemoSearchKeyword(validatedParams.keywordId);
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: {
+        message: '삭제되었습니다.',
+        deletedKeywordId: validatedParams.keywordId,
+      },
+    };
+  }
 
   // 2. API 호출 및 응답 검증 (path parameter interpolation)
   return apiClient.deleteWithValidation(

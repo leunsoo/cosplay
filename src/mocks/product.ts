@@ -1,6 +1,5 @@
 import type { ProductListDTO } from '@/entities/product/model';
 import type { ProductDetailResponseDTO } from '@/entities/product/model/schema/getProductDetail';
-import type { ProductSearchDTO } from '@/entities/product/model/schema/getProductSearch';
 import type { CreateProductBody } from '@/entities/product/model/schema/createProduct';
 import type { UpdateProductBody } from '@/entities/product/model/schema/updateProduct';
 import { DEMO_USER_UUID, mockMyProfile } from './user';
@@ -632,18 +631,6 @@ export const mockProductDetails: Record<number, ProductDetailResponseDTO> = {
         status: 'SELLING',
       },
     ],
-  },
-};
-
-export const mockProductSearch: ProductSearchDTO = {
-  products: mockProductList.products.slice(0, 6).map((p) => ({ ...p })),
-  pagination: {
-    currentPage: 1,
-    totalPages: 1,
-    totalElements: 6,
-    pageSize: 10,
-    hasNext: false,
-    hasPrevious: false,
   },
 };
 
