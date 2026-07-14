@@ -13,7 +13,11 @@ import {
   type DeleteAllRecentlyViewedDTO,
 } from '../model';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockRecentlyViewedList } from '@/mocks';
+import {
+  getDemoRecentlyViewedList,
+  addDemoRecentlyViewed,
+  clearDemoRecentlyViewed,
+} from '@/mocks';
 
 /**
  * 최근 본 상품 목록 조회 API
@@ -36,7 +40,11 @@ export const getRecentlyViewedList = async (
 
   // API 호출 및 응답 검증
   if (IS_DEMO)
-    return { status: 'SUCCESS', message: '성공', data: mockRecentlyViewedList };
+    return {
+      status: 'SUCCESS',
+      message: '성공',
+      data: getDemoRecentlyViewedList(),
+    };
 
   return apiClient.getWithValidation(
     '/api/v1/recently-viewed',
@@ -66,6 +74,11 @@ export const addRecentlyViewed = async (
   // 요청 바디 검증
   const validatedBody = AddRecentlyViewedBodySchema.parse(body);
 
+  if (IS_DEMO) {
+    addDemoRecentlyViewed(validatedBody.productId);
+    return { status: 'SUCCESS', message: '성공', data: null };
+  }
+
   // API 호출 (응답이 없으므로 z.null() 스키마 사용)
   return apiClient.postWithValidation(
     '/api/v1/recently-viewed',
@@ -92,6 +105,11 @@ export const deleteAllRecentlyViewed = async (
 ): Promise<ApiResponse<DeleteAllRecentlyViewedDTO>> => {
   // 요청 파라미터 검증
   const validatedParams = DeleteAllRecentlyViewedParamsSchema.parse(params);
+
+  if (IS_DEMO) {
+    const deletedCount = clearDemoRecentlyViewed();
+    return { status: 'SUCCESS', message: '성공', data: { deletedCount } };
+  }
 
   // API 호출 및 응답 검증
   return apiClient.deleteWithValidation(
