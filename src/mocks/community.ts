@@ -6,6 +6,7 @@ import type {
   QnaPostListDTO,
   QnaPostDetailDTO,
 } from '@/views/community-board/model/schema/qnaSchema';
+import { mockMyProfile } from './user';
 
 export const mockNoticeList: NoticeListDTO = [
   {
@@ -218,3 +219,69 @@ export const mockQnaDetails: Record<number, QnaPostDetailDTO> = {
     updatedAt: '2025-05-26T11:00:00',
   },
 };
+
+function getNextDemoQnaPostId(): number {
+  const ids = mockQnaList.map((post) => post.id);
+  return (ids.length > 0 ? Math.max(...ids) : 0) + 1;
+}
+
+export function createDemoQnaPost(body: {
+  title: string;
+  content: string;
+}): number {
+  const id = getNextDemoQnaPostId();
+  const now = new Date().toISOString();
+  const inquirer = mockMyProfile.nickname ?? '데모유저';
+
+  mockQnaDetails[id] = {
+    id,
+    inquirer,
+    title: body.title,
+    content: body.content,
+    answer: null,
+    answerAt: null,
+    updatedAt: now,
+  };
+  mockQnaList.unshift({
+    id,
+    inquirer,
+    title: body.title,
+    isAnswer: false,
+    updatedAt: now,
+  });
+
+  return id;
+}
+
+export function updateDemoQnaPost(body: {
+  id: number;
+  title: string;
+  content: string;
+}): void {
+  const existing = mockQnaDetails[body.id];
+  if (!existing) return;
+
+  const now = new Date().toISOString();
+  mockQnaDetails[body.id] = {
+    ...existing,
+    title: body.title,
+    content: body.content,
+    updatedAt: now,
+  };
+
+  const listIndex = mockQnaList.findIndex((post) => post.id === body.id);
+  if (listIndex !== -1) {
+    mockQnaList[listIndex] = {
+      ...mockQnaList[listIndex],
+      title: body.title,
+      updatedAt: now,
+    };
+  }
+}
+
+export function deleteDemoQnaPost(qnaPostId: number): void {
+  delete mockQnaDetails[qnaPostId];
+
+  const listIndex = mockQnaList.findIndex((post) => post.id === qnaPostId);
+  if (listIndex !== -1) mockQnaList.splice(listIndex, 1);
+}

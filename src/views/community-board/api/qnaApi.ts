@@ -6,7 +6,13 @@ import {
   type QnaPostDetailDTO,
 } from '../model/schema/qnaSchema';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockQnaList, mockQnaDetails } from '@/mocks';
+import {
+  mockQnaList,
+  mockQnaDetails,
+  createDemoQnaPost,
+  updateDemoQnaPost,
+  deleteDemoQnaPost,
+} from '@/mocks';
 
 export const getQnaList = async (): Promise<ApiResponse<QnaPostListDTO>> => {
   if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: mockQnaList };
@@ -31,6 +37,10 @@ export const createQnaPost = async (body: {
   title: string;
   content: string;
 }): Promise<ApiResponse<string>> => {
+  if (IS_DEMO) {
+    const id = createDemoQnaPost(body);
+    return { status: 'SUCCESS', message: '성공', data: String(id) };
+  }
   return apiClient.post('/api/v1/qna-posts', body);
 };
 
@@ -39,11 +49,19 @@ export const updateQnaPost = async (body: {
   title: string;
   content: string;
 }): Promise<ApiResponse<string>> => {
+  if (IS_DEMO) {
+    updateDemoQnaPost(body);
+    return { status: 'SUCCESS', message: '성공', data: String(body.id) };
+  }
   return apiClient.put('/api/v1/qna-posts', body);
 };
 
 export const deleteQnaPost = async (
   qnaPostId: number
 ): Promise<ApiResponse<string>> => {
+  if (IS_DEMO) {
+    deleteDemoQnaPost(qnaPostId);
+    return { status: 'SUCCESS', message: '성공', data: String(qnaPostId) };
+  }
   return apiClient.delete(`/api/v1/qna-posts/${qnaPostId}`);
 };
