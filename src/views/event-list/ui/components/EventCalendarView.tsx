@@ -201,15 +201,9 @@ export function EventCalendarView({ events }: EventCalendarViewProps) {
               {dayEvents.slice(0, 2).map((event, idx) => (
                 <div
                   key={idx}
-                  className={`px-1.5 py-1 rounded text-[10px] leading-[1.2] font-bold border-l-2 border-primary mb-1 overflow-hidden bg-gray-100 ${
+                  className={`px-1.5 py-1 rounded text-[10px] leading-[1.2] font-bold border-l-2 border-primary mb-1 truncate bg-gray-100 ${
                     !isCurrentMonth ? 'text-gray-400' : 'text-slate-900'
                   }`}
-                  style={{
-                    display: '-webkit-box',
-                    WebkitLineClamp: 2,
-                    WebkitBoxOrient: 'vertical',
-                    maxHeight: '2.9em',
-                  }}
                 >
                   {event.title}
                 </div>
