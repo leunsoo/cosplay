@@ -20,7 +20,7 @@ export const metadata: Metadata = {
   description:
     '국내 공식 및 개인 코스프레 행사 일정을 한눈에 확인하세요. 예정, 진행중, 종료된 행사까지 모두 제공합니다.',
   openGraph: {
-    title: '코스프레 행사 일정 | LLOWA',
+    title: '코스프레 행사 일정 - LLOWA',
     description: '국내 코스프레 공식 및 개인 행사 일정을 한눈에 확인하세요.',
     url: `${BASE_URL}/event`,
   },

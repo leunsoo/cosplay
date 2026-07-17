@@ -31,8 +31,8 @@ async function fetchProductDetail(id: string) {
  * 페이지별 고유한 title/description/OG 태그를 생성합니다.
  *
  * 예시:
- *   /market/products/1 → title: "코스프레 의상 판매 | LLOWA"
- *   /market/products/2 → title: "가발 일괄 판매 | LLOWA"
+ *   /market/products/1 → title: "코스프레 의상 판매 - LLOWA"
+ *   /market/products/2 → title: "가발 일괄 판매 - LLOWA"
  */
 export async function generateMetadata({
   params,
@@ -48,7 +48,7 @@ export async function generateMetadata({
         product.description ??
         `${product.title} - ${product.price.toLocaleString()}원`,
       openGraph: {
-        title: `${product.title} | LLOWA`,
+        title: `${product.title} - LLOWA`,
         description:
           product.description ??
           `${product.title} - ${product.price.toLocaleString()}원`,

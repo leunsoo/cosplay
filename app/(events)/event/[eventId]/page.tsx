@@ -30,8 +30,8 @@ async function fetchEventDetail(eventId: string) {
  * 페이지별 고유한 title/description/OG 태그를 생성합니다.
  *
  * 예시:
- *   /event/1 → title: "코믹월드 2024 | LLOWA"
- *   /event/2 → title: "코스페스타 서울 | LLOWA"
+ *   /event/1 → title: "코믹월드 2024 - LLOWA"
+ *   /event/2 → title: "코스페스타 서울 - LLOWA"
  */
 export async function generateMetadata({
   params,
@@ -47,7 +47,7 @@ export async function generateMetadata({
         event.description ??
         `${event.title} 행사 정보를 확인하세요. 일시: ${event.startDate} ~ ${event.endDate}, 장소: ${event.location}`,
       openGraph: {
-        title: `${event.title} | LLOWA`,
+        title: `${event.title} - LLOWA`,
         description:
           event.description ??
           `${event.title} - ${event.location} (${event.startDate} ~ ${event.endDate})`,
