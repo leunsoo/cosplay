@@ -11,14 +11,15 @@ const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 
 /**
  * 코스마켓 목록 페이지 메타데이터
- * layout.tsx의 title.template에 의해 "코스마켓 | LLOWA" 로 완성됨
+ *
+ * layout.tsx의 title.template에 의해 "코스프레 중고거래 마켓 - LLOWA" 로 완성됨
  */
 export const metadata: Metadata = {
-  title: '코스마켓',
+  title: '코스프레 중고거래 마켓',
   description:
     '코스프레 의상, 소품, 가발 등을 사고 팔 수 있는 코스프레 중고 거래 마켓입니다.',
   openGraph: {
-    title: '코스마켓 - LLOWA',
+    title: '코스프레 중고거래 마켓 - LLOWA',
     description:
       '코스프레 의상, 소품, 가발 등을 사고 팔 수 있는 코스프레 중고 거래 마켓입니다.',
     url: `${BASE_URL}/market`,
