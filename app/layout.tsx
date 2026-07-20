@@ -41,35 +41,35 @@ export const metadata: Metadata = {
 
   title: {
     template: '%s - LLOWA', // 예: "코믹월드 2024 - LLOWA"
-    default: '코스프레 행사 일정 · 코스프레 마켓 - LLOWA', // title 미지정 페이지의 기본값
+    default: 'LLOWA(로와) - 코스프레 행사 일정 · 코스프레 마켓', // title 미지정 페이지의 기본값
   },
 
   description:
-    '코스프레 공식 행사 일정부터 개인 행사 모임, 코스프레 의상·소품 중고거래까지 한 곳에서. 국내 코스프레 정보 플랫폼 LLOWA.',
+    '코스프레 정보 플랫폼 로와(LLOWA). 코스프레 공식 행사 일정부터 개인 행사 모임, 코스프레 의상·소품 중고거래까지 한 곳에서.',
 
   openGraph: {
     type: 'website',
     locale: 'ko_KR',
     url: BASE_URL,
-    siteName: 'LLOWA',
-    title: '코스프레 행사 일정 · 코스프레 마켓 - LLOWA',
+    siteName: '로와',
+    title: 'LLOWA(로와) - 코스프레 행사 일정 · 코스프레 마켓',
     description:
-      '코스프레 공식 행사 일정부터 개인 행사 모임, 코스프레 의상·소품 중고거래까지 한 곳에서. 국내 코스프레 정보 플랫폼 LLOWA.',
+      '코스프레 정보 플랫폼 로와(LLOWA). 코스프레 공식 행사 일정부터 개인 행사 모임, 코스프레 의상·소품 중고거래까지 한 곳에서.',
     images: [
       {
         url: '/og-image.jpg', // public/og-image.jpg (1200x630)
         width: 1200,
         height: 630,
-        alt: 'LLOWA - 코스프레 행사 일정 · 코스프레 마켓',
+        alt: 'LLOWA(로와) - 코스프레 행사 일정 · 코스프레 마켓',
       },
     ],
   },
 
   twitter: {
     card: 'summary_large_image', // 큰 이미지 카드 형식
-    title: '코스프레 행사 일정 · 코스프레 마켓 - LLOWA',
+    title: 'LLOWA(로와) - 코스프레 행사 일정 · 코스프레 마켓',
     description:
-      '코스프레 행사 일정부터 코스프레 의상·소품 중고거래, 코스어 커뮤니티까지 한 곳에서. 국내 코스프레 정보 플랫폼 LLOWA.',
+      '코스프레 정보 플랫폼 로와(LLOWA). 코스프레 행사 일정부터 의상·소품 중고거래, 코스어 커뮤니티까지 한 곳에서.',
     images: ['/og-image.jpg'],
   },
 

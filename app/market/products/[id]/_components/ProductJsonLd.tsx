@@ -31,7 +31,7 @@ export function ProductJsonLd({ product, id }: ProductJsonLdProps) {
           : 'https://schema.org/SoldOut',
       seller: {
         '@type': 'Organization',
-        name: 'LLOWA',
+        name: '로와',
       },
     },
   };

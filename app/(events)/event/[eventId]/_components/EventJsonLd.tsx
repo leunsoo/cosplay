@@ -32,7 +32,7 @@ export function EventJsonLd({ event, eventId }: EventJsonLdProps) {
     eventStatus: 'https://schema.org/EventScheduled',
     organizer: {
       '@type': 'Organization',
-      name: 'LLOWA',
+      name: '로와',
       url: BASE_URL,
     },
   };
