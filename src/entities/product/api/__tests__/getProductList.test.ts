@@ -1,22 +1,14 @@
-import { describe, test, expect, vi, beforeEach } from 'vitest';
+import { describe, test, expect } from 'vitest';
+import { http, HttpResponse } from 'msw';
 import { getProductList } from '../productApi';
-import { apiClient } from '@/shared/api';
 import type { ApiResponse } from '@/shared/api';
 import type { ProductListDTO } from '../../model';
-import { ProductListDTOSchema } from '../../model';
+import { server } from '@/shared/testing/msw/server';
 
-// apiClient.getWithValidation을 모킹
-vi.mock('@/shared/api', () => ({
-  apiClient: {
-    getWithValidation: vi.fn(),
-  },
-}));
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
+const PRODUCTS_URL = `${BASE_URL}/api/v1/products`;
 
 describe('getProductList', () => {
-  beforeEach(() => {
-    vi.clearAllMocks();
-  });
-
   // 테스트 헬퍼 함수: 목 응답 생성
   const createMockResponse = (
     overrides?: Partial<ProductListDTO>
@@ -46,28 +38,28 @@ describe('getProductList', () => {
     },
   });
 
-  test('올바른 URL과 파라미터로 apiClient를 호출한다', async () => {
+  test('올바른 URL과 page 파라미터로 요청한다', async () => {
     // Arrange
-    const mockParams = { page: 1 };
-    const mockResponse = createMockResponse();
-
-    vi.mocked(apiClient.getWithValidation).mockResolvedValue(mockResponse);
+    let requestedUrl: URL | undefined;
+    server.use(
+      http.get(PRODUCTS_URL, ({ request }) => {
+        requestedUrl = new URL(request.url);
+        return HttpResponse.json(createMockResponse());
+      })
+    );
 
     // Act
-    await getProductList(mockParams);
+    await getProductList({ page: 1 });
 
     // Assert
-    expect(apiClient.getWithValidation).toHaveBeenCalledWith(
-      '/api/v1/products',
-      ProductListDTOSchema,
-      { params: mockParams }
-    );
+    expect(requestedUrl?.pathname).toBe('/api/v1/products');
+    expect(requestedUrl?.searchParams.get('page')).toBe('1');
   });
 
   test('apiClient로부터 받은 응답을 그대로 반환한다', async () => {
     // Arrange
     const mockResponse = createMockResponse();
-    vi.mocked(apiClient.getWithValidation).mockResolvedValue(mockResponse);
+    server.use(http.get(PRODUCTS_URL, () => HttpResponse.json(mockResponse)));
 
     // Act
     const result = await getProductList({ page: 1 });
@@ -89,8 +81,7 @@ describe('getProductList', () => {
         hasPrevious: true,
       },
     });
-
-    vi.mocked(apiClient.getWithValidation).mockResolvedValue(mockResponse);
+    server.use(http.get(PRODUCTS_URL, () => HttpResponse.json(mockResponse)));
 
     // Act
     const result = await getProductList({ page: 100 });
@@ -119,15 +110,27 @@ describe('getProductList', () => {
       await expect(getProductList(invalidParams as any)).rejects.toThrow();
     });
 
-    test('API 에러를 전파한다', async () => {
+    test('서버 에러 응답(500)에 대해 에러를 던진다', async () => {
       // Arrange
-      const apiError = new Error('네트워크 에러');
-      vi.mocked(apiClient.getWithValidation).mockRejectedValue(apiError);
+      server.use(
+        http.get(PRODUCTS_URL, () =>
+          HttpResponse.json(
+            { status: 'ERROR', message: '서버 오류', data: null },
+            { status: 500 }
+          )
+        )
+      );
 
       // Act & Assert
-      await expect(getProductList({ page: 1 })).rejects.toThrow(
-        '네트워크 에러'
-      );
+      await expect(getProductList({ page: 1 })).rejects.toThrow();
+    });
+
+    test('네트워크 에러를 전파한다', async () => {
+      // Arrange
+      server.use(http.get(PRODUCTS_URL, () => HttpResponse.error()));
+
+      // Act & Assert
+      await expect(getProductList({ page: 1 })).rejects.toThrow();
     });
   });
 
@@ -146,8 +149,7 @@ describe('getProductList', () => {
           },
         ],
       });
-
-      vi.mocked(apiClient.getWithValidation).mockResolvedValue(mockResponse);
+      server.use(http.get(PRODUCTS_URL, () => HttpResponse.json(mockResponse)));
 
       // Act
       const result = await getProductList({ page: 1 });
@@ -172,8 +174,7 @@ describe('getProductList', () => {
           },
         ],
       });
-
-      vi.mocked(apiClient.getWithValidation).mockResolvedValue(mockResponse);
+      server.use(http.get(PRODUCTS_URL, () => HttpResponse.json(mockResponse)));
 
       // Act
       const result = await getProductList({ page: 1 });
@@ -194,8 +195,7 @@ describe('getProductList', () => {
           hasPrevious: true,
         },
       });
-
-      vi.mocked(apiClient.getWithValidation).mockResolvedValue(mockResponse);
+      server.use(http.get(PRODUCTS_URL, () => HttpResponse.json(mockResponse)));
 
       // Act
       const result = await getProductList({ page: 2 });
