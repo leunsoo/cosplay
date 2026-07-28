@@ -7,7 +7,6 @@ import { Footer } from '@/widgets/footer';
 import { QueryProvider } from '@/core/providers/QueryProvider';
 import { ClarityMaskBoundary } from '@/shared/observability/ClarityMaskBoundary';
 import { ClarityScript } from '@/shared/observability/ClarityScript';
-import { TracingBootstrap } from '@/shared/observability/TracingBootstrap';
 import { MobileGuard, DemoBanner } from '@/shared/ui';
 import { MobileBottomNav } from '@/widgets/mobile-bottom-nav/MobileBottomNav';
 import { MobileHeader } from '@/widgets/mobile-header/MobileHeader';
@@ -107,7 +106,6 @@ export default function RootLayout({
         />
         <DemoBanner />
         <QueryProvider>
-          <TracingBootstrap serviceName="cosplay-web" />
           <MobileGuard>
             <MainMenu />
             <MobileHeader />
