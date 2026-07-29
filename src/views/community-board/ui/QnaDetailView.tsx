@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
-import { ROUTES } from '@/core/config/routes';
+import { ROUTES } from '@/shared/routes';
 import { useAuthStore } from '@/shared/store/authStore';
 import { useLogined } from '@/entities/auth';
 import { getMyProfile } from '@/entities/user';

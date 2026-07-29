@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect } from 'react';
 import { usePathname, useRouter, useSearchParams } from 'next/navigation';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 import { useAuthStore } from '@/shared/store/authStore';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 

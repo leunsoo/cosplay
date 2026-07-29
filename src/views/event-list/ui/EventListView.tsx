@@ -12,7 +12,7 @@ import { MeetupSummaryCard } from '@/widgets/meetup-summary-card';
 import { isPersonalEvent, isOfficialEvent } from '@/entities/event';
 import { EventCalendarView } from './components/EventCalendarView';
 import { useLogined } from '@/entities/auth';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 import { useEventFavoriteList } from '@/features/favorite-event';
 import { useMeetupFavoriteList } from '@/features/favorite-meetup';
 import { MobileFab } from '@/shared/ui';

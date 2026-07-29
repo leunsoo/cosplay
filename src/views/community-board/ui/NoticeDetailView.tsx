@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ROUTES } from '@/core/config/routes';
+import { ROUTES } from '@/shared/routes';
 import { useNoticePost } from '../model/hooks/useNoticePost';
 import { NoticeContent } from './components/NoticeContent';
 

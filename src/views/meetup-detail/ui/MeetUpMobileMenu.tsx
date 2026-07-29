@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 
 interface MeetUpMobileMenuProps {
   meetupId: number;

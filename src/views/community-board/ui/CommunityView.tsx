@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { ROUTES } from '@/core/config/routes';
+import { ROUTES } from '@/shared/routes';
 import { useLogined } from '@/entities/auth';
 import { useNoticeList } from '../model/hooks/useNoticeList';
 import { useQnaList } from '../model/hooks/useQnaList';

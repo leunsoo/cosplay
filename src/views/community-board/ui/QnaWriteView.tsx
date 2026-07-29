@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { ROUTES } from '@/core/config/routes';
+import { ROUTES } from '@/shared/routes';
 import { useLogined } from '@/entities/auth';
 import { useCreateQnaPost } from '../model/hooks/useQnaMutations';
 

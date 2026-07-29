@@ -3,7 +3,7 @@
 import { useRouter } from 'next/navigation';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import { useAuthStore } from '@/shared/store/authStore';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 import {
   DEMO_REGISTERED_KEY,
   LOGIN_NEXT_KEY,

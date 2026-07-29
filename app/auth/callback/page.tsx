@@ -2,7 +2,7 @@
 
 import { Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 import { useAuthStore } from '@/shared/store/authStore';
 
 const LOGIN_NEXT_KEY = 'login_next_path';

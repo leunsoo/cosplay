@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ROUTES } from '@/core/config/routes';
+import { ROUTES } from '@/shared/routes';
 import type { NoticeSummary, QnaPostSummary } from '../../model/types';
 
 interface CommunityTableProps {

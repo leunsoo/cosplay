@@ -11,7 +11,7 @@ import {
   formatEventDate,
 } from '@/entities/event';
 import { isSameMonth, isToday } from '@/shared/lib/dateTime';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 
 interface DayModal {
   date: Date;

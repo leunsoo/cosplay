@@ -1,7 +1,7 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/shared/store/authStore';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 import { getMeetupDetail, deleteMeetup } from '../../api/meetupDetailApi';
 
 export function useMeetupDetail(meetupId: number) {

@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/shared/store/authStore';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 import { deleteFavoriteMeetup, getFavoriteMeetupList } from '../../api';
 import {
   mapFavoriteMeetupToBookmarkedMeetup,

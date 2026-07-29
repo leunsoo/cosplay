@@ -4,7 +4,7 @@ import { useEffect, useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useLogined } from '@/entities/auth';
 import { useAuthStore } from '@/shared/store/authStore';
-import { ROUTES } from '@/core/config/routes';
+import { ROUTES } from '@/shared/routes';
 
 export function MarketMobileMenu() {
   const [open, setOpen] = useState(false);

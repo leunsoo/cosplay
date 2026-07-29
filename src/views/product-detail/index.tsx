@@ -12,7 +12,7 @@ import { useProductDetail } from '@/entities/product';
 import { useAddRecentlyViewed } from '@/features/product-recently-viewed';
 import { useAuthStore } from '@/shared/store/authStore';
 import { isMe, useLogined } from '@/entities/auth';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 
 interface ProductDetailViewProps {
   productId: number;

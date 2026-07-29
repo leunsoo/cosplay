@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRef } from 'react';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 import type { MeetupDetailDTO } from '../model/schema/getMeetupDetail';
 import { useMeetupMembers } from '../model/hooks/useMeetupMembers';
 import { FavoriteMeetupButton } from '@/features/favorite-meetup';

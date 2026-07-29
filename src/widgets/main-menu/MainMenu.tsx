@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 import { LogoutBtn } from '@/features/logout';
 import { useLogined } from '@/entities/auth';
 import { UserAvatar, getMyProfile } from '@/entities/user';

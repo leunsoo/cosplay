@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { ROUTES } from '@/core/config/routes';
+import { ROUTES } from '@/shared/routes';
 import { convertToWebp, uploadToS3 } from '@/shared/lib/imageUpload';
 import { mapFormDataToCreateMeetupBody } from '../mapper';
 import { getMeetupPresignedUrl, updateMeetup } from '../../api';

@@ -1,7 +1,7 @@
 import { useRouter } from 'next/navigation';
 import { type Seller } from '@/entities/product';
 import { UserAvatar } from '@/entities/user';
-import { ROUTES } from '@/core/config/routes';
+import { ROUTES } from '@/shared/routes';
 
 interface SellerInfoCardProps {
   seller: Seller;

@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { ROUTES } from '@/core/config/routes';
+import { ROUTES } from '@/shared/routes';
 import { createQnaPost, updateQnaPost, deleteQnaPost } from '../../api/qnaApi';
 
 export function useCreateQnaPost() {

@@ -4,7 +4,7 @@ import { LogOut } from 'lucide-react';
 import { useAuthStore } from '@/shared/store/authStore';
 import { useLogout } from '../model';
 import { useRouter } from 'next/navigation';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 
 interface LogoutBtnProps {
   className?: string;

@@ -1,6 +1,6 @@
 import { ProductCard, type Product, type Seller } from '@/entities/product';
 import { useRouter } from 'next/navigation';
-import { ROUTES } from '@/core/config/routes';
+import { ROUTES } from '@/shared/routes';
 import { UserAvatar } from '@/entities/user';
 
 interface SellerProductsSectionProps {
