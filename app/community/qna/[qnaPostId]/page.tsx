@@ -1,6 +1,6 @@
 export const dynamic = 'force-dynamic';
 
-import { QnaDetailView } from '@/views/community-board';
+import { QnaDetailView } from '@/_pages/inquiry/qna-detail';
 
 interface Props {
   params: Promise<{ qnaPostId: string }>;
