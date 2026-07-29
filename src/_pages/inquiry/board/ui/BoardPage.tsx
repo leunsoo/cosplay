@@ -8,7 +8,7 @@ import { useQnaList } from '../api/use-qna-list';
 import { BoardTable } from './BoardTable';
 import { MobileFab } from '@/shared/ui';
 
-export function BoardView() {
+export function BoardPage() {
   const isLogined = useLogined();
   const { notices, isLoading: isLoadingNotices } = useNoticeList();
   const { qnaPosts, isLoading: isLoadingQna } = useQnaList();

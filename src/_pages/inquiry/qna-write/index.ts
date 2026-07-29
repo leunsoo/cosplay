@@ -1,1 +1,1 @@
-export { QnaWriteView } from './ui/QnaWriteView';
+export { QnaWritePage } from './ui/QnaWritePage';

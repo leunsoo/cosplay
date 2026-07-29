@@ -5,11 +5,11 @@ import { LoadingState, NotFoundState, BackLink } from '@/shared/ui';
 import { useNoticeDetail } from '../api/use-notice-detail';
 import { NoticeContent } from './NoticeContent';
 
-interface NoticeDetailViewProps {
+interface NoticeDetailPageProps {
   noticeId: number;
 }
 
-export function NoticeDetailView({ noticeId }: NoticeDetailViewProps) {
+export function NoticeDetailPage({ noticeId }: NoticeDetailPageProps) {
   const { notice, isLoading, error } = useNoticeDetail(noticeId);
 
   if (isLoading) {

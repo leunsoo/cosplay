@@ -1,1 +1,1 @@
-export { NoticeDetailView } from './ui/NoticeDetailView';
+export { NoticeDetailPage } from './ui/NoticeDetailPage';

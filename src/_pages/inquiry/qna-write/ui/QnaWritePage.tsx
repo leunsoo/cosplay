@@ -7,7 +7,7 @@ import { ROUTES } from '@/shared/routes';
 import { useLogined } from '@/entities/auth';
 import { useCreateQna } from '../api/use-create-qna';
 
-export function QnaWriteView() {
+export function QnaWritePage() {
   const isLogined = useLogined();
   const router = useRouter();
   const [title, setTitle] = useState('');

@@ -14,11 +14,11 @@ import { useUpdateQna } from '../api/use-update-qna';
 import { QnaContent } from './QnaContent';
 import { QnaMobileMenu } from './QnaMobileMenu';
 
-interface QnaDetailViewProps {
+interface QnaDetailPageProps {
   qnaPostId: number;
 }
 
-export function QnaDetailView({ qnaPostId }: QnaDetailViewProps) {
+export function QnaDetailPage({ qnaPostId }: QnaDetailPageProps) {
   const isLogined = useLogined();
   const userUuid = useAuthStore((state) => state.userUuid);
 

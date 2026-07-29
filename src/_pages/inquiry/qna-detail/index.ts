@@ -1,1 +1,1 @@
-export { QnaDetailView } from './ui/QnaDetailView';
+export { QnaDetailPage } from './ui/QnaDetailPage';
