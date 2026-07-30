@@ -7,11 +7,8 @@ import {
   updateProduct,
 } from '@/entities/product';
 import { useAuthStore } from '@/shared/store/authStore';
-import {
-  base64ToBlob,
-  convertToWebp,
-  uploadToS3,
-} from '@/shared/lib/imageUpload';
+import { base64ToBlob, convertToWebp } from '@/shared/lib/imageFormat';
+import { uploadToS3 } from '@/shared/lib/s3';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import type { ProductFormData } from '@/views/product-regist/model/types';
 
