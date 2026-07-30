@@ -8,3 +8,4 @@ export {
   mapUserProfileFormModelToRegisterBody,
   mapUserProfileFormModelToUpdateBody,
 } from './model/mapper';
+export { useProfileImageUpload } from './model/useProfileImageUpload';

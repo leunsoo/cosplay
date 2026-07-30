@@ -1,22 +1,21 @@
 'use client';
 
-import { useEffect, useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { ROUTES } from '@/shared/routes';
 import {
   deleteMyAccount,
-  generateProfileImageUploadUrl,
   getMyProfile,
   updateMyProfile,
 } from '@/shared/api/user';
 import { useAuthStore } from '@/shared/store/authStore';
-import { IS_DEMO } from '@/shared/lib/isDemo';
 import {
   type UserProfileFormValues,
   UserProfileFormFields,
   mapMyProfileDTOToUserProfileFormModel,
   mapUserProfileFormModelToUpdateBody,
+  useProfileImageUpload,
 } from '@/features/user-profile-form';
 import { MobileHeaderCustom } from '@/widgets/mobile-header/MobileHeader';
 import { MyInfoMobileMenu } from './MyInfoMobileMenu';
@@ -33,12 +32,6 @@ const EMPTY_USER_INFO: UserProfileFormValues = {
   removeProfileImage: false,
 };
 
-const revokePreviewUrl = (url: string) => {
-  if (url.startsWith('blob:')) {
-    URL.revokeObjectURL(url);
-  }
-};
-
 export function MyInfoPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -48,7 +41,7 @@ export function MyInfoPage() {
   const [isEditMode, setIsEditMode] = useState(false);
   const [draftInfo, setDraftInfo] =
     useState<UserProfileFormValues>(EMPTY_USER_INFO);
-  const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
+  const profileImage = useProfileImageUpload('');
 
   const myProfileQuery = useQuery({
     queryKey: ['my-profile', userUuid],
@@ -66,42 +59,13 @@ export function MyInfoPage() {
 
   const updateProfileMutation = useMutation({
     mutationFn: async () => {
-      let nextProfileImageUrl = draftInfo.profileImageUri;
-
-      if (profileImageFile) {
-        if (IS_DEMO) {
-          // 데모 모드: 실제 업로드 없이 이미 만들어둔 로컬 미리보기 URL을 그대로 사용
-          nextProfileImageUrl = draftInfo.profileImageUri;
-        } else {
-          const uploadUrlRes = await generateProfileImageUploadUrl({
-            filename: profileImageFile.name,
-          });
-          const { uploadUrl, imageUrl } = uploadUrlRes.data;
-          const uploadRes = await fetch(uploadUrl, {
-            method: 'PUT',
-            body: profileImageFile,
-            headers: {
-              'Content-Type':
-                profileImageFile.type || 'application/octet-stream',
-            },
-          });
-
-          if (!uploadRes.ok) {
-            throw new Error('Failed to upload profile image');
-          }
-
-          nextProfileImageUrl = imageUrl;
-        }
-      }
+      const profileImageUri = await profileImage.upload();
 
       return updateMyProfile({
         body: mapUserProfileFormModelToUpdateBody(
           {
             ...draftInfo,
-            profileImageUri: nextProfileImageUrl,
-            removeProfileImage: profileImageFile
-              ? false
-              : draftInfo.removeProfileImage,
+            profileImageUri,
           },
           userUuid
         ),
@@ -109,7 +73,6 @@ export function MyInfoPage() {
     },
     onSuccess: () => {
       alert('프로필이 수정되었습니다.');
-      setProfileImageFile(null);
       setIsEditMode(false);
       queryClient.invalidateQueries({ queryKey: ['my-profile', userUuid] });
     },
@@ -140,14 +103,13 @@ export function MyInfoPage() {
   };
 
   const handleStartEdit = () => {
-    setProfileImageFile(null);
+    profileImage.reset(currentProfile.profileImageUri);
     setDraftInfo(currentProfile);
     setIsEditMode(true);
   };
 
   const handleCancelEdit = () => {
-    revokePreviewUrl(draftInfo.profileImageUri);
-    setProfileImageFile(null);
+    profileImage.reset(currentProfile.profileImageUri);
     setDraftInfo(currentProfile);
     setIsEditMode(false);
   };
@@ -159,12 +121,6 @@ export function MyInfoPage() {
     }
     updateProfileMutation.mutate();
   };
-
-  useEffect(() => {
-    return () => {
-      revokePreviewUrl(draftInfo.profileImageUri);
-    };
-  }, [draftInfo.profileImageUri]);
 
   const handleWithdraw = () => {
     const isConfirmed = confirm(
@@ -229,26 +185,19 @@ export function MyInfoPage() {
       <main className="w-full max-w-4xl mx-auto md:px-6 md:py-8">
         <div className="flex flex-col gap-6">
           <UserProfileFormFields
-            values={isEditMode ? draftInfo : currentProfile}
+            values={{
+              ...(isEditMode ? draftInfo : currentProfile),
+              profileImageUri: profileImage.imageUri,
+            }}
             readOnly={!isEditMode}
             onFieldChange={updateDraftInfo}
-            onProfileImageChange={(file, previewUrl) => {
-              revokePreviewUrl(draftInfo.profileImageUri);
-              setProfileImageFile(file);
-              setDraftInfo((prev) => ({
-                ...prev,
-                profileImageUri: previewUrl,
-                removeProfileImage: false,
-              }));
+            onProfileImageChange={(file) => {
+              profileImage.selectFile(file);
+              updateDraftInfo('removeProfileImage', false);
             }}
             onProfileImageRemove={() => {
-              revokePreviewUrl(draftInfo.profileImageUri);
-              setProfileImageFile(null);
-              setDraftInfo((prev) => ({
-                ...prev,
-                profileImageUri: '',
-                removeProfileImage: true,
-              }));
+              profileImage.removeFile();
+              updateDraftInfo('removeProfileImage', true);
             }}
           />
 

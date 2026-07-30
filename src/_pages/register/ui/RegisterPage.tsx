@@ -1,11 +1,11 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ROUTES } from '@/shared/routes';
-import { generateProfileImageUploadUrl, registerUser } from '@/shared/api/user';
+import { registerUser } from '@/shared/api/user';
 import { useAuthStore } from '@/shared/store/authStore';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import {
@@ -16,6 +16,7 @@ import {
   type UserProfileFormValues,
   UserProfileFormFields,
   mapUserProfileFormModelToRegisterBody,
+  useProfileImageUpload,
 } from '@/features/user-profile-form';
 
 const INITIAL_REGISTER_VALUES: UserProfileFormValues = {
@@ -30,12 +31,6 @@ const INITIAL_REGISTER_VALUES: UserProfileFormValues = {
   removeProfileImage: false,
 };
 
-const revokePreviewUrl = (url: string) => {
-  if (url.startsWith('blob:')) {
-    URL.revokeObjectURL(url);
-  }
-};
-
 export function RegisterPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
@@ -44,40 +39,12 @@ export function RegisterPage() {
   const setDemoAuthenticated = useAuthStore(
     (state) => state.setDemoAuthenticated
   );
-  const [formValues, setFormValues] = useState<UserProfileFormValues>(
-    INITIAL_REGISTER_VALUES
-  );
-  const [profileImageFile, setProfileImageFile] = useState<File | null>(null);
+  const [formValues, setFormValues] = useState(INITIAL_REGISTER_VALUES);
+  const profileImage = useProfileImageUpload('');
 
   const registerMutation = useMutation({
     mutationFn: async () => {
-      let profileImageUri = '';
-
-      if (profileImageFile) {
-        if (IS_DEMO) {
-          // 데모 모드: 실제 업로드 없이 이미 만들어둔 로컬 미리보기 URL을 그대로 사용
-          profileImageUri = formValues.profileImageUri;
-        } else {
-          const uploadUrlRes = await generateProfileImageUploadUrl({
-            filename: profileImageFile.name,
-          });
-          const { uploadUrl, imageUrl } = uploadUrlRes.data;
-          const uploadRes = await fetch(uploadUrl, {
-            method: 'PUT',
-            body: profileImageFile,
-            headers: {
-              'Content-Type':
-                profileImageFile.type || 'application/octet-stream',
-            },
-          });
-
-          if (!uploadRes.ok) {
-            throw new Error('Failed to upload profile image');
-          }
-
-          profileImageUri = imageUrl;
-        }
-      }
+      const profileImageUri = await profileImage.upload();
 
       return registerUser({
         body: mapUserProfileFormModelToRegisterBody({
@@ -118,12 +85,6 @@ export function RegisterPage() {
     registerMutation.mutate();
   };
 
-  useEffect(() => {
-    return () => {
-      revokePreviewUrl(formValues.profileImageUri);
-    };
-  }, [formValues.profileImageUri]);
-
   return (
     <main className="w-full max-w-4xl mx-auto px-4 sm:px-6 py-8">
       <nav className="flex mb-6 text-sm font-medium text-gray-500">
@@ -156,19 +117,13 @@ export function RegisterPage() {
 
       <form onSubmit={handleSubmit} className="flex flex-col gap-6">
         <UserProfileFormFields
-          values={formValues}
+          values={{ ...formValues, profileImageUri: profileImage.imageUri }}
           required
           onFieldChange={updateFormValue}
-          onProfileImageChange={(file, previewUrl) => {
-            revokePreviewUrl(formValues.profileImageUri);
-            setProfileImageFile(file);
-            updateFormValue('profileImageUri', previewUrl);
+          onProfileImageChange={(file) => {
+            profileImage.selectFile(file);
           }}
-          onProfileImageRemove={() => {
-            revokePreviewUrl(formValues.profileImageUri);
-            setProfileImageFile(null);
-            updateFormValue('profileImageUri', '');
-          }}
+          onProfileImageRemove={() => profileImage.removeFile()}
         />
 
         <div className="flex justify-end">
