@@ -1,10 +1,10 @@
 import { Suspense } from 'react';
-import { LoginView } from '@/views/login';
+import { LoginPage } from '@/_pages/login';
 
-export default function LoginPage() {
+export default function Page() {
   return (
     <Suspense>
-      <LoginView />
+      <LoginPage />
     </Suspense>
   );
 }

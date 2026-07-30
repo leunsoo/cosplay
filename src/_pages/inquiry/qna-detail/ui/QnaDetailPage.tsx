@@ -6,7 +6,7 @@ import { ROUTES } from '@/shared/routes';
 import { LoadingState, NotFoundState, BackLink } from '@/shared/ui';
 import { useAuthStore } from '@/shared/store/authStore';
 import { useLogined } from '@/entities/auth';
-import { getMyProfile } from '@/entities/user';
+import { getMyProfile } from '@/shared/api/user';
 import { MobileHeaderCustom } from '@/widgets/mobile-header/MobileHeader';
 import { useQnaDetail } from '../api/use-qna-detail';
 import { useDeleteQna } from '../api/use-delete-qna';

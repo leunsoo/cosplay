@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import { PageStepper } from '@/shared/ui';
-import { UserAvatar } from '@/entities/user/ui';
+import { UserAvatar } from '@/entities/user';
 import { useMeetupDetail } from '../model/hooks/useMeetupDetail';
 import { useMeetupMembers } from '../model/hooks/useMeetupMembers';
 

@@ -8,15 +8,15 @@ import {
   deleteMyAccount,
   generateProfileImageUploadUrl,
   getMyProfile,
-  mapMyProfileDTOToUserProfileFormModel,
-  mapUserProfileFormModelToUpdateBody,
   updateMyProfile,
-} from '@/entities/user';
+} from '@/shared/api/user';
 import { useAuthStore } from '@/shared/store/authStore';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import {
   type UserProfileFormValues,
   UserProfileFormFields,
+  mapMyProfileDTOToUserProfileFormModel,
+  mapUserProfileFormModelToUpdateBody,
 } from '@/features/user-profile-form';
 import { MobileHeaderCustom } from '@/widgets/mobile-header/MobileHeader';
 import { MyInfoMobileMenu } from './MyInfoMobileMenu';
@@ -24,11 +24,11 @@ import { MyInfoMobileMenu } from './MyInfoMobileMenu';
 const EMPTY_USER_INFO: UserProfileFormValues = {
   nickname: '',
   name: '',
-  gender: 'woman',
+  gender: 'WOMAN',
   phone: '',
   birthDate: '',
   email: '',
-  profileImageUrl: '',
+  profileImageUri: '',
   introduction: '',
   removeProfileImage: false,
 };
@@ -39,7 +39,7 @@ const revokePreviewUrl = (url: string) => {
   }
 };
 
-export function MyInfoView() {
+export function MyInfoPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const userUuid = useAuthStore((state) => state.userUuid);
@@ -66,12 +66,12 @@ export function MyInfoView() {
 
   const updateProfileMutation = useMutation({
     mutationFn: async () => {
-      let nextProfileImageUrl = draftInfo.profileImageUrl;
+      let nextProfileImageUrl = draftInfo.profileImageUri;
 
       if (profileImageFile) {
         if (IS_DEMO) {
           // 데모 모드: 실제 업로드 없이 이미 만들어둔 로컬 미리보기 URL을 그대로 사용
-          nextProfileImageUrl = draftInfo.profileImageUrl;
+          nextProfileImageUrl = draftInfo.profileImageUri;
         } else {
           const uploadUrlRes = await generateProfileImageUploadUrl({
             filename: profileImageFile.name,
@@ -98,7 +98,7 @@ export function MyInfoView() {
         body: mapUserProfileFormModelToUpdateBody(
           {
             ...draftInfo,
-            profileImageUrl: nextProfileImageUrl,
+            profileImageUri: nextProfileImageUrl,
             removeProfileImage: profileImageFile
               ? false
               : draftInfo.removeProfileImage,
@@ -146,7 +146,7 @@ export function MyInfoView() {
   };
 
   const handleCancelEdit = () => {
-    revokePreviewUrl(draftInfo.profileImageUrl);
+    revokePreviewUrl(draftInfo.profileImageUri);
     setProfileImageFile(null);
     setDraftInfo(currentProfile);
     setIsEditMode(false);
@@ -162,9 +162,9 @@ export function MyInfoView() {
 
   useEffect(() => {
     return () => {
-      revokePreviewUrl(draftInfo.profileImageUrl);
+      revokePreviewUrl(draftInfo.profileImageUri);
     };
-  }, [draftInfo.profileImageUrl]);
+  }, [draftInfo.profileImageUri]);
 
   const handleWithdraw = () => {
     const isConfirmed = confirm(
@@ -233,20 +233,20 @@ export function MyInfoView() {
             readOnly={!isEditMode}
             onFieldChange={updateDraftInfo}
             onProfileImageChange={(file, previewUrl) => {
-              revokePreviewUrl(draftInfo.profileImageUrl);
+              revokePreviewUrl(draftInfo.profileImageUri);
               setProfileImageFile(file);
               setDraftInfo((prev) => ({
                 ...prev,
-                profileImageUrl: previewUrl,
+                profileImageUri: previewUrl,
                 removeProfileImage: false,
               }));
             }}
             onProfileImageRemove={() => {
-              revokePreviewUrl(draftInfo.profileImageUrl);
+              revokePreviewUrl(draftInfo.profileImageUri);
               setProfileImageFile(null);
               setDraftInfo((prev) => ({
                 ...prev,
-                profileImageUrl: '',
+                profileImageUri: '',
                 removeProfileImage: true,
               }));
             }}

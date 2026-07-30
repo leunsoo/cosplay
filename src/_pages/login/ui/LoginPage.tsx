@@ -3,7 +3,7 @@
 import { useSearchParams } from 'next/navigation';
 import { LoginBtn } from '@/features/login/ui/LoginBtn';
 
-export function LoginView() {
+export function LoginPage() {
   const searchParams = useSearchParams();
   const nextPath = searchParams.get('next');
 

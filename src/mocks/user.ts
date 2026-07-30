@@ -1,8 +1,8 @@
-import type { MyProfileDTO } from '@/entities/user/model/schema/getMyProfile';
+import type { UserProfileDTO } from '@/shared/api/user';
 
 export const DEMO_USER_UUID = 'demo-user-uuid-0000';
 
-const DEFAULT_MY_PROFILE: MyProfileDTO = {
+const DEFAULT_MY_PROFILE: UserProfileDTO = {
   uuid: DEMO_USER_UUID,
   nickname: '데모유저',
   name: '홍길동',
@@ -21,7 +21,7 @@ const DEFAULT_MY_PROFILE: MyProfileDTO = {
 // 프로필 데이터가 서로 어긋나지 않게 하기 위함)
 const MY_PROFILE_STORAGE_KEY = 'demo-my-profile';
 
-function loadPersistedMyProfile(): MyProfileDTO {
+function loadPersistedMyProfile(): UserProfileDTO {
   if (typeof window === 'undefined') return { ...DEFAULT_MY_PROFILE };
 
   try {
@@ -33,10 +33,10 @@ function loadPersistedMyProfile(): MyProfileDTO {
   }
 }
 
-export const mockMyProfile: MyProfileDTO = loadPersistedMyProfile();
+export const mockMyProfile: UserProfileDTO = loadPersistedMyProfile();
 
 export function updateDemoMyProfile(
-  fields: Partial<Omit<MyProfileDTO, 'uuid'>>
+  fields: Partial<Omit<UserProfileDTO, 'uuid'>>
 ): void {
   Object.assign(mockMyProfile, fields);
 

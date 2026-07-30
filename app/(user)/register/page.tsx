@@ -1,10 +1,10 @@
 import { AuthGuard } from '@/core/providers/AuthGuard';
-import { RegisterView } from '@/views/register';
+import { RegisterPage } from '@/_pages/register';
 
-export default function RegisterPage() {
+export default function Page() {
   return (
     <AuthGuard allowRoles={['temp']}>
-      <RegisterView />
+      <RegisterPage />
     </AuthGuard>
   );
 }

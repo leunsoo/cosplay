@@ -6,7 +6,8 @@ import { useQuery } from '@tanstack/react-query';
 import { ROUTES } from '@/shared/routes';
 import { LogoutBtn } from '@/features/logout';
 import { useLogined } from '@/entities/auth';
-import { UserAvatar, getMyProfile } from '@/entities/user';
+import { UserAvatar } from '@/entities/user';
+import { getMyProfile } from '@/shared/api/user';
 import { useAuthStore } from '@/shared/store/authStore';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 

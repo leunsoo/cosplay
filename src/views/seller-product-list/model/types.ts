@@ -1,6 +1,7 @@
-import { User } from '@/entities/user';
-
-export interface SellerProfile extends User {
+export interface SellerProfile {
+  uuid: string;
+  name: string;
+  avatarUrl: string | null;
   introduction: string | null;
 }
 

@@ -5,11 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ROUTES } from '@/shared/routes';
-import {
-  generateProfileImageUploadUrl,
-  mapUserProfileFormModelToRegisterBody,
-  registerUser,
-} from '@/entities/user';
+import { generateProfileImageUploadUrl, registerUser } from '@/shared/api/user';
 import { useAuthStore } from '@/shared/store/authStore';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import {
@@ -19,16 +15,17 @@ import {
 import {
   type UserProfileFormValues,
   UserProfileFormFields,
+  mapUserProfileFormModelToRegisterBody,
 } from '@/features/user-profile-form';
 
 const INITIAL_REGISTER_VALUES: UserProfileFormValues = {
   nickname: '',
   name: '',
-  gender: 'man',
+  gender: 'MAN',
   phone: '',
   birthDate: '',
   email: '',
-  profileImageUrl: '',
+  profileImageUri: '',
   introduction: '',
   removeProfileImage: false,
 };
@@ -39,7 +36,7 @@ const revokePreviewUrl = (url: string) => {
   }
 };
 
-export function RegisterView() {
+export function RegisterPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const userUuid = useAuthStore((state) => state.userUuid);
@@ -54,12 +51,12 @@ export function RegisterView() {
 
   const registerMutation = useMutation({
     mutationFn: async () => {
-      let profileImageUrl = '';
+      let profileImageUri = '';
 
       if (profileImageFile) {
         if (IS_DEMO) {
           // 데모 모드: 실제 업로드 없이 이미 만들어둔 로컬 미리보기 URL을 그대로 사용
-          profileImageUrl = formValues.profileImageUrl;
+          profileImageUri = formValues.profileImageUri;
         } else {
           const uploadUrlRes = await generateProfileImageUploadUrl({
             filename: profileImageFile.name,
@@ -78,14 +75,14 @@ export function RegisterView() {
             throw new Error('Failed to upload profile image');
           }
 
-          profileImageUrl = imageUrl;
+          profileImageUri = imageUrl;
         }
       }
 
       return registerUser({
         body: mapUserProfileFormModelToRegisterBody({
           ...formValues,
-          profileImageUrl,
+          profileImageUri,
         }),
       });
     },
@@ -123,9 +120,9 @@ export function RegisterView() {
 
   useEffect(() => {
     return () => {
-      revokePreviewUrl(formValues.profileImageUrl);
+      revokePreviewUrl(formValues.profileImageUri);
     };
-  }, [formValues.profileImageUrl]);
+  }, [formValues.profileImageUri]);
 
   return (
     <main className="w-full max-w-4xl mx-auto px-4 sm:px-6 py-8">
@@ -163,14 +160,14 @@ export function RegisterView() {
           required
           onFieldChange={updateFormValue}
           onProfileImageChange={(file, previewUrl) => {
-            revokePreviewUrl(formValues.profileImageUrl);
+            revokePreviewUrl(formValues.profileImageUri);
             setProfileImageFile(file);
-            updateFormValue('profileImageUrl', previewUrl);
+            updateFormValue('profileImageUri', previewUrl);
           }}
           onProfileImageRemove={() => {
-            revokePreviewUrl(formValues.profileImageUrl);
+            revokePreviewUrl(formValues.profileImageUri);
             setProfileImageFile(null);
-            updateFormValue('profileImageUrl', '');
+            updateFormValue('profileImageUri', '');
           }}
         />
 

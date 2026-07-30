@@ -1,10 +1,10 @@
 import { AuthGuard } from '@/core/providers/AuthGuard';
-import { MyInfoView } from '@/views/my-info';
+import { MyInfoPage } from '@/_pages/my-info';
 
-export default function MyInfoPage() {
+export default function Page() {
   return (
     <AuthGuard allowRoles={['member']}>
-      <MyInfoView />
+      <MyInfoPage />
     </AuthGuard>
   );
 }

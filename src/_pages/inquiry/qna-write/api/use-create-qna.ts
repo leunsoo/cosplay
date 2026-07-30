@@ -10,8 +10,7 @@ export function useCreateQna() {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (body: { title: string; content: string }) =>
-      createQna(body),
+    mutationFn: (body: { title: string; content: string }) => createQna(body),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: QNA_QUERIES.lists() });
       router.push(ROUTES.COMMUNITY.LIST);
