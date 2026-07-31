@@ -191,11 +191,11 @@ export function MyInfoPage() {
             }}
             readOnly={!isEditMode}
             onFieldChange={updateDraftInfo}
-            onProfileImageChange={(file) => {
+            onImageSelect={(file) => {
               profileImage.selectFile(file);
               updateDraftInfo('removeProfileImage', false);
             }}
-            onProfileImageRemove={() => {
+            onImageRemove={() => {
               profileImage.removeFile();
               updateDraftInfo('removeProfileImage', true);
             }}

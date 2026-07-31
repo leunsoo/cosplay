@@ -23,8 +23,8 @@ interface UserProfileFormFieldsProps {
     key: K,
     value: UserProfileFormValues[K]
   ) => void;
-  onProfileImageChange: (file: File, previewUrl: string) => void;
-  onProfileImageRemove?: () => void;
+  onImageSelect: (file: File) => void;
+  onImageRemove?: () => void;
 }
 
 export function UserProfileFormFields({
@@ -32,8 +32,8 @@ export function UserProfileFormFields({
   readOnly = false,
   required = false,
   onFieldChange,
-  onProfileImageChange,
-  onProfileImageRemove,
+  onImageSelect,
+  onImageRemove,
 }: UserProfileFormFieldsProps) {
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -41,8 +41,7 @@ export function UserProfileFormFields({
       return;
     }
 
-    const previewUrl = URL.createObjectURL(file);
-    onProfileImageChange(file, previewUrl);
+    onImageSelect(file);
   };
 
   return (
@@ -72,10 +71,10 @@ export function UserProfileFormFields({
                   onChange={handleImageChange}
                 />
               </label>
-              {values.profileImageUri && onProfileImageRemove && (
+              {values.profileImageUri && onImageRemove && (
                 <button
                   type="button"
-                  onClick={onProfileImageRemove}
+                  onClick={onImageRemove}
                   className="inline-flex items-center gap-1 px-3 py-2 rounded-lg border border-red-200 bg-white text-sm font-semibold text-red-500 hover:bg-red-50 transition-colors"
                 >
                   <span className="material-symbols-outlined text-[18px]">

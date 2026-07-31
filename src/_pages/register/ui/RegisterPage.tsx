@@ -120,10 +120,8 @@ export function RegisterPage() {
           values={{ ...formValues, profileImageUri: profileImage.imageUri }}
           required
           onFieldChange={updateFormValue}
-          onProfileImageChange={(file) => {
-            profileImage.selectFile(file);
-          }}
-          onProfileImageRemove={() => profileImage.removeFile()}
+          onImageSelect={profileImage.selectFile}
+          onImageRemove={profileImage.removeFile}
         />
 
         <div className="flex justify-end">
