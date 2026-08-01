@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuthStore } from '@/shared/auth/authStore';
+import { useAuthStore } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
 import { EventStatus } from '@/entities/event';
 import { useEventGroupChat } from '../model';

@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import { ROUTES } from '@/shared/routes';
 import { formatDate } from '@/shared/ui';
-import type { NoticeSummary, QnaSummary } from '@/shared/api';
+import type { NoticeSummary } from '@/shared/api/notice';
+import type { QnaSummary } from '@/shared/api/qna';
 
 interface BoardTableProps {
   notices: NoticeSummary[];

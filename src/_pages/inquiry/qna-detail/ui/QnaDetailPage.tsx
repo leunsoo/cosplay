@@ -4,7 +4,7 @@ import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { ROUTES } from '@/shared/routes';
 import { LoadingState, NotFoundState, BackLink } from '@/shared/ui';
-import { useAuthStore } from '@/shared/auth/authStore';
+import { useAuthStore } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
 import { getMyProfile } from '@/shared/api/user';
 import { MobileHeaderCustom } from '@/widgets/mobile-header/MobileHeader';

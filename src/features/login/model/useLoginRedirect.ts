@@ -1,7 +1,10 @@
 import { useRouter } from 'next/navigation';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { useAuthStore, type AuthStore } from '@/shared/auth/authStore';
-import { saveLoginRedirectPath } from '@/shared/auth';
+import {
+  useAuthStore,
+  saveLoginRedirectPath,
+  type AuthStore,
+} from '@/shared/auth';
 import {
   resolveDemoLoginRedirect,
   resolveOAuthLoginRedirect,

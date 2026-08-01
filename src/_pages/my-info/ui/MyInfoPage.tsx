@@ -9,7 +9,7 @@ import {
   getMyProfile,
   updateMyProfile,
 } from '@/shared/api/user';
-import { useAuthStore } from '@/shared/auth/authStore';
+import { useAuthStore } from '@/shared/auth';
 import {
   type UserProfileFormValues,
   UserProfileFormFields,

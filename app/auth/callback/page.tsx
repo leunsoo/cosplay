@@ -3,8 +3,7 @@
 import { Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';
-import { useAuthStore } from '@/shared/auth/authStore';
-import { consumeLoginRedirectPath } from '@/shared/auth';
+import { useAuthStore, consumeLoginRedirectPath } from '@/shared/auth';
 
 function isSafeInternalPath(path: string | null): path is string {
   return Boolean(path && path.startsWith('/') && !path.startsWith('//'));

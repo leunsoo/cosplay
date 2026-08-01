@@ -1,4 +1,4 @@
-import { useAuthStore } from '@/shared/auth/authStore';
+import { useAuthStore } from '@/shared/auth';
 
 /**
  * 현재 로그인한 유저가 대상 uuid의 주인인지 확인합니다.

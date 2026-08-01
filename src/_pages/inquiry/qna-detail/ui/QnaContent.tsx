@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import type { QnaDetail } from '@/shared/api';
+import type { QnaDetail } from '@/shared/api/qna';
 import { formatDateTime } from '@/shared/ui';
 
 interface QnaContentProps {

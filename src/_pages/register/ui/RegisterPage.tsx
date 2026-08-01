@@ -6,10 +6,12 @@ import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ROUTES } from '@/shared/routes';
 import { registerUser } from '@/shared/api/user';
-import { useAuthStore } from '@/shared/auth/authStore';
+import {
+  useAuthStore,
+  DEMO_REGISTERED_KEY,
+  consumeLoginRedirectPath,
+} from '@/shared/auth';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { DEMO_REGISTERED_KEY } from '@/shared/auth/demoAuthSession';
-import { consumeLoginRedirectPath } from '@/shared/auth';
 import {
   type UserProfileFormValues,
   UserProfileFormFields,

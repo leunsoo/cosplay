@@ -9,7 +9,7 @@ import {
   getProductSearch,
   mapProductDTOsToProducts,
 } from '@/entities/product';
-import { useAuthStore } from '@/shared/auth/authStore';
+import { useAuthStore } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
 import { useFavoriteList } from '@/features/favorite-product';
 import { PaginationControl } from '@/shared/ui';

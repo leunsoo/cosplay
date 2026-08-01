@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';
-import { updateQna, QNA_QUERIES } from '@/shared/api';
+import { updateQna, QNA_QUERIES } from '@/shared/api/qna';
 
 export function useUpdateQna(qnaPostId: number) {
   const router = useRouter();

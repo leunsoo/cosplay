@@ -1,5 +1,5 @@
 import { ROUTES } from '@/shared/routes';
-import { DEMO_REGISTERED_KEY } from '@/shared/auth/demoAuthSession';
+import { DEMO_REGISTERED_KEY } from '@/shared/auth';
 
 const OAUTH_PATHS = {
   google: '/oauth2/authorization/google-user',

@@ -1,4 +1,4 @@
-import type { NoticeDetail } from '@/shared/api';
+import type { NoticeDetail } from '@/shared/api/notice';
 import { formatDateTime } from '@/shared/ui';
 
 interface NoticeContentProps {

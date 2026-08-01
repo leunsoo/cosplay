@@ -12,7 +12,7 @@ import {
   transformChatRoomList,
   type ChatRoom,
 } from '@/features/product-trade-chat';
-import { useAuthStore } from '@/shared/auth/authStore';
+import { useAuthStore } from '@/shared/auth';
 import { getProductDetail } from '@/entities/product';
 import { useChatRoom } from './useChatRoom';
 

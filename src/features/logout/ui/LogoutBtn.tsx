@@ -1,7 +1,7 @@
 'use client';
 
 import { LogOut } from 'lucide-react';
-import { useAuthStore } from '@/shared/auth/authStore';
+import { useAuthStore } from '@/shared/auth';
 import { useLogout } from '../model';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';

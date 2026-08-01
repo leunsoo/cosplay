@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';
-import { deleteQna, QNA_QUERIES } from '@/shared/api';
+import { deleteQna, QNA_QUERIES } from '@/shared/api/qna';
 
 export function useDeleteQna() {
   const router = useRouter();

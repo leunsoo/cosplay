@@ -10,7 +10,7 @@ import {
 } from './ui';
 import { useProductDetail } from '@/entities/product';
 import { useAddRecentlyViewed } from '@/features/product-recently-viewed';
-import { useAuthStore } from '@/shared/auth/authStore';
+import { useAuthStore } from '@/shared/auth';
 import { isMe, useLogined } from '@/entities/auth';
 import { ROUTES } from '@/shared/routes';
 
