@@ -1,13 +1,12 @@
 import { ROUTES } from '@/shared/routes';
 import { DEMO_REGISTERED_KEY } from '@/shared/auth';
+import type { LoginProvider } from './loginProvider';
 
-const OAUTH_PATHS = {
+const OAUTH_PATHS: Record<LoginProvider, string> = {
   google: '/oauth2/authorization/google-user',
   kakao: '/oauth2/authorization/kakao-user',
   x: '/oauth2/authorization/x-user',
-} as const;
-
-export type LoginProvider = keyof typeof OAUTH_PATHS;
+};
 
 export type DemoAuthenticateAs = 'member' | 'temp';
 

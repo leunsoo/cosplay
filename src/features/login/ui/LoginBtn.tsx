@@ -1,16 +1,24 @@
 'use client';
 
+import type { ComponentType } from 'react';
 import { useLoginRedirect } from '../model/useLoginRedirect';
-import type { LoginProvider } from '../model/loginRedirectStrategy';
+import type { LoginProvider } from '../model/loginProvider';
 import { GoogleIcon } from './GoogleIcon';
 import { KakaoIcon } from './KakaoIcon';
 import { XIcon } from './XIcon';
+import type { IconProps } from './iconProps';
 
 interface LoginBtnProps {
   provider: LoginProvider;
 }
 
-const PROVIDER_META = {
+interface ProviderMeta {
+  label: string;
+  Icon: ComponentType<IconProps>;
+  className: string;
+}
+
+const PROVIDER_META: Record<LoginProvider, ProviderMeta> = {
   google: {
     label: 'Google로 계속하기',
     Icon: GoogleIcon,
@@ -26,7 +34,7 @@ const PROVIDER_META = {
     Icon: XIcon,
     className: 'bg-black text-white hover:bg-gray-800',
   },
-} as const;
+};
 
 export function LoginBtn({ provider }: LoginBtnProps) {
   const handleClick = useLoginRedirect(provider);

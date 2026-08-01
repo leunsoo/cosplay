@@ -1,2 +1,2 @@
 export { LoginBtn } from './ui/LoginBtn';
-export type { LoginProvider } from './model/loginRedirectStrategy';
+export { PROVIDERS, type LoginProvider } from './model/loginProvider';

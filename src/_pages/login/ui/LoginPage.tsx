@@ -1,5 +1,5 @@
 import { Suspense } from 'react';
-import { LoginBtn } from '@/features/login';
+import { LoginBtn, PROVIDERS } from '@/features/login';
 
 export function LoginPage() {
   return (
@@ -17,9 +17,9 @@ export function LoginPage() {
 
           <Suspense>
             <div className="flex flex-col gap-3 mb-3">
-              <LoginBtn provider="google" />
-              <LoginBtn provider="kakao" />
-              <LoginBtn provider="x" />
+              {PROVIDERS.map((provider) => (
+                <LoginBtn key={provider} provider={provider} />
+              ))}
             </div>
           </Suspense>
         </div>

@@ -8,9 +8,9 @@ import {
 import {
   resolveDemoLoginRedirect,
   resolveOAuthLoginRedirect,
-  type LoginProvider,
   type LoginRedirectAction,
 } from './loginRedirectStrategy';
+import type { LoginProvider } from './loginProvider';
 
 export function useLoginRedirect(provider: LoginProvider): () => void {
   const router = useRouter();
