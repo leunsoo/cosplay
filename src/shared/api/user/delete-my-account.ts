@@ -1,7 +1,7 @@
 import { apiClient, type ApiResponse } from '@/shared/api';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import { resetDemoMyProfile } from '@/mocks';
-import { DEMO_REGISTERED_KEY } from '@/shared/lib/demoAuthSession';
+import { DEMO_REGISTERED_KEY } from '@/shared/auth/demoAuthSession';
 
 export interface DeleteMyAccountBody {
   uuid: string;

@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { useAuthStore } from '@/shared/store/authStore';
+import { useAuthStore } from '@/shared/auth/authStore';
 import {
   getMeetupMembers,
   joinMeetup,

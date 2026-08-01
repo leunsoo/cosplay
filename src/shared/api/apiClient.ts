@@ -6,7 +6,7 @@ import axios, {
   type InternalAxiosRequestConfig,
 } from 'axios';
 import { z, ZodError } from 'zod';
-import { useAuthStore } from '@/shared/store/authStore';
+import { useAuthStore } from '@/shared/auth/authStore';
 import { isTokenExpired } from '@/shared/jwt/jwt';
 import { getApiConfig } from './apiConfig';
 import { type ApiResponse } from './response';

@@ -2,10 +2,10 @@
 
 import { useEffect, useRef } from 'react';
 import { apiClient } from '@/shared/api';
-import { useAuthStore } from '@/shared/store/authStore';
+import { useAuthStore } from '@/shared/auth/authStore';
 import { reissueToken } from '@/entities/auth';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { DEMO_REGISTERED_KEY } from '@/shared/lib/demoAuthSession';
+import { DEMO_REGISTERED_KEY } from '@/shared/auth/demoAuthSession';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const hasBootstrapped = useRef(false);

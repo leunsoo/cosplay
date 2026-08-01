@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { useAuthStore } from '@/shared/store/authStore';
+import { useAuthStore } from '@/shared/auth/authStore';
 import { ROUTES } from '@/shared/routes';
 import { deleteFavoriteEvent, getFavoriteEventList } from '../../api';
 import {

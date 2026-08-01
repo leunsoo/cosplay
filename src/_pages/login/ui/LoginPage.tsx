@@ -1,7 +1,7 @@
 'use client';
 
 import { useSearchParams } from 'next/navigation';
-import { LoginBtn } from '@/features/login/ui/LoginBtn';
+import { LoginBtn } from '@/features/login';
 
 export function LoginPage() {
   const searchParams = useSearchParams();

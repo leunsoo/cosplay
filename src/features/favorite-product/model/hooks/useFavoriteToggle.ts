@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { useDebouncedCallback } from 'use-debounce';
 import { type ApiResponse } from '@/shared/api';
-import { useAuthStore } from '@/shared/store/authStore';
+import { useAuthStore } from '@/shared/auth/authStore';
 import { getFavoriteStatus, addFavorite, deleteFavorite } from '../../api';
 import { type FavoriteListDTO } from '../index';
 

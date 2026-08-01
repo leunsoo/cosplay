@@ -3,7 +3,7 @@
 import { RecentlyViewedList } from '@/features/product-recently-viewed';
 import { FavoriteProductList } from '@/features/favorite-product';
 import { useLogined } from '@/entities/auth';
-import { useAuthStore } from '@/shared/store/authStore';
+import { useAuthStore } from '@/shared/auth/authStore';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 
 export function MarketSideBar() {

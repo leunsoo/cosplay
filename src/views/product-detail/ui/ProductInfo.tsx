@@ -5,7 +5,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { type Seller } from '@/entities/product';
 import { deleteProduct, updateProductStatus } from '@/entities/product';
-import { useAuthStore } from '@/shared/store/authStore';
+import { useAuthStore } from '@/shared/auth/authStore';
 import { useLogined } from '@/entities/auth';
 import { SellerInfoCard } from './SellerInfoCard';
 import { FavoriteButton } from '@/features/favorite-product';

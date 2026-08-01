@@ -6,12 +6,10 @@ import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ROUTES } from '@/shared/routes';
 import { registerUser } from '@/shared/api/user';
-import { useAuthStore } from '@/shared/store/authStore';
+import { useAuthStore } from '@/shared/auth/authStore';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import {
-  DEMO_REGISTERED_KEY,
-  LOGIN_NEXT_KEY,
-} from '@/shared/lib/demoAuthSession';
+import { DEMO_REGISTERED_KEY } from '@/shared/auth/demoAuthSession';
+import { consumeLoginRedirectPath } from '@/shared/auth';
 import {
   type UserProfileFormValues,
   UserProfileFormFields,
@@ -62,8 +60,7 @@ export function RegisterPage() {
       }
       queryClient.invalidateQueries({ queryKey: ['my-profile', userUuid] });
       alert('회원가입이 완료되었습니다.');
-      const next = sessionStorage.getItem(LOGIN_NEXT_KEY);
-      sessionStorage.removeItem(LOGIN_NEXT_KEY);
+      const next = consumeLoginRedirectPath();
       router.push(next || ROUTES.HOME);
     },
     onError: (error) => {

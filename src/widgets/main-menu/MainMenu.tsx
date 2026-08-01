@@ -8,7 +8,7 @@ import { LogoutBtn } from '@/features/logout';
 import { useLogined } from '@/entities/auth';
 import { UserAvatar } from '@/entities/user';
 import { getMyProfile } from '@/shared/api/user';
-import { useAuthStore } from '@/shared/store/authStore';
+import { useAuthStore } from '@/shared/auth/authStore';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 
 export function MainMenu() {
