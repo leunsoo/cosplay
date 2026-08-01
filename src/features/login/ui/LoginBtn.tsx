@@ -8,7 +8,6 @@ import { XIcon } from './XIcon';
 
 interface LoginBtnProps {
   provider: LoginProvider;
-  nextPath?: string | null;
 }
 
 const PROVIDER_META = {
@@ -29,8 +28,8 @@ const PROVIDER_META = {
   },
 } as const;
 
-export function LoginBtn({ provider, nextPath }: LoginBtnProps) {
-  const handleClick = useLoginRedirect(provider, nextPath);
+export function LoginBtn({ provider }: LoginBtnProps) {
+  const handleClick = useLoginRedirect(provider);
   const meta = PROVIDER_META[provider];
 
   return (

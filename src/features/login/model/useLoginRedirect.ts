@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import {
   useAuthStore,
@@ -12,11 +12,9 @@ import {
   type LoginRedirectAction,
 } from './loginRedirectStrategy';
 
-export function useLoginRedirect(
-  provider: LoginProvider,
-  nextPath?: string | null
-): () => void {
+export function useLoginRedirect(provider: LoginProvider): () => void {
   const router = useRouter();
+  const searchParams = useSearchParams();
   const setDemoAuthenticated = useAuthStore(
     (state) => state.setDemoAuthenticated
   );
@@ -25,6 +23,7 @@ export function useLoginRedirect(
   );
 
   return function handleLoginClick() {
+    const nextPath = searchParams.get('next');
     const action = IS_DEMO
       ? resolveDemoLoginRedirect(nextPath)
       : resolveOAuthLoginRedirect(provider, nextPath);

@@ -1,12 +1,7 @@
-'use client';
-
-import { useSearchParams } from 'next/navigation';
+import { Suspense } from 'react';
 import { LoginBtn } from '@/features/login';
 
 export function LoginPage() {
-  const searchParams = useSearchParams();
-  const nextPath = searchParams.get('next');
-
   return (
     <main className="min-h-[calc(100vh-64px)] bg-linear-to-b from-white via-gray-50 to-white">
       <section className="container-custom mx-auto px-4 py-10 md:py-16">
@@ -20,11 +15,13 @@ export function LoginPage() {
             </p>
           </div>
 
-          <div className="flex flex-col gap-3 mb-3">
-            <LoginBtn provider="google" nextPath={nextPath} />
-            <LoginBtn provider="kakao" nextPath={nextPath} />
-            <LoginBtn provider="x" nextPath={nextPath} />
-          </div>
+          <Suspense>
+            <div className="flex flex-col gap-3 mb-3">
+              <LoginBtn provider="google" />
+              <LoginBtn provider="kakao" />
+              <LoginBtn provider="x" />
+            </div>
+          </Suspense>
         </div>
       </section>
     </main>
