@@ -5,7 +5,7 @@ import { type Metadata } from 'next';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
 import { getProductListServer } from '@/entities/product';
-import { ProductListView } from '@/views/product-list';
+import { ProductListView } from '@/_pages/market/product-list';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 

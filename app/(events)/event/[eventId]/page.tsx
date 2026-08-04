@@ -4,8 +4,8 @@ export const dynamic = 'force-dynamic';
 import { type Metadata } from 'next';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
-import { getEventDetailServer } from '@/views/event-detail/api';
-import { EventDetailView } from '@/views/event-detail';
+import { getEventDetailServer } from '@/_pages/event/event-detail/api';
+import { EventDetailView } from '@/_pages/event/event-detail';
 import { EventJsonLd } from './_components/EventJsonLd';
 
 interface EventDetailPageProps {

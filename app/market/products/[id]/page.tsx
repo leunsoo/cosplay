@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
 import { getProductDetailServer } from '@/entities/product';
-import { ProductDetailView } from '@/views/product-detail';
+import { ProductDetailView } from '@/_pages/market/product-detail';
 import { ProductJsonLd } from './_components/ProductJsonLd';
 
 interface ProductDetailPageProps {

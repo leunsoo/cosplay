@@ -1,4 +1,4 @@
-import { MeetUpDetailView } from '@/views/meetup-detail/MeetUpDetailView';
+import { MeetUpDetailView } from '@/_pages/event/meetup-detail/MeetUpDetailView';
 
 interface MeetUpDetailPageProps {
   params: Promise<{ meetupId: string }>;

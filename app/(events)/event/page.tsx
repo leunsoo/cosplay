@@ -7,7 +7,7 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
 import { getEventsListServer } from '@/entities/event';
 import { getBannerListServer } from '@/entities/banner';
-import { EventListView } from '@/views/event-list';
+import { EventListView } from '@/_pages/event/event-list';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 

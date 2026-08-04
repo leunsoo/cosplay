@@ -1,5 +1,5 @@
 import { AuthGuard } from '@/_app/providers/AuthGuard';
-import { ChatView } from '@/views/product-chat';
+import { ChatView } from '@/_pages/market/product-chat';
 
 interface ChatPageProps {
   searchParams: Promise<{
