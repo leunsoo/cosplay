@@ -1,4 +1,4 @@
-import { AuthGuard } from '@/core/providers/AuthGuard';
+import { AuthGuard } from '@/_app/providers/AuthGuard';
 import { ProductRegistView } from '@/views/product-regist';
 
 export default function ProductRegistPage() {

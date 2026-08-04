@@ -1,4 +1,4 @@
-import { AuthGuard } from '@/core/providers/AuthGuard';
+import { AuthGuard } from '@/_app/providers/AuthGuard';
 import { ChatView } from '@/views/product-chat';
 
 interface ChatPageProps {

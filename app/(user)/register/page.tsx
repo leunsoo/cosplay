@@ -1,4 +1,4 @@
-import { AuthGuard } from '@/core/providers/AuthGuard';
+import { AuthGuard } from '@/_app/providers/AuthGuard';
 import { RegisterPage } from '@/_pages/register';
 
 export default function Page() {

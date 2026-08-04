@@ -4,7 +4,7 @@ import Script from 'next/script';
 import './globals.css';
 import { MainMenu } from '@/widgets/main-menu';
 import { Footer } from '@/widgets/footer';
-import { QueryProvider } from '@/core/providers/QueryProvider';
+import { QueryProvider } from '@/_app/providers/QueryProvider';
 import { MobileGuard, DemoBanner } from '@/shared/ui';
 import { MobileBottomNav } from '@/widgets/mobile-bottom-nav/MobileBottomNav';
 import { MobileHeader } from '@/widgets/mobile-header/MobileHeader';
