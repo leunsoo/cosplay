@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ROUTES } from '@/shared/routes';
-import { registerUser } from '@/shared/api/user';
+import { USER_QUERIES, registerUser } from '@/shared/api/user';
 import {
   useAuthStore,
   DEMO_REGISTERED_KEY,
@@ -34,7 +34,6 @@ const INITIAL_REGISTER_VALUES: UserProfileFormValues = {
 export function RegisterPage() {
   const router = useRouter();
   const queryClient = useQueryClient();
-  const userUuid = useAuthStore((state) => state.userUuid);
   const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
   const setDemoAuthenticated = useAuthStore(
     (state) => state.setDemoAuthenticated
@@ -60,7 +59,7 @@ export function RegisterPage() {
       } else {
         setAuthenticated(response.data.accessToken);
       }
-      queryClient.invalidateQueries({ queryKey: ['my-profile', userUuid] });
+      queryClient.invalidateQueries({ queryKey: USER_QUERIES.myProfiles() });
       alert('회원가입이 완료되었습니다.');
       const next = consumeLoginRedirectPath();
       router.push(next || ROUTES.HOME);

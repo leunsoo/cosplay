@@ -6,7 +6,7 @@ import { ROUTES } from '@/shared/routes';
 import { LoadingState, NotFoundState, BackLink } from '@/shared/ui';
 import { useAuthStore } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
-import { getMyProfile } from '@/shared/api/user';
+import { USER_QUERIES } from '@/shared/api/user';
 import { MobileHeaderCustom } from '@/widgets/mobile-header/MobileHeader';
 import { useQnaDetail } from '../api/use-qna-detail';
 import { useDeleteQna } from '../api/use-delete-qna';
@@ -29,8 +29,7 @@ export function QnaDetailPage({ qnaPostId }: QnaDetailPageProps) {
   const { mutate: updatePost, isPending: isUpdating } = useUpdateQna(qnaPostId);
 
   const { data: profileData } = useQuery({
-    queryKey: ['my-profile', userUuid],
-    queryFn: () => getMyProfile({ uuid: userUuid }),
+    ...USER_QUERIES.myProfile(userUuid),
     enabled: isLogined && !!userUuid,
     staleTime: Infinity,
   });

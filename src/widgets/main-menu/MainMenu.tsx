@@ -7,7 +7,7 @@ import { ROUTES } from '@/shared/routes';
 import { LogoutBtn } from '@/features/logout';
 import { useLogined } from '@/entities/auth';
 import { UserAvatar } from '@/entities/user';
-import { getMyProfile } from '@/shared/api/user';
+import { USER_QUERIES } from '@/shared/api/user';
 import { useAuthStore } from '@/shared/auth';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 
@@ -19,8 +19,7 @@ export function MainMenu() {
   const userUuid = useAuthStore((state) => state.userUuid);
 
   const { data: profile } = useQuery({
-    queryKey: ['my-profile', userUuid],
-    queryFn: () => getMyProfile({ uuid: userUuid }),
+    ...USER_QUERIES.myProfile(userUuid),
     enabled: logined && !!userUuid,
     staleTime: Infinity,
   });
