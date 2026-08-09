@@ -8,7 +8,7 @@ export function ErrorState({
   onRetry,
 }: ErrorStateProps) {
   return (
-    <main className="flex flex-col items-center justify-center min-h-[400px] gap-4">
+    <main className="flex flex-col items-center justify-center min-h-100 gap-4">
       <span className="material-symbols-outlined text-6xl text-gray-300">
         error
       </span>
