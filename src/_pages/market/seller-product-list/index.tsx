@@ -2,13 +2,8 @@
 
 import { useParams, useRouter } from 'next/navigation';
 import { ProductGrid } from '@/entities/product';
-import { PaginationControl } from '@/shared/ui';
-import {
-  SellerProfileCard,
-  TabNavigation,
-  LoadingState,
-  ErrorState,
-} from './ui';
+import { PaginationControl, ErrorState } from '@/shared/ui';
+import { SellerProfileCard, TabNavigation, LoadingState } from './ui';
 import { useSellerData, type Tab } from './model';
 
 export function SellerProductsListView() {

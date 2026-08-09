@@ -4,7 +4,7 @@ interface ErrorStateProps {
 }
 
 export function ErrorState({
-  message = '판매자 정보를 불러오는데 실패했습니다.',
+  message = '정보를 불러오는데 실패했습니다.',
   onRetry,
 }: ErrorStateProps) {
   return (
