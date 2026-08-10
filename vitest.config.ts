@@ -8,6 +8,11 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: './src/setupTests.ts',
+    // .env* 파일은 전부 gitignore 대상이라 CI/다른 머신에는 존재하지 않음
+    // serverFetch가 절대 URL을 조립하려면 이 값이 항상 필요하므로 커밋되는 설정에 명시
+    env: {
+      NEXT_PUBLIC_API_BASE_URL: 'http://localhost:8080',
+    },
     coverage: {
       provider: 'v8',
       reporter: ['text', 'json', 'html'],
@@ -17,6 +22,7 @@ export default defineConfig({
       exclude: [
         'node_modules/',
         'src/setupTests.ts',
+        'src/shared/testing/**',
         // 설정 파일
         '**/*.config.*',
         '**/*.d.ts',

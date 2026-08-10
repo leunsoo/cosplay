@@ -3,8 +3,8 @@
 import { useRouter } from 'next/navigation';
 import { ProductSearchInput } from '@/features/product-search';
 import { useLogined } from '@/entities/auth';
-import { useAuthStore } from '@/shared/store/authStore';
-import { ROUTES } from '@/core/config/routes';
+import { useAuthStore } from '@/shared/auth';
+import { ROUTES } from '@/shared/routes';
 
 export function MarketMenu() {
   const router = useRouter();

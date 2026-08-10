@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 import { useLogined } from '@/entities/auth';
 
 const NAV_ITEMS = [

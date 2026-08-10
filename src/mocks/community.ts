@@ -1,14 +1,8 @@
-import type {
-  NoticeListDTO,
-  NoticeDetailDTO,
-} from '@/views/community-board/model/schema/noticeSchema';
-import type {
-  QnaPostListDTO,
-  QnaPostDetailDTO,
-} from '@/views/community-board/model/schema/qnaSchema';
+import type { NoticeList, NoticeDetail } from '@/shared/api/notice/notice';
+import type { QnaList, QnaDetail } from '@/shared/api/qna/qna';
 import { mockMyProfile } from './user';
 
-export const mockNoticeList: NoticeListDTO = [
+export const mockNoticeList: NoticeList = [
   {
     id: 1,
     title: '[공지] LLOWA 서비스 이용 약관 개정 안내',
@@ -46,7 +40,7 @@ export const mockNoticeList: NoticeListDTO = [
   },
 ];
 
-export const mockNoticeDetails: Record<number, NoticeDetailDTO> = {
+export const mockNoticeDetails: Record<number, NoticeDetail> = {
   1: {
     id: 1,
     title: '[공지] LLOWA 서비스 이용 약관 개정 안내',
@@ -126,7 +120,7 @@ export const mockNoticeDetails: Record<number, NoticeDetailDTO> = {
   },
 };
 
-export const mockQnaList: QnaPostListDTO = [
+export const mockQnaList: QnaList = [
   {
     id: 1,
     inquirer: '코스짱',
@@ -164,7 +158,7 @@ export const mockQnaList: QnaPostListDTO = [
   },
 ];
 
-export const mockQnaDetails: Record<number, QnaPostDetailDTO> = {
+export const mockQnaDetails: Record<number, QnaDetail> = {
   1: {
     id: 1,
     inquirer: '코스짱',
@@ -220,16 +214,16 @@ export const mockQnaDetails: Record<number, QnaPostDetailDTO> = {
   },
 };
 
-function getNextDemoQnaPostId(): number {
+function getNextDemoQnaId(): number {
   const ids = mockQnaList.map((post) => post.id);
   return (ids.length > 0 ? Math.max(...ids) : 0) + 1;
 }
 
-export function createDemoQnaPost(body: {
+export function createDemoQna(body: {
   title: string;
   content: string;
 }): number {
-  const id = getNextDemoQnaPostId();
+  const id = getNextDemoQnaId();
   const now = new Date().toISOString();
   const inquirer = mockMyProfile.nickname ?? '데모유저';
 
@@ -253,7 +247,7 @@ export function createDemoQnaPost(body: {
   return id;
 }
 
-export function updateDemoQnaPost(body: {
+export function updateDemoQna(body: {
   id: number;
   title: string;
   content: string;
@@ -279,7 +273,7 @@ export function updateDemoQnaPost(body: {
   }
 }
 
-export function deleteDemoQnaPost(qnaPostId: number): void {
+export function deleteDemoQna(qnaPostId: number): void {
   delete mockQnaDetails[qnaPostId];
 
   const listIndex = mockQnaList.findIndex((post) => post.id === qnaPostId);

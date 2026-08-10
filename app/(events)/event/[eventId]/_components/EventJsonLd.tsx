@@ -1,4 +1,4 @@
-import { type EventDetailDTO } from '@/views/event-detail/model';
+import { type EventDetailDTO } from '@/_pages/event/event-detail/model';
 
 interface EventJsonLdProps {
   event: EventDetailDTO;

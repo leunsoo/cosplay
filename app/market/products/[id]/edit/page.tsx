@@ -2,7 +2,7 @@
 
 import { use } from 'react';
 import { useProductDetail } from '@/entities/product';
-import { ProductRegistView } from '@/views/product-regist';
+import { ProductRegistView } from '@/_pages/market/product-regist';
 import { isMe } from '@/entities/auth';
 import { useRouter } from 'next/navigation';
 

@@ -3,11 +3,12 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { useQuery } from '@tanstack/react-query';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 import { LogoutBtn } from '@/features/logout';
 import { useLogined } from '@/entities/auth';
-import { UserAvatar, getMyProfile } from '@/entities/user';
-import { useAuthStore } from '@/shared/store/authStore';
+import { UserAvatar } from '@/entities/user';
+import { USER_QUERIES } from '@/shared/api/user';
+import { useAuthStore } from '@/shared/auth';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 
 export function MainMenu() {
@@ -18,8 +19,7 @@ export function MainMenu() {
   const userUuid = useAuthStore((state) => state.userUuid);
 
   const { data: profile } = useQuery({
-    queryKey: ['my-profile', userUuid],
-    queryFn: () => getMyProfile({ uuid: userUuid }),
+    ...USER_QUERIES.myProfile(userUuid),
     enabled: logined && !!userUuid,
     staleTime: Infinity,
   });

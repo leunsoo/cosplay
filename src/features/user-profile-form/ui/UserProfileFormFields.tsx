@@ -1,14 +1,18 @@
 'use client';
 
 import { type ChangeEvent } from 'react';
-import { type Gender, type UserProfileFormValues } from '../model/types';
+import {
+  GENDER_OPTIONS,
+  type UserProfileFormValues,
+} from '../model/user-profile-form';
 import { formatPhoneKorea, normalizePhone } from '@/shared/lib/formatPhone';
 import { UserAvatar } from '@/entities/user';
+import { type Gender } from '@/shared/api/user';
 import { BirthDatePicker } from './BirthDatePicker';
 
 const GENDER_LABELS: Record<Gender, string> = {
-  man: '남성',
-  woman: '여성',
+  MAN: '남성',
+  WOMAN: '여성',
 };
 
 interface UserProfileFormFieldsProps {
@@ -19,8 +23,8 @@ interface UserProfileFormFieldsProps {
     key: K,
     value: UserProfileFormValues[K]
   ) => void;
-  onProfileImageChange: (file: File, previewUrl: string) => void;
-  onProfileImageRemove?: () => void;
+  onImageSelect: (file: File) => void;
+  onImageRemove?: () => void;
 }
 
 export function UserProfileFormFields({
@@ -28,8 +32,8 @@ export function UserProfileFormFields({
   readOnly = false,
   required = false,
   onFieldChange,
-  onProfileImageChange,
-  onProfileImageRemove,
+  onImageSelect,
+  onImageRemove,
 }: UserProfileFormFieldsProps) {
   const handleImageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
@@ -37,8 +41,7 @@ export function UserProfileFormFields({
       return;
     }
 
-    const previewUrl = URL.createObjectURL(file);
-    onProfileImageChange(file, previewUrl);
+    onImageSelect(file);
   };
 
   return (
@@ -51,7 +54,7 @@ export function UserProfileFormFields({
       <div className="grid grid-cols-1 gap-6">
         <div className="flex flex-col items-center sm:items-start gap-3">
           <UserAvatar
-            avatarUrl={values.profileImageUrl ?? null}
+            avatarUrl={values.profileImageUri ?? null}
             className="w-28 h-28 border border-gray-200"
           />
           {!readOnly && (
@@ -68,10 +71,10 @@ export function UserProfileFormFields({
                   onChange={handleImageChange}
                 />
               </label>
-              {values.profileImageUrl && onProfileImageRemove && (
+              {values.profileImageUri && onImageRemove && (
                 <button
                   type="button"
-                  onClick={onProfileImageRemove}
+                  onClick={onImageRemove}
                   className="inline-flex items-center gap-1 px-3 py-2 rounded-lg border border-red-200 bg-white text-sm font-semibold text-red-500 hover:bg-red-50 transition-colors"
                 >
                   <span className="material-symbols-outlined text-[18px]">
@@ -121,7 +124,7 @@ export function UserProfileFormFields({
             성별 {required && <span className="text-red-500">*</span>}
           </label>
           <div className="flex flex-wrap gap-3">
-            {(['man', 'woman'] as const).map((gender) => {
+            {GENDER_OPTIONS.map((gender) => {
               const isSelected = values.gender === gender;
               return (
                 <button

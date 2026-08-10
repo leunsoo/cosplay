@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 import {
   type PersonalEvent,
   formatEventDate,

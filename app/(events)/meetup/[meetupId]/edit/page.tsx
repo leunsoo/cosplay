@@ -1,7 +1,7 @@
 'use client';
 
 import { use } from 'react';
-import { MeetUpEditView } from '@/views/meetup-regist/MeetUpEditView';
+import { MeetUpEditView } from '@/_pages/event/meetup-regist/MeetUpEditView';
 
 interface MeetUpEditPageProps {
   params: Promise<{ meetupId: string }>;

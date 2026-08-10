@@ -4,10 +4,7 @@ import Script from 'next/script';
 import './globals.css';
 import { MainMenu } from '@/widgets/main-menu';
 import { Footer } from '@/widgets/footer';
-import { QueryProvider } from '@/core/providers/QueryProvider';
-import { ClarityMaskBoundary } from '@/shared/observability/ClarityMaskBoundary';
-import { ClarityScript } from '@/shared/observability/ClarityScript';
-import { TracingBootstrap } from '@/shared/observability/TracingBootstrap';
+import { QueryProvider } from '@/_app/providers/QueryProvider';
 import { MobileGuard, DemoBanner } from '@/shared/ui';
 import { MobileBottomNav } from '@/widgets/mobile-bottom-nav/MobileBottomNav';
 import { MobileHeader } from '@/widgets/mobile-header/MobileHeader';
@@ -100,18 +97,16 @@ export default function RootLayout({
       <body
         className={`${notoSansKR.variable} bg-background-light text-text-main font-sans overflow-x-hidden antialiased flex flex-col min-h-screen`}
       >
-        <ClarityScript />
         <Script
           src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`}
           strategy="beforeInteractive"
         />
         <DemoBanner />
         <QueryProvider>
-          <TracingBootstrap serviceName="cosplay-web" />
           <MobileGuard>
             <MainMenu />
             <MobileHeader />
-            <ClarityMaskBoundary>{children}</ClarityMaskBoundary>
+            <main className="flex-1 pb-16 md:pb-0">{children}</main>
             <Footer />
             <MobileBottomNav />
           </MobileGuard>

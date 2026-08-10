@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 
 const CUSTOM_HEADER_PATHS = [

@@ -6,14 +6,11 @@ import {
   uploadProductImages,
   updateProduct,
 } from '@/entities/product';
-import { useAuthStore } from '@/shared/store/authStore';
-import {
-  base64ToBlob,
-  convertToWebp,
-  uploadToS3,
-} from '@/shared/lib/imageUpload';
+import { useAuthStore } from '@/shared/auth';
+import { base64ToBlob, convertToWebp } from '@/shared/lib/imageFormat';
+import { uploadToS3 } from '@/shared/lib/s3';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import type { ProductFormData } from '@/views/product-regist/model/types';
+import type { ProductFormData } from '@/_pages/market/product-regist/model/types';
 
 interface UseProductRegistOptions {
   productId?: number;

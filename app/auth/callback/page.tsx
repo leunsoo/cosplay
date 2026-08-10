@@ -2,10 +2,8 @@
 
 import { Suspense, useEffect } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
-import { ROUTES } from '@/core/config';
-import { useAuthStore } from '@/shared/store/authStore';
-
-const LOGIN_NEXT_KEY = 'login_next_path';
+import { ROUTES } from '@/shared/routes';
+import { useAuthStore, consumeLoginRedirectPath } from '@/shared/auth';
 
 function isSafeInternalPath(path: string | null): path is string {
   return Boolean(path && path.startsWith('/') && !path.startsWith('//'));
@@ -28,20 +26,19 @@ function AuthCallbackInner() {
     }
 
     if (role === 'temp') {
-      sessionStorage.removeItem(LOGIN_NEXT_KEY);
+      consumeLoginRedirectPath();
       router.replace(ROUTES.REGISTER);
       return;
     }
 
     const nextFromQuery = searchParams.get('next');
-    const nextFromStorage = sessionStorage.getItem(LOGIN_NEXT_KEY);
+    const nextFromStorage = consumeLoginRedirectPath();
     const targetPath = isSafeInternalPath(nextFromQuery)
       ? nextFromQuery
       : isSafeInternalPath(nextFromStorage)
         ? nextFromStorage
         : ROUTES.HOME;
 
-    sessionStorage.removeItem(LOGIN_NEXT_KEY);
     router.replace(targetPath);
   }, [authStatus, role, router, searchParams]);
 

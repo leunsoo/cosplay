@@ -1,5 +1,5 @@
-import type { SellerProfileDTO } from '@/views/seller-product-list/model/schema/getSellerProfile';
-import type { SellerProductsDTO } from '@/views/seller-product-list/model/schema/getSellerProducts';
+import type { SellerProfileDTO } from '@/_pages/market/seller-product-list/model/schema/getSellerProfile';
+import type { SellerProductsDTO } from '@/_pages/market/seller-product-list/model/schema/getSellerProducts';
 import { DEMO_USER_UUID, mockMyProfile } from './user';
 import { mockProductList, mockProductDetails } from './product';
 

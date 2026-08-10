@@ -1,10 +1,10 @@
 'use client';
 
 import { LogOut } from 'lucide-react';
-import { useAuthStore } from '@/shared/store/authStore';
+import { useAuthStore } from '@/shared/auth';
 import { useLogout } from '../model';
 import { useRouter } from 'next/navigation';
-import { ROUTES } from '@/core/config';
+import { ROUTES } from '@/shared/routes';
 
 interface LogoutBtnProps {
   className?: string;

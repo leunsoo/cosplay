@@ -1,6 +1,6 @@
 'use client';
 
-import { MeetUpRegistView } from '@/views/meetup-regist/MeetUpRegistView';
+import { MeetUpRegistView } from '@/_pages/event/meetup-regist/MeetUpRegistView';
 
 export default function MeetUpRegisterPage() {
   return <MeetUpRegistView />;
