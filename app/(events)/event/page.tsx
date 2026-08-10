@@ -5,7 +5,8 @@ export const dynamic = 'force-dynamic';
 import { type Metadata } from 'next';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
-import { getEventsListServer } from '@/entities/event';
+import { EVENT_QUERIES } from '@/shared/api/event';
+import { getEventsListServer } from '@/shared/api/event/index.server';
 import { getBannerListServer } from '@/entities/banner';
 import { EventListView } from '@/_pages/event/event-list';
 
@@ -46,7 +47,7 @@ export default async function EventMainPage() {
 
   await Promise.all([
     queryClient.prefetchQuery({
-      queryKey: ['events', 'ALL'],
+      queryKey: EVENT_QUERIES.list('ALL').queryKey,
       queryFn: () => getEventsListServer('ALL'),
     }),
     queryClient.prefetchQuery({

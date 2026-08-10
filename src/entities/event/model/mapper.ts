@@ -1,4 +1,4 @@
-import type { EventDTO } from './schema/getEventList';
+import type { EventDTO } from '@/shared/api/event';
 import type { OfficialEvent } from '../types';
 import { EventStatus, EventSource } from '../types';
 

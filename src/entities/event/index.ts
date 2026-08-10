@@ -15,9 +15,6 @@ export {
   isPersonalEvent,
 } from './types';
 
-// API
-export { getEventsList, getEventsListServer } from './api';
-
 // Model
 export { mapEventDtoToEvent, mapEventDtosToEvents } from './model';
 

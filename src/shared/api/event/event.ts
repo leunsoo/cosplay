@@ -1,9 +1,10 @@
 import { z } from 'zod';
+import { type ApiResponse } from '@/shared/api';
+import { mockEventList } from '@/mocks';
 
 // 행사 목록 조회 API 스키마
 
 // ------------------ Internal 스키마 (파일 내부에서만 사용)
-// 일단 검증 로직은 좀 더 고민해볼게욥
 const EventDTOSchema = z.object({
   eventId: z.number().int().positive(),
   title: z.string().min(1),
@@ -25,3 +26,16 @@ export const EventListDTOSchema = z.array(EventDTOSchema);
 // ------------------ 타입 추론
 export type EventListDTO = z.infer<typeof EventListDTOSchema>;
 export type EventDTO = z.infer<typeof EventDTOSchema>;
+
+export type EventStatusParam = 'ALL' | 'UPCOMING' | 'ONGOING' | 'CLOSED';
+
+// getEventsList/getEventsListServer가 공통으로 쓰는 데모 모드 필터링
+export function resolveDemoEvents(
+  status: EventStatusParam
+): ApiResponse<EventListDTO> {
+  const filtered =
+    status === 'ALL'
+      ? mockEventList
+      : mockEventList.filter((e) => e.status === status);
+  return { status: 'SUCCESS', message: '성공', data: filtered };
+}

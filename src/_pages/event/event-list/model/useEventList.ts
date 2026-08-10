@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { getEventsList, mapEventDtoToEvent } from '@/entities/event';
+import { mapEventDtoToEvent } from '@/entities/event';
+import { EVENT_QUERIES, type EventStatusParam } from '@/shared/api/event';
 import { getMeetupList, type MeetupStatus } from '../api/meetupApi';
-import { type EventStatusParam } from '@/entities/event/api/eventApi';
 import { mapMeetupDtoToEvent } from './mappers';
 
 const CATEGORY_TO_EVENT_STATUS: Record<string, EventStatusParam> = {
@@ -30,8 +30,7 @@ export function useEventList() {
     isFetching: isEventsFetching,
     error: eventsError,
   } = useQuery({
-    queryKey: ['events', eventStatus],
-    queryFn: () => getEventsList(eventStatus),
+    ...EVENT_QUERIES.list(eventStatus),
     enabled: selectedSource === '공식',
     staleTime: 30 * 60 * 1000,
     placeholderData: keepPreviousData,
