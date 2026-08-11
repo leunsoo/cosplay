@@ -2,22 +2,22 @@
 
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';
-import { useLogined } from '@/entities/auth';
 import { type EventSourceTab } from '../model/event-filter-options';
 
 interface EventListHeaderProps {
   isCalendarView: boolean;
   onViewModeChange: (isCalendar: boolean) => void;
   selectedSource: EventSourceTab;
+  isLogined: boolean;
 }
 
 export function EventListHeader({
   isCalendarView,
   onViewModeChange,
   selectedSource,
+  isLogined,
 }: EventListHeaderProps) {
   const router = useRouter();
-  const isLogined = useLogined();
 
   return (
     <section className="sticky top-16 z-30 bg-background-light/95 backdrop-blur-sm pt-2 pb-4 border-b border-gray-200/60">

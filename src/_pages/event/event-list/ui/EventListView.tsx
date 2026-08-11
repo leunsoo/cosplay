@@ -1,7 +1,6 @@
 'use client';
 
-import { useState } from 'react';
-import { useEventList } from '../model/use-event-list';
+import { useEventBrowser } from '../model/use-event-browser';
 import { HeroBanner } from './HeroBanner';
 import { EventListHeader } from './EventListHeader';
 import { EventSourceFilter } from './EventSourceFilter';
@@ -9,42 +8,27 @@ import { EventFilter } from './EventFilter';
 import { EventSummaryCard } from '@/widgets/event-summary-card';
 import { MeetupSummaryCard } from '@/widgets/meetup-summary-card';
 import { isPersonalEvent, isOfficialEvent } from '../model/event';
-import { type EventSourceTab } from '../model/event-filter-options';
 import { EventCalendarView } from './EventCalendarView';
-import { useLogined } from '@/entities/auth';
 import { ROUTES } from '@/shared/routes';
-import { useEventFavoriteList } from '@/features/favorite-event';
-import { useMeetupFavoriteList } from '@/features/favorite-meetup';
 import { MobileFab } from '@/shared/ui';
 
 export default function EventListView() {
-  const isLogined = useLogined();
   const {
+    isLogined,
     isLoading,
     error,
     events,
     selectedSource,
-    setSelectedSource,
     selectedCategory,
-    setSelectedCategory,
-  } = useEventList();
-
-  const { allEventsAsCards } = useEventFavoriteList();
-  const { allMeetupsAsCards } = useMeetupFavoriteList();
-
-  const [isCalendarView, setIsCalendarView] = useState(false);
-  const [showFavorites, setShowFavorites] = useState(false);
-
-  const handleSourceChange = (source: EventSourceTab) => {
-    setSelectedSource(source);
-    setSelectedCategory('전체');
-    setIsCalendarView(false);
-    setShowFavorites(false);
-  };
-
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
-  };
+    allEventsAsCards,
+    allMeetupsAsCards,
+    isCalendarView,
+    showFavorites,
+    onSourceChange,
+    onCategoryChange,
+    onViewModeChange,
+    onToggleFavorites,
+  } = useEventBrowser();
 
   return (
     <div className="container-custom flex flex-col lg:flex-row min-h-screen pt-6 pb-20 gap-8">
@@ -57,24 +41,25 @@ export default function EventListView() {
 
         <EventSourceFilter
           selectedSource={selectedSource}
-          onSourceChange={handleSourceChange}
+          onSourceChange={onSourceChange}
         />
 
         <div className="hidden md:block">
           <EventListHeader
             isCalendarView={isCalendarView}
-            onViewModeChange={setIsCalendarView}
+            onViewModeChange={onViewModeChange}
             selectedSource={selectedSource}
+            isLogined={isLogined}
           />
         </div>
 
         {!isCalendarView && (
           <EventFilter
             selectedCategory={selectedCategory}
-            onCategoryChange={handleCategoryChange}
+            onCategoryChange={onCategoryChange}
             selectedSource={selectedSource}
             showFavorites={showFavorites}
-            onToggleFavorites={() => setShowFavorites((prev) => !prev)}
+            onToggleFavorites={onToggleFavorites}
           />
         )}
 

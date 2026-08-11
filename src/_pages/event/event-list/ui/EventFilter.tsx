@@ -28,10 +28,7 @@ export function EventFilter({
         {categories.map((cat) => (
           <button
             key={cat}
-            onClick={() => {
-              if (showFavorites) onToggleFavorites?.();
-              onCategoryChange(cat);
-            }}
+            onClick={() => onCategoryChange(cat)}
             className={`px-4 py-1.5 rounded-full text-sm font-bold shadow-md transition-colors ${
               !showFavorites && selectedCategory === cat
                 ? 'bg-slate-800 text-white hover:bg-slate-700'
