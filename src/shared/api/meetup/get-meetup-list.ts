@@ -1,12 +1,25 @@
+import { z } from 'zod';
 import { apiClient, type ApiResponse } from '@/shared/api';
-import {
-  MeetupListDTOSchema,
-  type MeetupListDTO,
-} from '../model/schema/getMeetupList';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import { mockMeetupList } from '@/mocks';
 
 export type MeetupStatus = 'ALL' | 'ONGOING' | 'CLOSED';
+
+const MeetupItemDTOSchema = z.object({
+  meetupId: z.number().int().positive(),
+  title: z.string(),
+  thumbnailUrl: z.string().nullable(),
+  scheduledAt: z.string(),
+  location: z.string(),
+  maxMembers: z.number(),
+  currentMembers: z.number(),
+  status: z.enum(['ONGOING', 'CLOSED']),
+});
+
+export const MeetupListDTOSchema = z.array(MeetupItemDTOSchema);
+
+export type MeetupListDTO = z.infer<typeof MeetupListDTOSchema>;
+export type MeetupItemDTO = z.infer<typeof MeetupItemDTOSchema>;
 
 export const getMeetupList = async (
   status: MeetupStatus = 'ALL'

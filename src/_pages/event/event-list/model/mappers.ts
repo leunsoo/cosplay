@@ -1,4 +1,4 @@
-import type { MeetupItemDTO } from './schema/getMeetupList';
+import type { MeetupItemDTO } from '@/shared/api/meetup';
 import { type PersonalEvent, EventStatus, EventSource } from '@/entities/event';
 
 function resolveMeetupStatus(status: string): EventStatus {
