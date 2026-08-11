@@ -1,9 +1,8 @@
 import { useState } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { mapEventDtoToEvent } from '@/entities/event';
 import { EVENT_QUERIES, type EventStatusParam } from '@/shared/api/event';
 import { MEETUP_QUERIES, type MeetupStatus } from '@/shared/api/meetup';
-import { mapMeetupDtoToEvent } from './mappers';
+import { mapEventDtoToEvent, mapMeetupDtoToEvent } from '../api/mapper';
 
 const CATEGORY_TO_EVENT_STATUS: Record<string, EventStatusParam> = {
   전체: 'ALL',

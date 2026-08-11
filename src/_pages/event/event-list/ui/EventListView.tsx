@@ -8,7 +8,7 @@ import { EventSourceFilter } from './EventSourceFilter';
 import { EventFilter } from './EventFilter';
 import { EventSummaryCard } from '@/widgets/event-summary-card';
 import { MeetupSummaryCard } from '@/widgets/meetup-summary-card';
-import { isPersonalEvent, isOfficialEvent } from '@/entities/event';
+import { isPersonalEvent, isOfficialEvent } from '../model/event';
 import { EventCalendarView } from './EventCalendarView';
 import { useLogined } from '@/entities/auth';
 import { ROUTES } from '@/shared/routes';

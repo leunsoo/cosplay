@@ -1,7 +1,8 @@
 'use client';
 
 import Image from 'next/image';
-import { formatEventDate, type OfficialEventDetail } from '@/entities/event';
+import { formatEventDate } from '@/entities/event';
+import type { OfficialEventDetail } from '../model';
 import { FavoriteButton } from '@/features/favorite-event';
 
 interface EventHeaderProps {

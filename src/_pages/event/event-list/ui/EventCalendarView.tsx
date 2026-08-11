@@ -2,14 +2,9 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import {
-  Event,
-  getEventsForDate,
-  generateCalendarDays,
-  isOfficialEvent,
-  isPersonalEvent,
-  formatEventDate,
-} from '@/entities/event';
+import { formatEventDate } from '@/entities/event';
+import { type Event, isOfficialEvent, isPersonalEvent } from '../model/event';
+import { getEventsForDate, generateCalendarDays } from '../lib/calendar';
 import { isSameMonth, isToday } from '@/shared/lib/dateTime';
 import { ROUTES } from '@/shared/routes';
 

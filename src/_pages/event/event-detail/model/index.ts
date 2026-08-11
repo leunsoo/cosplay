@@ -7,3 +7,4 @@ export {
   mapEventDetailDtoToEventDetailWithUploader,
   type EventDetailWithUploader,
 } from './mapper';
+export type { OfficialEventDetail } from './event';
