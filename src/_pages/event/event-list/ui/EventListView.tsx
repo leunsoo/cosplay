@@ -9,19 +9,23 @@ import { EventSummaryCard } from '@/widgets/event-summary-card';
 import { MeetupSummaryCard } from '@/widgets/meetup-summary-card';
 import { isPersonalEvent, isOfficialEvent } from '../model/event';
 import { EventCalendarView } from './EventCalendarView';
+import { useLogined } from '@/entities/auth';
 import { ROUTES } from '@/shared/routes';
+import { useEventFavoriteList } from '@/features/favorite-event';
+import { useMeetupFavoriteList } from '@/features/favorite-meetup';
 import { MobileFab } from '@/shared/ui';
 
 export default function EventListView() {
+  const isLogined = useLogined();
+  const { allEventsAsCards } = useEventFavoriteList();
+  const { allMeetupsAsCards } = useMeetupFavoriteList();
+
   const {
-    isLogined,
     isLoading,
     error,
     events,
     selectedSource,
     selectedCategory,
-    allEventsAsCards,
-    allMeetupsAsCards,
     isCalendarView,
     showFavorites,
     onSourceChange,
