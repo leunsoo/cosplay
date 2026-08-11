@@ -7,7 +7,8 @@ import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
 import { EVENT_QUERIES } from '@/shared/api/event';
 import { getEventsListServer } from '@/shared/api/event/index.server';
-import { getBannerListServer } from '@/entities/banner';
+import { BANNER_QUERIES } from '@/shared/api/banner';
+import { getBannerListServer } from '@/shared/api/banner/index.server';
 import { EventListView } from '@/_pages/event/event-list';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
@@ -51,7 +52,7 @@ export default async function EventMainPage() {
       queryFn: () => getEventsListServer('ALL'),
     }),
     queryClient.prefetchQuery({
-      queryKey: ['banners'],
+      queryKey: BANNER_QUERIES.list().queryKey,
       queryFn: () => getBannerListServer(),
     }),
   ]);

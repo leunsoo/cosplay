@@ -2,18 +2,15 @@
 
 import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getBannerList, type BannerDTO } from '@/entities/banner';
+import { BANNER_QUERIES } from '@/shared/api/banner';
+import type { BannersDTO } from '@/shared/api/banner';
 
 export function useHeroBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['banners'],
-    queryFn: () => getBannerList(),
-    // staleTime: 5 * 60 * 1000,
-  });
+  const { data, isLoading, error } = useQuery(BANNER_QUERIES.list());
 
-  const banners: BannerDTO[] = data?.data ?? [];
+  const banners: BannersDTO = data?.data ?? [];
 
   // 자동 슬라이드 (5초마다)
   useEffect(() => {
@@ -32,10 +29,6 @@ export function useHeroBanner() {
     setCurrentSlide((prev) => (prev + 1) % banners.length);
   };
 
-  const goToSlide = (index: number) => {
-    setCurrentSlide(index);
-  };
-
   return {
     banners,
     currentSlide,
@@ -43,6 +36,5 @@ export function useHeroBanner() {
     error,
     goToPrev,
     goToNext,
-    goToSlide,
   };
 }

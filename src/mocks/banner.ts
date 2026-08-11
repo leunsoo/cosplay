@@ -1,4 +1,4 @@
-import type { BannersDTO } from '@/entities/banner/model';
+import type { BannersDTO } from '@/shared/api/banner';
 
 export const mockBanners: BannersDTO = [
   {

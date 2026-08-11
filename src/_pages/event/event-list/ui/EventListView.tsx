@@ -2,15 +2,14 @@
 
 import { useState } from 'react';
 import { useEventList } from '../model/useEventList';
-import { useHeroBanner } from '../model/useHeroBanner';
-import { HeroBanner } from './components/HeroBanner';
-import { EventListHeader } from './components/EventListHeader';
-import { EventSourceFilter } from './components/EventSourceFilter';
-import { EventFilter } from './components/EventFilter';
+import { HeroBanner } from './HeroBanner';
+import { EventListHeader } from './EventListHeader';
+import { EventSourceFilter } from './EventSourceFilter';
+import { EventFilter } from './EventFilter';
 import { EventSummaryCard } from '@/widgets/event-summary-card';
 import { MeetupSummaryCard } from '@/widgets/meetup-summary-card';
 import { isPersonalEvent, isOfficialEvent } from '@/entities/event';
-import { EventCalendarView } from './components/EventCalendarView';
+import { EventCalendarView } from './EventCalendarView';
 import { useLogined } from '@/entities/auth';
 import { ROUTES } from '@/shared/routes';
 import { useEventFavoriteList } from '@/features/favorite-event';
@@ -28,8 +27,6 @@ export default function EventListView() {
     selectedCategory,
     setSelectedCategory,
   } = useEventList();
-
-  const { banners, currentSlide, goToPrev, goToNext } = useHeroBanner();
 
   const { allEventsAsCards } = useEventFavoriteList();
   const { allMeetupsAsCards } = useMeetupFavoriteList();
@@ -55,12 +52,7 @@ export default function EventListView() {
         <MobileFab href={ROUTES.EVENT.REGISTER} />
       )}
       <main className="flex-1 flex flex-col gap-6">
-        <HeroBanner
-          banners={banners}
-          currentSlide={currentSlide}
-          onPrev={goToPrev}
-          onNext={goToNext}
-        />
+        <HeroBanner />
 
         <EventSourceFilter
           selectedSource={selectedSource}
