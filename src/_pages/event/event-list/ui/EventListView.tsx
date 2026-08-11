@@ -4,7 +4,8 @@ import { useEventBrowser } from '../model/use-event-browser';
 import { HeroBanner } from './HeroBanner';
 import { EventListHeader } from './EventListHeader';
 import { EventSourceFilter } from './EventSourceFilter';
-import { EventFilter } from './EventFilter';
+import { EventCategoryFilter } from './EventCategoryFilter';
+import { FavoritesToggleButton } from './FavoritesToggleButton';
 import { EventSummaryCard } from './EventSummaryCard';
 import { MeetupSummaryCard } from './MeetupSummaryCard';
 import { isPersonalEvent, isOfficialEvent } from '../model/event';
@@ -58,13 +59,20 @@ export default function EventListView() {
         </div>
 
         {!isCalendarView && (
-          <EventFilter
-            selectedCategory={selectedCategory}
-            onCategoryChange={onCategoryChange}
-            selectedSource={selectedSource}
-            showFavorites={showFavorites}
-            onToggleFavorites={onToggleFavorites}
-          />
+          <div className="flex items-center justify-between">
+            <EventCategoryFilter
+              selectedCategory={selectedCategory}
+              onCategoryChange={onCategoryChange}
+              selectedSource={selectedSource}
+              showFavorites={showFavorites}
+            />
+            <div className="md:hidden">
+              <FavoritesToggleButton
+                isActive={showFavorites}
+                onToggle={onToggleFavorites}
+              />
+            </div>
+          </div>
         )}
 
         <section className="flex flex-col gap-4">
