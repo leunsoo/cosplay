@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useEventList } from '../model/useEventList';
+import { useEventList } from '../model/use-event-list';
 import { HeroBanner } from './HeroBanner';
 import { EventListHeader } from './EventListHeader';
 import { EventSourceFilter } from './EventSourceFilter';

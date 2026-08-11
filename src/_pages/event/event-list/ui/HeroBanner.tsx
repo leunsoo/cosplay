@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { useHeroBanner } from '../model/useHeroBanner';
+import { useHeroBanner } from '../model/use-hero-banner';
 
 const EMPTY_STATE_CLASSNAME =
   'relative w-full rounded-2xl overflow-hidden aspect-21/9 md:aspect-[2.5/1] flex items-center justify-center bg-gray-100';
