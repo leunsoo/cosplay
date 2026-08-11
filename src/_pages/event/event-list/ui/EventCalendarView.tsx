@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { formatEventDate } from '@/entities/event';
 import { type Event, isOfficialEvent, isPersonalEvent } from '../model/event';
 import { getEventsForDate, generateCalendarDays } from '../lib/calendar';
+import { formatEventPrice, formatMemberCount } from '../lib/format';
 import { isSameMonth, isToday } from '@/shared/lib/dateTime';
 import { ROUTES } from '@/shared/routes';
 
@@ -42,13 +43,13 @@ function EventCompactCard({ event }: { event: Event }) {
         {isOfficialEvent(event) && (
           <p className="text-xs text-gray-800 truncate">
             <span className="font-medium text-gray-400 mr-1">금액</span>
-            {event.price === 0 ? '무료' : `${event.price.toLocaleString()}원`}
+            {formatEventPrice(event.price)}
           </p>
         )}
         {isPersonalEvent(event) && (
           <p className="text-xs text-gray-800 truncate">
             <span className="font-medium text-gray-400 mr-1">인원</span>
-            {event.currentMembers} / {event.maxMembers} 명
+            {formatMemberCount(event.currentMembers, event.maxMembers)}
           </p>
         )}
       </div>
