@@ -1,9 +1,14 @@
 'use client';
 
+import {
+  type EventSourceTab,
+  getCategoryOptions,
+} from '../model/event-filter-options';
+
 interface EventFilterProps {
   selectedCategory: string;
   onCategoryChange: (category: string) => void;
-  selectedSource: '공식' | '개인';
+  selectedSource: EventSourceTab;
   showFavorites?: boolean;
   onToggleFavorites?: () => void;
 }
@@ -15,10 +20,7 @@ export function EventFilter({
   showFavorites,
   onToggleFavorites,
 }: EventFilterProps) {
-  const categories =
-    selectedSource === '개인'
-      ? ['전체', '진행중', '종료됨']
-      : ['전체', '예정', '진행중', '종료됨'];
+  const categories = getCategoryOptions(selectedSource);
 
   return (
     <div className="flex items-center justify-between">

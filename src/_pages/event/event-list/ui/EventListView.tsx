@@ -9,6 +9,7 @@ import { EventFilter } from './EventFilter';
 import { EventSummaryCard } from '@/widgets/event-summary-card';
 import { MeetupSummaryCard } from '@/widgets/meetup-summary-card';
 import { isPersonalEvent, isOfficialEvent } from '../model/event';
+import { type EventSourceTab } from '../model/event-filter-options';
 import { EventCalendarView } from './EventCalendarView';
 import { useLogined } from '@/entities/auth';
 import { ROUTES } from '@/shared/routes';
@@ -34,7 +35,7 @@ export default function EventListView() {
   const [isCalendarView, setIsCalendarView] = useState(false);
   const [showFavorites, setShowFavorites] = useState(false);
 
-  const handleSourceChange = (source: '공식' | '개인') => {
+  const handleSourceChange = (source: EventSourceTab) => {
     setSelectedSource(source);
     setSelectedCategory('전체');
     setIsCalendarView(false);

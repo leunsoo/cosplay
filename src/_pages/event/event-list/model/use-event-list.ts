@@ -1,24 +1,16 @@
 import { useState } from 'react';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { EVENT_QUERIES, type EventStatusParam } from '@/shared/api/event';
-import { MEETUP_QUERIES, type MeetupStatus } from '@/shared/api/meetup';
+import { EVENT_QUERIES } from '@/shared/api/event';
+import { MEETUP_QUERIES } from '@/shared/api/meetup';
 import { mapEventDtoToEvent, mapMeetupDtoToEvent } from '../api/mapper';
-
-const CATEGORY_TO_EVENT_STATUS: Record<string, EventStatusParam> = {
-  전체: 'ALL',
-  예정: 'UPCOMING',
-  진행중: 'ONGOING',
-  종료됨: 'CLOSED',
-};
-
-const CATEGORY_TO_MEETUP_STATUS: Record<string, MeetupStatus> = {
-  전체: 'ALL',
-  진행중: 'ONGOING',
-  종료됨: 'CLOSED',
-};
+import {
+  type EventSourceTab,
+  CATEGORY_TO_EVENT_STATUS,
+  CATEGORY_TO_MEETUP_STATUS,
+} from './event-filter-options';
 
 export function useEventList() {
-  const [selectedSource, setSelectedSource] = useState<'공식' | '개인'>('공식');
+  const [selectedSource, setSelectedSource] = useState<EventSourceTab>('공식');
   const [selectedCategory, setSelectedCategory] = useState<string>('전체');
 
   const eventStatus = CATEGORY_TO_EVENT_STATUS[selectedCategory] ?? 'ALL';

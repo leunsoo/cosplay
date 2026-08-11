@@ -3,11 +3,12 @@
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';
 import { useLogined } from '@/entities/auth';
+import { type EventSourceTab } from '../model/event-filter-options';
 
 interface EventListHeaderProps {
   isCalendarView: boolean;
   onViewModeChange: (isCalendar: boolean) => void;
-  selectedSource: '공식' | '개인';
+  selectedSource: EventSourceTab;
 }
 
 export function EventListHeader({

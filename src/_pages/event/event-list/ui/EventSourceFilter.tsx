@@ -1,11 +1,14 @@
 'use client';
 
-interface EventSourceFilterProps {
-  selectedSource: '공식' | '개인';
-  onSourceChange: (source: '공식' | '개인') => void;
-}
+import {
+  type EventSourceTab,
+  EVENT_SOURCE_TABS,
+} from '../model/event-filter-options';
 
-const SOURCES: ('공식' | '개인')[] = ['공식', '개인'];
+interface EventSourceFilterProps {
+  selectedSource: EventSourceTab;
+  onSourceChange: (source: EventSourceTab) => void;
+}
 
 export function EventSourceFilter({
   selectedSource,
@@ -13,7 +16,7 @@ export function EventSourceFilter({
 }: EventSourceFilterProps) {
   return (
     <div className="flex bg-gray-100 rounded-xl p-1 gap-1">
-      {SOURCES.map((source) => (
+      {EVENT_SOURCE_TABS.map((source) => (
         <button
           key={source}
           onClick={() => onSourceChange(source)}
