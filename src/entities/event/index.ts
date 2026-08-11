@@ -1,27 +1,6 @@
 // Types
-export type {
-  Event,
-  OfficialEvent,
-  OfficialEventDetail,
-  PersonalEvent,
-  EventDate,
-  EventFeature,
-  Organizer,
-} from './types';
-export {
-  EventStatus,
-  EventSource,
-  isOfficialEvent,
-  isPersonalEvent,
-} from './types';
-
-// Model
-export { mapEventDtoToEvent, mapEventDtosToEvents } from './model';
+export type { OfficialEvent, PersonalEvent, EventDate } from './model/event';
+export { EventStatus, EventSource } from './model/event';
 
 // Utilities
-export {
-  formatEventDate,
-  getStatusColor,
-  getEventsForDate,
-  generateCalendarDays,
-} from './lib';
+export { formatEventDate, getStatusColor } from './lib/dateTime';
