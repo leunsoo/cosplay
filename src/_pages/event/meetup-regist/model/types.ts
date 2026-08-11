@@ -9,13 +9,3 @@ export interface MeetupFormData {
   thumbnailFile: File | null;
   thumbnailPreview: string;
 }
-
-export interface CreateMeetupBody {
-  title: string;
-  description: string;
-  scheduledAt: string;
-  maxMembers: number;
-  location: string;
-  locationDetail: string;
-  thumbnailUrl?: string;
-}

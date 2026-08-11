@@ -1,4 +1,5 @@
-import type { MeetupFormData, CreateMeetupBody } from './types';
+import type { MeetupFormData } from './types';
+import type { CreateMeetupBody } from '@/shared/api/meetup';
 
 export function mapFormDataToCreateMeetupBody(
   formData: MeetupFormData,

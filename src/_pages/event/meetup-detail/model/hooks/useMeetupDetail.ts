@@ -2,7 +2,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/shared/auth';
 import { ROUTES } from '@/shared/routes';
-import { getMeetupDetail, deleteMeetup } from '../../api/meetupDetailApi';
+import { MEETUP_QUERIES, deleteMeetup } from '@/shared/api/meetup';
 
 export function useMeetupDetail(meetupId: number) {
   const router = useRouter();
@@ -13,10 +13,7 @@ export function useMeetupDetail(meetupId: number) {
     data: detailData,
     isLoading,
     error: detailError,
-  } = useQuery({
-    queryKey: ['meetup-detail', meetupId],
-    queryFn: () => getMeetupDetail(meetupId),
-  });
+  } = useQuery(MEETUP_QUERIES.detail(meetupId));
 
   const detail = detailData?.data ?? null;
   const isHost = !!detail && !!currentUuid && detail.host.uuid === currentUuid;
@@ -24,7 +21,7 @@ export function useMeetupDetail(meetupId: number) {
   const { mutate: handleDelete, isPending: isDeleting } = useMutation({
     mutationFn: () => deleteMeetup(meetupId),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['meetups'] });
+      queryClient.invalidateQueries({ queryKey: MEETUP_QUERIES.all() });
       router.push(ROUTES.HOME);
     },
   });

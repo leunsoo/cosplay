@@ -4,7 +4,11 @@ import { ROUTES } from '@/shared/routes';
 import { convertToWebp } from '@/shared/lib/imageFormat';
 import { uploadToS3 } from '@/shared/lib/s3';
 import { mapFormDataToCreateMeetupBody } from '../mapper';
-import { getMeetupPresignedUrl, createMeetup } from '../../api';
+import {
+  MEETUP_QUERIES,
+  getMeetupPresignedUrl,
+  createMeetup,
+} from '@/shared/api/meetup';
 import type { MeetupFormData } from '../types';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 
@@ -33,7 +37,7 @@ export function useMeetUpRegist() {
       return createMeetup(body);
     },
     onSuccess: (res) => {
-      queryClient.invalidateQueries({ queryKey: ['meetups'] });
+      queryClient.invalidateQueries({ queryKey: MEETUP_QUERIES.all() });
       alert('모임이 등록되었습니다.');
       router.push(ROUTES.MEETUP.DETAIL(res.data));
     },

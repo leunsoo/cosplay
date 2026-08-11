@@ -1,7 +1,9 @@
-import type { MeetupListDTO } from '@/_pages/event/event-list/model/schema/getMeetupList';
-import type { MeetupDetailDTO } from '@/_pages/event/meetup-detail/model/schema/getMeetupDetail';
-import type { MeetupMembersDTO } from '@/_pages/event/meetup-detail/model/schema/getMeetupMembers';
-import type { CreateMeetupBody } from '@/_pages/event/meetup-regist/model';
+import type {
+  MeetupListDTO,
+  MeetupDetailDTO,
+  MeetupMembersDTO,
+  CreateMeetupBody,
+} from '@/shared/api/meetup';
 import { DEMO_USER_UUID, mockMyProfile } from './user';
 
 export const mockMeetupList: MeetupListDTO = [

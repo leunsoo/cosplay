@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { getMeetupDetail } from '@/_pages/event/meetup-detail/api/meetupDetailApi';
+import { MEETUP_QUERIES, getMeetupDetail } from '@/shared/api/meetup';
 import { MeetUpRegistView } from './MeetUpRegistView';
 import type { MeetupFormData } from './model/types';
 
@@ -30,10 +30,7 @@ function buildInitialData(
 }
 
 export function MeetUpEditView({ meetupId }: MeetUpEditViewProps) {
-  const { data, isLoading, error } = useQuery({
-    queryKey: ['meetup-detail', meetupId],
-    queryFn: () => getMeetupDetail(meetupId),
-  });
+  const { data, isLoading, error } = useQuery(MEETUP_QUERIES.detail(meetupId));
 
   if (isLoading) {
     return (

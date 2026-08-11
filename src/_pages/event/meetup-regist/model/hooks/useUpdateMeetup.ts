@@ -4,7 +4,11 @@ import { ROUTES } from '@/shared/routes';
 import { convertToWebp } from '@/shared/lib/imageFormat';
 import { uploadToS3 } from '@/shared/lib/s3';
 import { mapFormDataToCreateMeetupBody } from '../mapper';
-import { getMeetupPresignedUrl, updateMeetup } from '../../api';
+import {
+  MEETUP_QUERIES,
+  getMeetupPresignedUrl,
+  updateMeetup,
+} from '@/shared/api/meetup';
 import type { MeetupFormData } from '../types';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 
@@ -40,8 +44,10 @@ export function useUpdateMeetup(meetupId?: number) {
     },
     onSuccess: () => {
       if (!meetupId) return;
-      queryClient.invalidateQueries({ queryKey: ['meetup-detail', meetupId] });
-      queryClient.invalidateQueries({ queryKey: ['meetups'] });
+      queryClient.invalidateQueries({
+        queryKey: MEETUP_QUERIES.detail(meetupId).queryKey,
+      });
+      queryClient.invalidateQueries({ queryKey: MEETUP_QUERIES.all() });
       alert('모임이 수정되었습니다.');
       router.push(ROUTES.MEETUP.DETAIL(meetupId));
     },
