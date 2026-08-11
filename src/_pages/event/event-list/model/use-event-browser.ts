@@ -11,8 +11,8 @@ export function useEventBrowser() {
     events,
     selectedSource,
     setSelectedSource,
-    selectedCategory,
-    setSelectedCategory,
+    selectedStatus,
+    setSelectedStatus,
   } = useEventList();
 
   const [isCalendarView, setIsCalendarView] = useState(false);
@@ -22,14 +22,14 @@ export function useEventBrowser() {
 
   const handleSourceChange = (source: EventSourceTab) => {
     setSelectedSource(source);
-    setSelectedCategory('전체');
+    setSelectedStatus('전체');
     setIsCalendarView(false);
     exitFavorites();
   };
 
-  const handleCategoryChange = (category: string) => {
+  const handleStatusChange = (status: string) => {
     exitFavorites();
-    setSelectedCategory(category);
+    setSelectedStatus(status);
   };
 
   return {
@@ -37,11 +37,11 @@ export function useEventBrowser() {
     error,
     events,
     selectedSource,
-    selectedCategory,
+    selectedStatus,
     isCalendarView,
     showFavorites,
     onSourceChange: handleSourceChange,
-    onCategoryChange: handleCategoryChange,
+    onStatusChange: handleStatusChange,
     onViewModeChange: setIsCalendarView,
     onToggleFavorites: () => setShowFavorites((prev) => !prev),
     onExitFavorites: exitFavorites,

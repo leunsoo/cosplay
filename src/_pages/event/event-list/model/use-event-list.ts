@@ -5,16 +5,16 @@ import { MEETUP_QUERIES } from '@/shared/api/meetup';
 import { mapEventDtoToEvent, mapMeetupDtoToEvent } from '../api/mapper';
 import {
   type EventSourceTab,
-  CATEGORY_TO_EVENT_STATUS,
-  CATEGORY_TO_MEETUP_STATUS,
+  STATUS_LABEL_TO_EVENT_STATUS,
+  STATUS_LABEL_TO_MEETUP_STATUS,
 } from './event-filter-options';
 
 export function useEventList() {
   const [selectedSource, setSelectedSource] = useState<EventSourceTab>('공식');
-  const [selectedCategory, setSelectedCategory] = useState<string>('전체');
+  const [selectedStatus, setSelectedStatus] = useState<string>('전체');
 
-  const eventStatus = CATEGORY_TO_EVENT_STATUS[selectedCategory] ?? 'ALL';
-  const meetupStatus = CATEGORY_TO_MEETUP_STATUS[selectedCategory] ?? 'ALL';
+  const eventStatus = STATUS_LABEL_TO_EVENT_STATUS[selectedStatus] ?? 'ALL';
+  const meetupStatus = STATUS_LABEL_TO_MEETUP_STATUS[selectedStatus] ?? 'ALL';
 
   const {
     data: eventsData,
@@ -58,7 +58,7 @@ export function useEventList() {
     events,
     selectedSource,
     setSelectedSource,
-    selectedCategory,
-    setSelectedCategory,
+    selectedStatus,
+    setSelectedStatus,
   };
 }

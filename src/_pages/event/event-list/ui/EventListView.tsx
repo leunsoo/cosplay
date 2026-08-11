@@ -4,7 +4,7 @@ import { useEventBrowser } from '../model/use-event-browser';
 import { HeroBanner } from './HeroBanner';
 import { EventListHeader } from './EventListHeader';
 import { EventSourceFilter } from './EventSourceFilter';
-import { EventCategoryFilter } from './EventCategoryFilter';
+import { EventStatusFilter } from './EventStatusFilter';
 import { FavoritesToggleButton } from './FavoritesToggleButton';
 import { EventSummaryCard } from './EventSummaryCard';
 import { MeetupSummaryCard } from './MeetupSummaryCard';
@@ -26,11 +26,11 @@ export default function EventListView() {
     error,
     events,
     selectedSource,
-    selectedCategory,
+    selectedStatus,
     isCalendarView,
     showFavorites,
     onSourceChange,
-    onCategoryChange,
+    onStatusChange,
     onViewModeChange,
     onToggleFavorites,
   } = useEventBrowser();
@@ -60,9 +60,9 @@ export default function EventListView() {
 
         {!isCalendarView && (
           <div className="flex items-center justify-between">
-            <EventCategoryFilter
-              selectedCategory={selectedCategory}
-              onCategoryChange={onCategoryChange}
+            <EventStatusFilter
+              selectedStatus={selectedStatus}
+              onStatusChange={onStatusChange}
               selectedSource={selectedSource}
               showFavorites={showFavorites}
             />
