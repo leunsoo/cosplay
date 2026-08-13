@@ -1,1 +1,0 @@
-export { useProductRegist } from './model';

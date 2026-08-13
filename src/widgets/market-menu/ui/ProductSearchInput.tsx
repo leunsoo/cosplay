@@ -1,7 +1,8 @@
 'use client';
 
 import { KeywordList } from '@/entities/search-keywords';
-import { useProductSearch, useRecentKeywords } from '../model';
+import { useProductSearch } from '../model/use-product-search';
+import { useRecentKeywords } from '../model/use-recent-keywords';
 
 export function ProductSearchInput() {
   const { keyword, setKeyword, handleSearch, handleKeyDown } =

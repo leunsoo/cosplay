@@ -1,1 +1,0 @@
-export { ProductSearchInput } from './ProductSearchInput';

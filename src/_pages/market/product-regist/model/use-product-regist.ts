@@ -10,7 +10,7 @@ import { useAuthStore } from '@/shared/auth';
 import { base64ToBlob, convertToWebp } from '@/shared/lib/imageFormat';
 import { uploadToS3 } from '@/shared/lib/s3';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import type { ProductFormData } from '@/_pages/market/product-regist/model/types';
+import type { ProductFormData } from './types';
 
 interface UseProductRegistOptions {
   productId?: number;
