@@ -11,7 +11,7 @@ import {
 } from '@/entities/product';
 import { useAuthStore } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
-import { useFavoriteList } from '@/features/favorite-product';
+import { useFavoriteProductCards } from './model/use-favorite-product-cards';
 import { PaginationControl } from '@/shared/ui';
 import { Header } from './ui';
 
@@ -43,8 +43,10 @@ export function ProductListView({ keyword = '' }: ProductListViewProps) {
         : getProductList({ page: currentPage }),
   });
 
-  const { allProductsAsCards, handleProductClick: handleFavoriteClick } =
-    useFavoriteList({ uuid: userUuid });
+  const {
+    products: allProductsAsCards,
+    handleProductClick: handleFavoriteClick,
+  } = useFavoriteProductCards({ uuid: userUuid });
 
   useEffect(() => {
     if (isSearchMode && data && userUuid) {

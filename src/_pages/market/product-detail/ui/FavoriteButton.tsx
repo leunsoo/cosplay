@@ -1,6 +1,6 @@
 'use client';
 
-import { useFavoriteToggle } from '../model';
+import { useProductFavoriteToggle } from '../model/use-favorite-toggle';
 
 interface FavoriteButtonProps {
   productId: number;
@@ -16,7 +16,7 @@ export function FavoriteButton({
   mainImageUrl,
 }: FavoriteButtonProps) {
   const { displayedFavorited, isPending, isLoading, handleClick } =
-    useFavoriteToggle({ productId, title, price, mainImageUrl });
+    useProductFavoriteToggle({ productId, title, price, mainImageUrl });
 
   return (
     <button

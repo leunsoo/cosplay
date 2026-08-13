@@ -6,6 +6,7 @@ import {
   uploadProductImages,
   updateProduct,
 } from '@/entities/product';
+import { FAVORITE_PRODUCT_QUERIES } from '@/shared/api/favorite-product';
 import { useAuthStore } from '@/shared/auth';
 import { base64ToBlob, convertToWebp } from '@/shared/lib/imageFormat';
 import { uploadToS3 } from '@/shared/lib/s3';
@@ -130,7 +131,9 @@ export function useProductRegist({
     onSuccess: (response) => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
       if (isEditMode) {
-        queryClient.invalidateQueries({ queryKey: ['favorite', userUuid] });
+        queryClient.invalidateQueries({
+          queryKey: FAVORITE_PRODUCT_QUERIES.all(),
+        });
         queryClient.invalidateQueries({
           queryKey: ['recently-viewed', userUuid],
         });

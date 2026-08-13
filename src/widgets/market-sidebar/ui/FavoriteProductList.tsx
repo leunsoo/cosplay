@@ -1,6 +1,6 @@
 'use client';
 
-import { useFavoriteList } from '../model';
+import { useFavoriteProductPanel } from '../model/use-favorite-product-panel';
 import { ProductSidePanel } from '@/entities/product';
 
 interface FavoriteProductListProps {
@@ -17,7 +17,7 @@ export function FavoriteProductList({ uuid }: FavoriteProductListProps) {
     setCurrentPage,
     handleProductClick,
     handleProductRemove,
-  } = useFavoriteList({ uuid });
+  } = useFavoriteProductPanel({ uuid });
 
   return (
     <ProductSidePanel
