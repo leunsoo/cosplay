@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useRef, useState, useEffect } from 'react';
 import DaumPostcodeEmbed from 'react-daum-postcode';
-import type { MeetupFormData } from '../../model';
+import type { MeetupFormData } from '../model/meetup-form';
 import { DateTimePicker } from './DateTimePicker';
 
 function RequiredLabel({ children }: { children: string }) {

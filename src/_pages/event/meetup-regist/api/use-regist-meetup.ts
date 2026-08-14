@@ -3,16 +3,37 @@ import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';
 import { convertToWebp } from '@/shared/lib/imageFormat';
 import { uploadToS3 } from '@/shared/lib/s3';
-import { mapFormDataToCreateMeetupBody } from '../mapper';
-import {
-  MEETUP_QUERIES,
-  getMeetupPresignedUrl,
-  createMeetup,
-} from '@/shared/api/meetup';
-import type { MeetupFormData } from '../types';
+import { apiClient, type ApiResponse } from '@/shared/api';
 import { IS_DEMO } from '@/shared/lib/isDemo';
+import { createDemoMeetup } from '@/mocks';
+import { mapFormDataToCreateMeetupBody } from './mapper';
+import { MEETUP_QUERIES } from '@/shared/api/meetup';
+import { getMeetupPresignedUrl } from './get-meetup-presigned-url';
+import type { MeetupFormData } from '../model/meetup-form';
 
-export function useMeetUpRegist() {
+export interface CreateMeetupBody {
+  title: string;
+  description: string;
+  scheduledAt: string;
+  maxMembers: number;
+  location: string;
+  locationDetail: string;
+  thumbnailUrl?: string;
+}
+
+const createMeetup = (body: CreateMeetupBody): Promise<ApiResponse<number>> => {
+  if (IS_DEMO) {
+    const meetupId = createDemoMeetup(body);
+    return Promise.resolve({
+      status: 'SUCCESS',
+      message: '성공',
+      data: meetupId,
+    });
+  }
+  return apiClient.post('/api/v1/meetups', body);
+};
+
+export function useRegistMeetup() {
   const router = useRouter();
   const queryClient = useQueryClient();
 

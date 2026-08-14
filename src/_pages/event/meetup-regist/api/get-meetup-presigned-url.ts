@@ -1,12 +1,12 @@
 import { z } from 'zod';
 import { apiClient, type ApiResponse } from '@/shared/api';
 
-export const PresignedUrlDataSchema = z.object({
+const PresignedUrlDataSchema = z.object({
   uploadUrl: z.string(),
   imageUrl: z.string(),
 });
 
-export type PresignedUrlData = z.infer<typeof PresignedUrlDataSchema>;
+type PresignedUrlData = z.infer<typeof PresignedUrlDataSchema>;
 
 export const getMeetupPresignedUrl = (
   filename: string

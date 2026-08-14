@@ -9,3 +9,15 @@ export interface MeetupFormData {
   thumbnailFile: File | null;
   thumbnailPreview: string;
 }
+
+export const INITIAL_FORM_DATA: MeetupFormData = {
+  title: '',
+  description: '',
+  eventDate: '',
+  eventTime: '',
+  location: '',
+  locationDetail: '',
+  maxMembers: '',
+  thumbnailFile: null,
+  thumbnailPreview: '',
+};

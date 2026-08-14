@@ -2,10 +2,10 @@
 
 import { useQuery } from '@tanstack/react-query';
 import { MEETUP_QUERIES, getMeetupDetail } from '@/shared/api/meetup';
-import { MeetUpRegistView } from './MeetUpRegistView';
-import type { MeetupFormData } from './model/types';
+import { MeetUpRegistPage } from './MeetUpRegistPage';
+import type { MeetupFormData } from '../model/meetup-form';
 
-interface MeetUpEditViewProps {
+interface MeetUpEditPageProps {
   meetupId: number;
 }
 
@@ -29,7 +29,7 @@ function buildInitialData(
   };
 }
 
-export function MeetUpEditView({ meetupId }: MeetUpEditViewProps) {
+export function MeetUpEditPage({ meetupId }: MeetUpEditPageProps) {
   const { data, isLoading, error } = useQuery(MEETUP_QUERIES.detail(meetupId));
 
   if (isLoading) {
@@ -54,7 +54,7 @@ export function MeetUpEditView({ meetupId }: MeetUpEditViewProps) {
   }
 
   return (
-    <MeetUpRegistView
+    <MeetUpRegistPage
       meetupId={meetupId}
       initialData={buildInitialData(data.data)}
     />

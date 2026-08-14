@@ -1,26 +1,23 @@
 'use client';
 
 import { useState } from 'react';
-import { useMeetupDetail } from './model/hooks/useMeetupDetail';
-import { useMeetupMembers } from './model/hooks/useMeetupMembers';
+import { useMeetupDetail } from '../api/use-meetup-detail';
+import { useMeetupJoinToggle } from '../model/use-meetup-join-toggle';
 import { MeetupGroupChat } from '@/features/meetup-group-chat';
 import { EventStatus } from '@/entities/event';
 import { useLogined } from '@/entities/auth';
-import {
-  MeetUpHeader,
-  MeetUpTabs,
-  MeetUpAbout,
-  MeetUpMobileMenu,
-  // MeetUpLocation,
-  type MeetUpTabType,
-} from './ui';
+import { MeetUpHeader } from './MeetUpHeader';
+import { MeetUpTabs, type MeetUpTabType } from './MeetUpTabs';
+import { MeetUpAbout } from './MeetUpAbout';
+import { MeetUpMobileMenu } from './MeetUpMobileMenu';
+// import { MeetUpLocation } from './MeetUpLocation';
 import { MobileHeaderCustom } from '@/widgets/mobile-header/MobileHeader';
 
-interface MeetUpDetailViewProps {
+interface MeetUpDetailPageProps {
   meetupId: string;
 }
 
-export function MeetUpDetailView({ meetupId }: MeetUpDetailViewProps) {
+export function MeetUpDetailPage({ meetupId }: MeetUpDetailPageProps) {
   const [activeTab, setActiveTab] = useState<MeetUpTabType>('details');
   const meetupIdNum = Number(meetupId);
 
@@ -28,7 +25,7 @@ export function MeetUpDetailView({ meetupId }: MeetUpDetailViewProps) {
   const { detail, isHost, isLoading, error, handleDelete, isDeleting } =
     useMeetupDetail(meetupIdNum);
   const { isJoined, handleJoin, handleLeave, isJoining, isLeaving } =
-    useMeetupMembers(meetupIdNum, !!detail);
+    useMeetupJoinToggle(meetupIdNum, !!detail);
 
   if (isLoading) {
     return (
@@ -97,6 +94,7 @@ export function MeetUpDetailView({ meetupId }: MeetUpDetailViewProps) {
                     ? EventStatus.ENDED
                     : EventStatus.ONGOING
                 }
+                isJoined={isJoined}
               />
             </div>
           )}

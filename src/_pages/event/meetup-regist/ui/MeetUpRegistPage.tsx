@@ -3,30 +3,27 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { ROUTES } from '@/shared/routes';
-import {
-  type MeetupFormData,
-  INITIAL_FORM_DATA,
-  useMeetUpRegist,
-} from './model';
-import { useUpdateMeetup } from './model/hooks/useUpdateMeetup';
-import { EventForm } from './ui/components';
+import { type MeetupFormData, INITIAL_FORM_DATA } from '../model/meetup-form';
+import { useRegistMeetup } from '../api/use-regist-meetup';
+import { useUpdateMeetup } from '../api/use-update-meetup';
+import { EventForm } from './EventForm';
 
-interface MeetUpRegistViewProps {
+interface MeetUpRegistPageProps {
   /** 수정 모드일 때 meetupId를 전달 */
   meetupId?: number;
   /** 수정 모드일 때 초기값을 전달 */
   initialData?: MeetupFormData;
 }
 
-export function MeetUpRegistView({
+export function MeetUpRegistPage({
   meetupId,
   initialData,
-}: MeetUpRegistViewProps) {
+}: MeetUpRegistPageProps) {
   const isEditMode = !!meetupId;
   const [formData, setFormData] = useState<MeetupFormData>(
     initialData ?? INITIAL_FORM_DATA
   );
-  const { submit, isPending } = useMeetUpRegist();
+  const { submit, isPending } = useRegistMeetup();
   const { update, isPending: isUpdatePending } = useUpdateMeetup(meetupId);
 
   const handleChange = (

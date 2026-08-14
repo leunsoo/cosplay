@@ -1,13 +1,13 @@
 'use client';
 
 import { use } from 'react';
-import { MeetUpEditView } from '@/_pages/event/meetup-regist/MeetUpEditView';
+import { MeetUpEditPage } from '@/_pages/event/meetup-regist';
 
-interface MeetUpEditPageProps {
+interface MeetUpEditRouteProps {
   params: Promise<{ meetupId: string }>;
 }
 
-export default function MeetUpEditPage({ params }: MeetUpEditPageProps) {
+export default function MeetUpEditRoute({ params }: MeetUpEditRouteProps) {
   const { meetupId } = use(params);
-  return <MeetUpEditView meetupId={Number(meetupId)} />;
+  return <MeetUpEditPage meetupId={Number(meetupId)} />;
 }

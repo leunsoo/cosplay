@@ -2,7 +2,23 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/shared/auth';
 import { ROUTES } from '@/shared/routes';
-import { MEETUP_QUERIES, deleteMeetup } from '@/shared/api/meetup';
+import { apiClient, type ApiResponse } from '@/shared/api';
+import { IS_DEMO } from '@/shared/lib/isDemo';
+import { deleteDemoMeetup, removeDemoFavoriteMeetup } from '@/mocks';
+import { MEETUP_QUERIES } from '@/shared/api/meetup';
+
+const deleteMeetup = (meetupId: number): Promise<ApiResponse<void>> => {
+  if (IS_DEMO) {
+    deleteDemoMeetup(meetupId);
+    removeDemoFavoriteMeetup(meetupId);
+    return Promise.resolve({
+      status: 'SUCCESS',
+      message: '성공',
+      data: undefined,
+    });
+  }
+  return apiClient.delete(`/api/v1/meetups/${meetupId}`);
+};
 
 export function useMeetupDetail(meetupId: number) {
   const router = useRouter();
