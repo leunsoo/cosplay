@@ -1,4 +1,4 @@
-import type { EventStatusParam } from '@/shared/api/event';
+import type { EventStatusParam } from '../api/get-events-list';
 import type { MeetupStatus } from '../api/get-meetup-list';
 
 export type EventSourceTab = '공식' | '개인';

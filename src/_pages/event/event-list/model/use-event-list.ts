@@ -1,8 +1,6 @@
 import { useState } from 'react';
-import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { EVENT_QUERIES } from '@/shared/api/event';
-import { MEETUP_QUERIES } from '@/shared/api/meetup';
-import { getMeetupList } from '../api/get-meetup-list';
+import { useEventsList } from '../api/get-events-list';
+import { useMeetupList } from '../api/get-meetup-list';
 import { mapEventDtoToEvent, mapMeetupDtoToEvent } from '../api/mapper';
 import {
   type EventSourceTab,
@@ -21,26 +19,13 @@ export function useEventList() {
     data: eventsData,
     isFetching: isEventsFetching,
     error: eventsError,
-  } = useQuery({
-    ...EVENT_QUERIES.list(eventStatus),
-    enabled: selectedSource === '공식',
-    staleTime: 30 * 60 * 1000,
-    placeholderData: keepPreviousData,
-  });
+  } = useEventsList(eventStatus, selectedSource === '공식');
 
   const {
     data: meetupsData,
     isFetching: isMeetupsFetching,
     error: meetupsError,
-  } = useQuery({
-    // MEETUP_QUERIES.all()과 같은 접두사를 써서, meetup-regist/meetup-detail의
-    // 전체 무효화(MEETUP_QUERIES.all())가 이 목록 캐시도 함께 무효화하도록 한다.
-    queryKey: [...MEETUP_QUERIES.all(), 'list', meetupStatus],
-    queryFn: () => getMeetupList(meetupStatus),
-    enabled: selectedSource === '개인',
-    staleTime: 3 * 60 * 1000,
-    placeholderData: keepPreviousData,
-  });
+  } = useMeetupList(meetupStatus, selectedSource === '개인');
 
   const events = (() => {
     if (selectedSource === '공식') {

@@ -1,4 +1,4 @@
-import type { BannersDTO } from '@/shared/api/banner';
+import type { BannersDTO } from '@/_pages/event/event-list/api/get-banner-list';
 
 export const mockBanners: BannersDTO = [
   {

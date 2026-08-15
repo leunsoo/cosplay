@@ -2,7 +2,7 @@ import 'server-only';
 import { serverFetch, type ApiResponse } from '@/shared/api';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import { mockBanners } from '@/mocks';
-import { BannersDTOSchema, type BannersDTO } from './banner';
+import { BannersDTOSchema, type BannersDTO } from './get-banner-list';
 
 export const getBannerListServer = async (): Promise<
   ApiResponse<BannersDTO>

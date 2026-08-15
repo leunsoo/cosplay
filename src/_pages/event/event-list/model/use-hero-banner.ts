@@ -1,14 +1,13 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useQuery } from '@tanstack/react-query';
-import { BANNER_QUERIES } from '@/shared/api/banner';
-import type { BannersDTO } from '@/shared/api/banner';
+import { useBannerList } from '../api/get-banner-list';
+import type { BannersDTO } from '../api/get-banner-list';
 
 export function useHeroBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);
 
-  const { data, isLoading, error } = useQuery(BANNER_QUERIES.list());
+  const { data, isLoading, error } = useBannerList();
 
   const banners: BannersDTO = data?.data ?? [];
 

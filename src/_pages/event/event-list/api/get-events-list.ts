@@ -1,10 +1,14 @@
+'use client';
+
 import { z } from 'zod';
-import { type ApiResponse } from '@/shared/api';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
+import { apiClient, type ApiResponse } from '@/shared/api';
+import { IS_DEMO } from '@/shared/lib/isDemo';
 import { mockEventList } from '@/mocks';
+import { EVENT_QUERIES } from './event.query';
 
-// 행사 목록 조회 API 스키마
+// 행사 목록 조회 API
 
-// ------------------ Internal 스키마 (파일 내부에서만 사용)
 const EventDTOSchema = z.object({
   eventId: z.number().int().positive(),
   title: z.string().min(1),
@@ -12,18 +16,14 @@ const EventDTOSchema = z.object({
   startDate: z.string(),
   endDate: z.string(),
   location: z.string(),
-  // 이건 임시 값이고 나중에 아래 부분 정상적으로 올거니 그때 nullable 지우겠슴당
   price: z.number(),
   status: z.enum(['UPCOMING', 'ONGOING', 'CLOSED']),
-
   category: z.string(),
 });
 
-// ------------------ Response 스키마 (외부에서 사용)
 // 현재 백엔드는 배열 직접 반환
 export const EventListDTOSchema = z.array(EventDTOSchema);
 
-// ------------------ 타입 추론
 export type EventListDTO = z.infer<typeof EventListDTOSchema>;
 export type EventDTO = z.infer<typeof EventDTOSchema>;
 
@@ -38,4 +38,24 @@ export function resolveDemoEvents(
       ? mockEventList
       : mockEventList.filter((e) => e.status === status);
   return { status: 'SUCCESS', message: '성공', data: filtered };
+}
+
+export const getEventsList = async (
+  status: EventStatusParam = 'ALL'
+): Promise<ApiResponse<EventListDTO>> => {
+  if (IS_DEMO) return resolveDemoEvents(status);
+  return apiClient.getWithValidation(
+    `/api/v1/events?status=${status}`,
+    EventListDTOSchema
+  );
+};
+
+export function useEventsList(status: EventStatusParam, enabled: boolean) {
+  return useQuery({
+    queryKey: EVENT_QUERIES.list(status),
+    queryFn: () => getEventsList(status),
+    enabled,
+    staleTime: 30 * 60 * 1000,
+    placeholderData: keepPreviousData,
+  });
 }

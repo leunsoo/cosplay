@@ -1,7 +1,11 @@
+'use client';
+
 import { z } from 'zod';
+import { useQuery, keepPreviousData } from '@tanstack/react-query';
 import { apiClient, type ApiResponse } from '@/shared/api';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import { mockMeetupList } from '@/mocks';
+import { MEETUP_QUERIES } from '@/shared/api/meetup';
 
 export type MeetupStatus = 'ALL' | 'ONGOING' | 'CLOSED';
 
@@ -36,3 +40,15 @@ export const getMeetupList = async (
     MeetupListDTOSchema
   );
 };
+
+export function useMeetupList(status: MeetupStatus, enabled: boolean) {
+  return useQuery({
+    // MEETUP_QUERIES.all()과 같은 접두사를 써서, meetup-regist/meetup-detail의
+    // 전체 무효화(MEETUP_QUERIES.all())가 이 목록 캐시도 함께 무효화하도록 한다.
+    queryKey: [...MEETUP_QUERIES.all(), 'list', status],
+    queryFn: () => getMeetupList(status),
+    enabled,
+    staleTime: 3 * 60 * 1000,
+    placeholderData: keepPreviousData,
+  });
+}
