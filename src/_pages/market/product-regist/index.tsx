@@ -4,8 +4,6 @@ import { useRef, useState } from 'react';
 import { useForm, Controller, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
-import { useProductRegist } from '@/features/product-regist';
-
 import {
   ImageUploadSection,
   TitleSection,
@@ -15,6 +13,7 @@ import {
   RichTextEditor,
   FormButtons,
 } from './ui';
+import { useProductRegist } from './model/use-product-regist';
 import { INITIAL_FORM_DATA, TITLE_MAX_LENGTH } from './model/const';
 import { ProductFormSchema, type ProductFormValues } from './model/validation';
 import type { ProductFormData } from './model/types';

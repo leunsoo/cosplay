@@ -1,16 +1,15 @@
 'use client';
 
-import { useState } from 'react';
-import { useEventList } from '../model/useEventList';
-import { useHeroBanner } from '../model/useHeroBanner';
-import { HeroBanner } from './components/HeroBanner';
-import { EventListHeader } from './components/EventListHeader';
-import { EventSourceFilter } from './components/EventSourceFilter';
-import { EventFilter } from './components/EventFilter';
-import { EventSummaryCard } from '@/widgets/event-summary-card';
-import { MeetupSummaryCard } from '@/widgets/meetup-summary-card';
-import { isPersonalEvent, isOfficialEvent } from '@/entities/event';
-import { EventCalendarView } from './components/EventCalendarView';
+import { useEventBrowser } from '../model/use-event-browser';
+import { HeroBanner } from './HeroBanner';
+import { EventListHeader } from './EventListHeader';
+import { EventSourceFilter } from './EventSourceFilter';
+import { EventStatusFilter } from './EventStatusFilter';
+import { FavoritesToggleButton } from './FavoritesToggleButton';
+import { EventSummaryCard } from './EventSummaryCard';
+import { MeetupSummaryCard } from './MeetupSummaryCard';
+import { isPersonalEvent, isOfficialEvent } from '../model/event';
+import { EventCalendarView } from './EventCalendarView';
 import { useLogined } from '@/entities/auth';
 import { ROUTES } from '@/shared/routes';
 import { useEventFavoriteList } from '@/features/favorite-event';
@@ -19,34 +18,22 @@ import { MobileFab } from '@/shared/ui';
 
 export default function EventListView() {
   const isLogined = useLogined();
+  const { allEventsAsCards } = useEventFavoriteList();
+  const { allMeetupsAsCards } = useMeetupFavoriteList();
+
   const {
     isLoading,
     error,
     events,
     selectedSource,
-    setSelectedSource,
-    selectedCategory,
-    setSelectedCategory,
-  } = useEventList();
-
-  const { banners, currentSlide, goToPrev, goToNext } = useHeroBanner();
-
-  const { allEventsAsCards } = useEventFavoriteList();
-  const { allMeetupsAsCards } = useMeetupFavoriteList();
-
-  const [isCalendarView, setIsCalendarView] = useState(false);
-  const [showFavorites, setShowFavorites] = useState(false);
-
-  const handleSourceChange = (source: '공식' | '개인') => {
-    setSelectedSource(source);
-    setSelectedCategory('전체');
-    setIsCalendarView(false);
-    setShowFavorites(false);
-  };
-
-  const handleCategoryChange = (category: string) => {
-    setSelectedCategory(category);
-  };
+    selectedStatus,
+    isCalendarView,
+    showFavorites,
+    onSourceChange,
+    onStatusChange,
+    onViewModeChange,
+    onToggleFavorites,
+  } = useEventBrowser();
 
   return (
     <div className="container-custom flex flex-col lg:flex-row min-h-screen pt-6 pb-20 gap-8">
@@ -55,34 +42,37 @@ export default function EventListView() {
         <MobileFab href={ROUTES.EVENT.REGISTER} />
       )}
       <main className="flex-1 flex flex-col gap-6">
-        <HeroBanner
-          banners={banners}
-          currentSlide={currentSlide}
-          onPrev={goToPrev}
-          onNext={goToNext}
-        />
+        <HeroBanner />
 
         <EventSourceFilter
           selectedSource={selectedSource}
-          onSourceChange={handleSourceChange}
+          onSourceChange={onSourceChange}
         />
 
         <div className="hidden md:block">
           <EventListHeader
             isCalendarView={isCalendarView}
-            onViewModeChange={setIsCalendarView}
+            onViewModeChange={onViewModeChange}
             selectedSource={selectedSource}
+            isLogined={isLogined}
           />
         </div>
 
         {!isCalendarView && (
-          <EventFilter
-            selectedCategory={selectedCategory}
-            onCategoryChange={handleCategoryChange}
-            selectedSource={selectedSource}
-            showFavorites={showFavorites}
-            onToggleFavorites={() => setShowFavorites((prev) => !prev)}
-          />
+          <div className="flex items-center justify-between">
+            <EventStatusFilter
+              selectedStatus={selectedStatus}
+              onStatusChange={onStatusChange}
+              selectedSource={selectedSource}
+              showFavorites={showFavorites}
+            />
+            <div className="md:hidden">
+              <FavoritesToggleButton
+                isActive={showFavorites}
+                onToggle={onToggleFavorites}
+              />
+            </div>
+          </div>
         )}
 
         <section className="flex flex-col gap-4">

@@ -1,7 +1,7 @@
 export const dynamic = 'force-dynamic';
 
 import { MetadataRoute } from 'next';
-import { getEventsListServer } from '@/entities/event';
+import { getEventsListServer } from '@/_pages/event/event-list/index.server';
 import { getProductListServer } from '@/entities/product';
 
 /**

@@ -1,13 +1,13 @@
-import { MeetUpDetailView } from '@/_pages/event/meetup-detail/MeetUpDetailView';
+import { MeetUpDetailPage } from '@/_pages/event/meetup-detail';
 
-interface MeetUpDetailPageProps {
+interface MeetUpDetailRouteProps {
   params: Promise<{ meetupId: string }>;
 }
 
-export default async function MeetUpDetailPage({
+export default async function MeetUpDetailRoute({
   params,
-}: MeetUpDetailPageProps) {
+}: MeetUpDetailRouteProps) {
   const { meetupId } = await params;
 
-  return <MeetUpDetailView meetupId={meetupId} />;
+  return <MeetUpDetailPage meetupId={meetupId} />;
 }

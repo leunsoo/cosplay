@@ -4,9 +4,9 @@ import { useEffect, useMemo, useState } from 'react';
 import { useAuthStore } from '@/shared/auth';
 import {
   type UserProfileFormValues,
-  mapMyProfileDTOToUserProfileFormModel,
   useProfileImageUpload,
 } from '@/features/user-profile-form';
+import { mapMyProfileDTOToUserProfileFormModel } from '../api/mapper';
 import { useMyProfile } from '../api/use-my-profile';
 import { useUpdateMyProfile } from '../api/use-update-my-profile';
 import { useDeleteMyAccount } from '../api/use-delete-my-account';

@@ -2,22 +2,13 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { ROUTES } from '@/shared/routes';
-import { USER_QUERIES, registerUser } from '@/shared/api/user';
-import {
-  useAuthStore,
-  DEMO_REGISTERED_KEY,
-  consumeLoginRedirectPath,
-} from '@/shared/auth';
-import { IS_DEMO } from '@/shared/lib/isDemo';
 import {
   type UserProfileFormValues,
   UserProfileFormFields,
-  mapUserProfileFormModelToRegisterBody,
   useProfileImageUpload,
 } from '@/features/user-profile-form';
+import { useRegisterUser } from '../api/use-register-user';
 
 const INITIAL_REGISTER_VALUES: UserProfileFormValues = {
   nickname: '',
@@ -32,43 +23,9 @@ const INITIAL_REGISTER_VALUES: UserProfileFormValues = {
 };
 
 export function RegisterPage() {
-  const router = useRouter();
-  const queryClient = useQueryClient();
-  const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
-  const setDemoAuthenticated = useAuthStore(
-    (state) => state.setDemoAuthenticated
-  );
   const [formValues, setFormValues] = useState(INITIAL_REGISTER_VALUES);
   const profileImage = useProfileImageUpload('');
-
-  const registerMutation = useMutation({
-    mutationFn: async () => {
-      const profileImageUri = await profileImage.upload();
-
-      return registerUser({
-        body: mapUserProfileFormModelToRegisterBody({
-          ...formValues,
-          profileImageUri,
-        }),
-      });
-    },
-    onSuccess: (response) => {
-      if (IS_DEMO) {
-        sessionStorage.setItem(DEMO_REGISTERED_KEY, 'true');
-        setDemoAuthenticated();
-      } else {
-        setAuthenticated(response.data.accessToken);
-      }
-      queryClient.invalidateQueries({ queryKey: USER_QUERIES.myProfiles() });
-      alert('회원가입이 완료되었습니다.');
-      const next = consumeLoginRedirectPath();
-      router.push(next || ROUTES.HOME);
-    },
-    onError: (error) => {
-      console.error('회원가입 실패:', error);
-      alert('회원가입에 실패했습니다. 잠시 후 다시 시도해주세요.');
-    },
-  });
+  const registerMutation = useRegisterUser();
 
   const updateFormValue = <K extends keyof UserProfileFormValues>(
     key: K,
@@ -80,7 +37,10 @@ export function RegisterPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    registerMutation.mutate();
+    registerMutation.mutate({
+      formValues,
+      uploadProfileImage: profileImage.upload,
+    });
   };
 
   return (

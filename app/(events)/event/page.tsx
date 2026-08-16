@@ -5,9 +5,15 @@ export const dynamic = 'force-dynamic';
 import { type Metadata } from 'next';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
-import { getEventsListServer } from '@/entities/event';
-import { getBannerListServer } from '@/entities/banner';
-import { EventListView } from '@/_pages/event/event-list';
+import {
+  EVENT_QUERIES,
+  BANNER_QUERIES,
+  EventListView,
+} from '@/_pages/event/event-list';
+import {
+  getEventsListServer,
+  getBannerListServer,
+} from '@/_pages/event/event-list/index.server';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 
@@ -46,11 +52,11 @@ export default async function EventMainPage() {
 
   await Promise.all([
     queryClient.prefetchQuery({
-      queryKey: ['events', 'ALL'],
+      queryKey: EVENT_QUERIES.list('ALL'),
       queryFn: () => getEventsListServer('ALL'),
     }),
     queryClient.prefetchQuery({
-      queryKey: ['banners'],
+      queryKey: BANNER_QUERIES.list(),
       queryFn: () => getBannerListServer(),
     }),
   ]);

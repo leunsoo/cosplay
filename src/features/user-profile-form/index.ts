@@ -1,11 +1,3 @@
 export { UserProfileFormFields } from './ui/UserProfileFormFields';
-export {
-  UserProfileFormValuesSchema,
-  type UserProfileFormValues,
-} from './model/user-profile-form';
-export {
-  mapMyProfileDTOToUserProfileFormModel,
-  mapUserProfileFormModelToRegisterBody,
-  mapUserProfileFormModelToUpdateBody,
-} from './model/mapper';
+export { type UserProfileFormValues } from './model/user-profile-form';
 export { useProfileImageUpload } from './model/useProfileImageUpload';

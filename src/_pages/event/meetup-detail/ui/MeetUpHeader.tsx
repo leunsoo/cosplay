@@ -4,8 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRef } from 'react';
 import { ROUTES } from '@/shared/routes';
-import type { MeetupDetailDTO } from '../model/schema/getMeetupDetail';
-import { useMeetupMembers } from '../model/hooks/useMeetupMembers';
+import type { MeetupDetailDTO } from '@/shared/api/meetup';
+import { useMeetupMembers } from '../api/use-meetup-members';
 import { FavoriteMeetupButton } from '@/features/favorite-meetup';
 import { ConfirmDialog } from '@/shared/ui';
 

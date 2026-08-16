@@ -1,0 +1,21 @@
+import type { MeetupFormData } from '../model/meetup-form';
+import type { CreateMeetupBody } from './use-regist-meetup';
+
+export function mapFormDataToCreateMeetupBody(
+  formData: MeetupFormData,
+  thumbnailUrl?: string
+): CreateMeetupBody {
+  const scheduledAt = new Date(
+    `${formData.eventDate}T${formData.eventTime || '00:00'}`
+  ).toISOString();
+
+  return {
+    title: formData.title,
+    description: formData.description,
+    scheduledAt,
+    maxMembers: Number(formData.maxMembers),
+    location: formData.location,
+    locationDetail: formData.locationDetail,
+    ...(thumbnailUrl ? { thumbnailUrl } : {}),
+  };
+}

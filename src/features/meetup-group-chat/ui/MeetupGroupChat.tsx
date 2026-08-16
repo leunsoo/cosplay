@@ -6,21 +6,21 @@ import { EventStatus } from '@/entities/event';
 import { useMeetupGroupChat } from '../model';
 import { GroupChatHeader, GroupMessageInput } from '@/entities/chat';
 import { MeetupGroupMessageList } from './MeetupGroupMessageList';
-import { useMeetupMembers } from '@/_pages/event/meetup-detail/model/hooks/useMeetupMembers';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 
 interface MeetupGroupChatProps {
   meetupId: string;
   meetupStatus: EventStatus;
+  isJoined: boolean;
 }
 
 export function MeetupGroupChat({
   meetupId,
   meetupStatus,
+  isJoined,
 }: MeetupGroupChatProps) {
   const userUuid = useAuthStore((state) => state.userUuid);
   const logined = useLogined();
-  const { isJoined } = useMeetupMembers(Number(meetupId), logined);
 
   const isEnded = meetupStatus === EventStatus.ENDED;
   const canSend = logined && !isEnded && isJoined && !IS_DEMO;

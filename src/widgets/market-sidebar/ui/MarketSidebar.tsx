@@ -1,10 +1,10 @@
 'use client';
 
 import { RecentlyViewedList } from '@/features/product-recently-viewed';
-import { FavoriteProductList } from '@/features/favorite-product';
 import { useLogined } from '@/entities/auth';
 import { useAuthStore } from '@/shared/auth';
 import { IS_DEMO } from '@/shared/lib/isDemo';
+import { FavoriteProductList } from './FavoriteProductList';
 
 export function MarketSideBar() {
   const logined = useLogined();

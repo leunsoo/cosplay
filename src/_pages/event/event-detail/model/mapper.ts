@@ -1,9 +1,6 @@
 import type { EventDetailDTO } from './schema';
-import {
-  type OfficialEventDetail,
-  EventStatus,
-  EventSource,
-} from '@/entities/event';
+import { EventStatus, EventSource } from '@/entities/event';
+import type { OfficialEventDetail } from './event';
 
 const statusMap: Record<'UPCOMING' | 'ONGOING' | 'CLOSED', EventStatus> = {
   UPCOMING: EventStatus.UPCOMING,
