@@ -1,7 +1,7 @@
 'use client';
 
 import { useAuthStore } from '@/shared/auth';
-import { useFavoriteToggle } from '@/shared/lib/use-favorite-toggle';
+import { useOptimisticToggle } from '@/shared/lib/use-optimistic-toggle';
 import type { ApiResponse } from '@/shared/api';
 import {
   deleteFavorite,
@@ -26,51 +26,61 @@ export function useProductFavoriteToggle({
 }: UseProductFavoriteToggleParams) {
   const userUuid = useAuthStore((state) => state.userUuid);
 
-  return useFavoriteToggle<ApiResponse<FavoriteListDTO>>({
-    enabled: !!userUuid && !!productId,
-    statusQueryKey: ['favorite-status', userUuid, productId],
-    listQueryKey: FAVORITE_PRODUCT_QUERIES.list(userUuid).queryKey,
-    fetchStatus: () => getFavoriteStatus({ uuid: userUuid, productId }),
-    addFavorite: () =>
-      addFavorite({ uuid: userUuid }, { productId: String(productId) }),
-    removeFavorite: () => deleteFavorite({ uuid: userUuid, productId }),
-    patchListCache: (old, adding) => {
-      if (!old) return old;
+  const { displayedActive, isPending, isLoading, handleClick } =
+    useOptimisticToggle<ApiResponse<FavoriteListDTO>>({
+      enabled: !!userUuid && !!productId,
+      statusQueryKey: ['favorite-status', userUuid, productId],
+      listQueryKey: FAVORITE_PRODUCT_QUERIES.list(userUuid).queryKey,
+      fetchIsActive: () => getFavoriteStatus({ uuid: userUuid, productId }),
+      activate: () =>
+        addFavorite({ uuid: userUuid }, { productId: String(productId) }),
+      deactivate: () => deleteFavorite({ uuid: userUuid, productId }),
+      patchListCache: (old, activating) => {
+        if (!old) return old;
 
-      if (adding) {
-        const alreadyExists = old.data.products.some(
-          (p) => p.productId === productId
-        );
-        if (alreadyExists) return old;
+        if (activating) {
+          const alreadyExists = old.data.products.some(
+            (p) => p.productId === productId
+          );
+          if (alreadyExists) return old;
+
+          return {
+            ...old,
+            data: {
+              ...old.data,
+              totalCount: old.data.totalCount + 1,
+              products: [
+                {
+                  productId,
+                  title,
+                  price,
+                  mainImageUrl,
+                  favoritedAt: new Date().toISOString(),
+                  status: 'SELLING' as const,
+                },
+                ...old.data.products,
+              ],
+            },
+          };
+        }
 
         return {
           ...old,
           data: {
             ...old.data,
-            totalCount: old.data.totalCount + 1,
-            products: [
-              {
-                productId,
-                title,
-                price,
-                mainImageUrl,
-                favoritedAt: new Date().toISOString(),
-                status: 'SELLING' as const,
-              },
-              ...old.data.products,
-            ],
+            totalCount: old.data.totalCount - 1,
+            products: old.data.products.filter(
+              (p) => p.productId !== productId
+            ),
           },
         };
-      }
+      },
+    });
 
-      return {
-        ...old,
-        data: {
-          ...old.data,
-          totalCount: old.data.totalCount - 1,
-          products: old.data.products.filter((p) => p.productId !== productId),
-        },
-      };
-    },
-  });
+  return {
+    displayedFavorited: displayedActive,
+    isPending,
+    isLoading,
+    handleClick,
+  };
 }

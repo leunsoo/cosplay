@@ -1,42 +1,24 @@
 import { useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { useAuthStore } from '@/shared/auth';
 import { ROUTES } from '@/shared/routes';
-import { deleteFavoriteEvent, getFavoriteEventList } from '../../api';
+import { FAVORITE_EVENT_QUERIES } from '@/shared/api/favorite-event';
 import {
   mapFavoriteEventToBookmarkedEvent,
   mapFavoriteEventToOfficialEvent,
-} from '../mapper';
+} from '../api/mapper';
 
 const PAGE_SIZE = 3;
 
 export function useEventFavoriteList() {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const userUuid = useAuthStore((state) => state.userUuid);
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isLoading } = useQuery({
-    queryKey: ['favorite-event', userUuid],
-    queryFn: () => getFavoriteEventList({ uuid: userUuid }),
-    enabled: !!userUuid,
+    ...FAVORITE_EVENT_QUERIES.list(userUuid),
     staleTime: Infinity,
-  });
-
-  const { mutate: handleDelete } = useMutation({
-    mutationFn: (eventId: number) =>
-      deleteFavoriteEvent({ uuid: userUuid, eventId }),
-    onMutate: (eventId: number) => {
-      queryClient.setQueryData(
-        ['favorite-event-status', userUuid, eventId],
-        (old: { data: { isFavorited: boolean } } | undefined) =>
-          old ? { ...old, data: { isFavorited: false } } : old
-      );
-    },
-    onSettled: () => {
-      queryClient.invalidateQueries({ queryKey: ['favorite-event', userUuid] });
-    },
   });
 
   const favorites = data?.data;
@@ -64,6 +46,5 @@ export function useEventFavoriteList() {
     totalPages,
     onPageChange: setCurrentPage,
     handleEventClick,
-    handleDelete,
   };
 }

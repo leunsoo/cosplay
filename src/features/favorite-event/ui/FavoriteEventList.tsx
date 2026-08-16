@@ -1,6 +1,7 @@
 'use client';
 
-import { useEventFavoriteList } from '../model';
+import { useEventFavoriteList } from '../model/use-event-favorite-list';
+import { useDeleteFavoriteEvent } from '../model/use-delete-favorite-event';
 import { FavoriteEvent } from './FavoriteEvent';
 import { PageStepper } from '@/shared/ui';
 
@@ -17,8 +18,8 @@ export function FavoriteEventList({
     totalPages,
     onPageChange,
     handleEventClick,
-    handleDelete,
   } = useEventFavoriteList();
+  const { mutate: handleDelete } = useDeleteFavoriteEvent();
 
   const displayedEvents = showPagination ? events : allEvents;
 

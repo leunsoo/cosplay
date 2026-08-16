@@ -1,4 +1,4 @@
-import type { FavoriteEventListDTO } from './schema/getFavoriteEventList';
+import type { FavoriteEventListDTO } from '@/shared/api/favorite-event';
 import { EventStatus, EventSource, type OfficialEvent } from '@/entities/event';
 
 export interface BookmarkedEvent {

@@ -4,6 +4,7 @@ import {
   formatEventDate,
   getStatusColor,
 } from '@/entities/event';
+import { useLogined } from '@/entities/auth';
 import { FavoriteButton } from '@/features/favorite-event';
 import { formatEventPrice } from '../lib/format';
 import { SummaryCardShell } from './SummaryCardShell';
@@ -15,6 +16,7 @@ interface EventSummaryCardProps {
 
 export function EventSummaryCard({ event }: EventSummaryCardProps) {
   const statusColor = getStatusColor(event.status);
+  const logined = useLogined();
 
   return (
     <SummaryCardShell
@@ -33,18 +35,7 @@ export function EventSummaryCard({ event }: EventSummaryCardProps) {
           </span>
         </>
       }
-      favoriteButton={
-        <FavoriteButton
-          eventId={Number(event.id)}
-          title={event.title}
-          startDate={event.dateInfo.startDate.toISOString()}
-          endDate={(
-            event.dateInfo.endDate ?? event.dateInfo.startDate
-          ).toISOString()}
-          location={event.location}
-          thumbnailUrl={event.imageUrl}
-        />
-      }
+      favoriteButton={logined && <FavoriteButton event={event} />}
       infoRows={
         <>
           <SummaryCardInfoRow

@@ -1,5 +1,5 @@
-import type { FavoriteEventListDTO } from '@/features/favorite-event/model/schema/getFavoriteEventList';
-import type { FavoriteEventStatusDTO } from '@/features/favorite-event/model/schema/getFavoriteEventStatus';
+import type { FavoriteEventListDTO } from '@/shared/api/favorite-event';
+import type { FavoriteEventStatusDTO } from '@/features/favorite-event/api/get-favorite-event-status';
 import { mockEventList } from './event';
 
 // 데모 모드 찜 상태 (메모리 유지, 새로고침 시 초기화)

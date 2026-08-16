@@ -2,8 +2,10 @@
 
 import { useState } from 'react';
 import { useLogined } from '@/entities/auth';
-import { FavoriteEventList } from '@/features/favorite-event';
-import { useEventFavoriteList } from '@/features/favorite-event/model';
+import {
+  FavoriteEventList,
+  useEventFavoriteList,
+} from '@/features/favorite-event';
 import { FavoriteMeetupList } from '@/features/favorite-meetup';
 import { useMeetupFavoriteList } from '@/features/favorite-meetup/model';
 
