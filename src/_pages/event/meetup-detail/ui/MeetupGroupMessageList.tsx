@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { type MeetupChatMessage } from '../model';
+import type { MeetupChatMessage } from '../model/meetup-chat';
 import { ChatMessageBubble } from '@/entities/chat';
 
 interface MeetupGroupMessageListProps {

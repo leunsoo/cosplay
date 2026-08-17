@@ -3,10 +3,10 @@
 import { useState } from 'react';
 import { useMeetupDetail } from '../api/use-meetup-detail';
 import { useMeetupJoinToggle } from '../model/use-meetup-join-toggle';
-import { MeetupGroupChat } from '@/features/meetup-group-chat';
 import { EventStatus } from '@/entities/event';
 import { useLogined } from '@/entities/auth';
 import { MeetUpHeader } from './MeetUpHeader';
+import { MeetupGroupChat } from './MeetupGroupChat';
 import { MeetUpTabs, type MeetUpTabType } from './MeetUpTabs';
 import { MeetUpAbout } from './MeetUpAbout';
 import { MeetUpMobileMenu } from './MeetUpMobileMenu';

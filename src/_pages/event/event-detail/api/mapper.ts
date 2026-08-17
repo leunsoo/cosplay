@@ -1,5 +1,5 @@
-import { type EventChatMessageDTO } from './schema';
-import { type EventChatMessage } from './types';
+import type { EventChatMessageDTO } from './get-event-chat-messages';
+import type { EventChatMessage } from '../model/event-chat';
 
 export function mapEventChatMessageDTOToMessage(
   dto: EventChatMessageDTO,

@@ -4,7 +4,6 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { ROUTES } from '@/shared/routes';
-import { EventGroupChat } from '@/features/event-group-chat';
 import { getEventDetail } from './api';
 import { mapEventDetailDtoToEventDetailWithUploader } from './model';
 import {
@@ -13,6 +12,7 @@ import {
   EventAbout,
   EventSchedule,
   EventLocation,
+  EventGroupChat,
   type EventTabType,
 } from './ui';
 

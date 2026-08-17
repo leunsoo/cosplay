@@ -3,26 +3,31 @@
 import { useAuthStore } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
 import { EventStatus } from '@/entities/event';
-import { useEventGroupChat } from '../model';
+import { useMeetupGroupChat } from '../model/use-meetup-group-chat';
 import { GroupChatHeader, GroupMessageInput } from '@/entities/chat';
-import { GroupMessageList } from './GroupMessageList';
+import { MeetupGroupMessageList } from './MeetupGroupMessageList';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 
-interface EventGroupChatProps {
-  eventId: string;
-  eventStatus: EventStatus;
+interface MeetupGroupChatProps {
+  meetupId: string;
+  meetupStatus: EventStatus;
+  isJoined: boolean;
 }
 
-export function EventGroupChat({ eventId, eventStatus }: EventGroupChatProps) {
+export function MeetupGroupChat({
+  meetupId,
+  meetupStatus,
+  isJoined,
+}: MeetupGroupChatProps) {
   const userUuid = useAuthStore((state) => state.userUuid);
   const logined = useLogined();
 
-  const isEnded = eventStatus === EventStatus.ENDED;
-  const canSend = logined && !isEnded && !IS_DEMO;
+  const isEnded = meetupStatus === EventStatus.ENDED;
+  const canSend = logined && !isEnded && isJoined && !IS_DEMO;
 
   const { messages, activeCount, sendMessage, isLoading, isError } =
-    useEventGroupChat({
-      eventId: Number(eventId),
+    useMeetupGroupChat({
+      meetupId: Number(meetupId),
       userUuid,
       disabled: isEnded,
     });
@@ -64,9 +69,11 @@ export function EventGroupChat({ eventId, eventStatus }: EventGroupChatProps) {
     ? '종료된 행사입니다.'
     : !logined
       ? '채팅에 참여하려면 로그인 후 이용해주세요.'
-      : IS_DEMO
-        ? '데모 모드에서는 실시간 채팅이 지원되지 않습니다.'
-        : null;
+      : !isJoined
+        ? '참여자만 채팅을 이용할 수 있습니다.'
+        : IS_DEMO
+          ? '데모 모드에서는 실시간 채팅이 지원되지 않습니다.'
+          : null;
 
   return (
     <section>
@@ -75,7 +82,7 @@ export function EventGroupChat({ eventId, eventStatus }: EventGroupChatProps) {
         className="bg-white dark:bg-[#1b0d1b] border border-gray-200 dark:border-gray-800 rounded-2xl overflow-hidden flex flex-col h-130 md:h-150"
         data-clarity-mask="True"
       >
-        <GroupMessageList messages={messages} />
+        <MeetupGroupMessageList messages={messages} />
         {inputGuideMessage && (
           <p className="text-center text-xs text-gray-400 py-2">
             {inputGuideMessage}

@@ -1,9 +1,9 @@
-import type { EventChatRoomDTO } from '@/features/event-group-chat/model/schema/getEventChatRoom';
-import type { EventChatMessageListDTO } from '@/features/event-group-chat/model/schema/getEventChatMessages';
-import type { EventChatActiveCountDTO } from '@/features/event-group-chat/model/schema/getEventChatActiveCount';
-import type { MeetupChatRoomDTO } from '@/features/meetup-group-chat/model/schema/getMeetupChatRoom';
-import type { MeetupChatMessageListDTO } from '@/features/meetup-group-chat/model/schema/getMeetupChatMessages';
-import type { MeetupChatActiveCountDTO } from '@/features/meetup-group-chat/model/schema/getMeetupChatActiveCount';
+import type { EventChatRoomDTO } from '@/_pages/event/event-detail/api/get-event-chat-room';
+import type { EventChatMessageListDTO } from '@/_pages/event/event-detail/api/get-event-chat-messages';
+import type { EventChatActiveCountDTO } from '@/_pages/event/event-detail/api/get-event-chat-active-count';
+import type { MeetupChatRoomDTO } from '@/_pages/event/meetup-detail/api/get-meetup-chat-room';
+import type { MeetupChatMessageListDTO } from '@/_pages/event/meetup-detail/api/get-meetup-chat-messages';
+import type { MeetupChatActiveCountDTO } from '@/_pages/event/meetup-detail/api/get-meetup-chat-active-count';
 
 export const mockEventChatRoom: EventChatRoomDTO = {
   roomId: 101,

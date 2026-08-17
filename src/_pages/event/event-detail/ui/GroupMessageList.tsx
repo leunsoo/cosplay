@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
-import { type EventChatMessage } from '../model';
+import type { EventChatMessage } from '../model/event-chat';
 import { ChatMessageBubble } from '@/entities/chat';
 
 interface GroupMessageListProps {

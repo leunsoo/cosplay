@@ -1,11 +1,6 @@
 import { z } from 'zod';
 
-export const MeetupChatSendPayloadSchema = z.object({
-  senderUuid: z.string().min(1),
-  content: z.string().min(1),
-  type: z.literal('TEXT'),
-});
-
+// STOMP subscribe 수신 body
 export const MeetupChatReceivePayloadSchema = z.object({
   id: z.number().int().nonnegative(),
   roomId: z.number().int().nonnegative(),
@@ -17,15 +12,6 @@ export const MeetupChatReceivePayloadSchema = z.object({
   type: z.string(),
   createdAt: z.string(),
 });
-
-export const MeetupChatActiveCountPayloadSchema = z.object({
-  count: z.number().int().nonnegative(),
-});
-
-export type MeetupChatSendPayload = z.infer<typeof MeetupChatSendPayloadSchema>;
 export type MeetupChatReceivePayload = z.infer<
   typeof MeetupChatReceivePayloadSchema
->;
-export type MeetupChatActiveCountPayload = z.infer<
-  typeof MeetupChatActiveCountPayloadSchema
 >;

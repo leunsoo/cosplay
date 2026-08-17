@@ -1,5 +1,5 @@
-import { type MeetupChatMessageDTO } from './schema';
-import { type MeetupChatMessage } from './types';
+import type { MeetupChatMessageDTO } from './get-meetup-chat-messages';
+import type { MeetupChatMessage } from '../model/meetup-chat';
 
 export function mapMeetupChatMessageDTOToMessage(
   dto: MeetupChatMessageDTO,
