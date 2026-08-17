@@ -1,6 +1,7 @@
 'use client';
 
-import { useMeetupFavoriteList } from '../model';
+import { useMeetupFavoriteList } from '../model/use-meetup-favorite-list';
+import { useDeleteFavoriteMeetup } from '../model/use-delete-favorite-meetup';
 import { FavoriteMeetup } from './FavoriteMeetup';
 import { PageStepper } from '@/shared/ui';
 
@@ -17,8 +18,8 @@ export function FavoriteMeetupList({
     totalPages,
     onPageChange,
     handleMeetupClick,
-    handleDelete,
   } = useMeetupFavoriteList();
+  const { mutate: handleDelete } = useDeleteFavoriteMeetup();
 
   const displayedMeetups = showPagination ? meetups : allMeetups;
 

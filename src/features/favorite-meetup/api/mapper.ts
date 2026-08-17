@@ -1,5 +1,9 @@
-import type { FavoriteMeetupListDTO } from './schema/getFavoriteMeetupList';
-import { EventStatus, EventSource, type PersonalEvent } from '@/entities/event';
+import type { FavoriteMeetupListDTO } from '@/shared/api/favorite-meetup';
+import {
+  EventSource,
+  parseEventStatus,
+  type PersonalEvent,
+} from '@/entities/event';
 
 export interface BookmarkedMeetup {
   id: string;
@@ -8,12 +12,6 @@ export interface BookmarkedMeetup {
   day: string;
   status?: string;
 }
-
-const statusMap: Record<string, EventStatus> = {
-  UPCOMING: EventStatus.UPCOMING,
-  ONGOING: EventStatus.ONGOING,
-  CLOSED: EventStatus.ENDED,
-};
 
 function resolveMeetupStatus(scheduledAt: Date): string {
   const now = new Date();
@@ -51,7 +49,7 @@ export function mapFavoriteMeetupToPersonalEvent(
     location: dto.location,
     maxMembers: dto.maxMembers,
     currentMembers: dto.currentMembers,
-    status: statusMap[dto.status] ?? EventStatus.UPCOMING,
+    status: parseEventStatus(dto.status),
     source: EventSource.PERSONAL,
     dateInfo: {
       startDate: scheduledDate,

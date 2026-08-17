@@ -1,5 +1,9 @@
 import type { FavoriteEventListDTO } from '@/shared/api/favorite-event';
-import { EventStatus, EventSource, type OfficialEvent } from '@/entities/event';
+import {
+  EventSource,
+  parseEventStatus,
+  type OfficialEvent,
+} from '@/entities/event';
 
 export interface BookmarkedEvent {
   id: string;
@@ -9,12 +13,6 @@ export interface BookmarkedEvent {
   status?: string;
   isUpcoming?: boolean;
 }
-
-const statusMap: Record<string, EventStatus> = {
-  UPCOMING: EventStatus.UPCOMING,
-  ONGOING: EventStatus.ONGOING,
-  CLOSED: EventStatus.ENDED,
-};
 
 function resolveEventStatus(startDate: Date, endDate: Date): string {
   const now = new Date();
@@ -50,7 +48,7 @@ export function mapFavoriteEventToOfficialEvent(
     location: dto.location,
     price: dto.price,
     category: dto.category,
-    status: statusMap[dto.status] ?? EventStatus.UPCOMING,
+    status: parseEventStatus(dto.status),
     source: EventSource.OFFICIAL,
     dateInfo: {
       startDate: new Date(dto.startDate),

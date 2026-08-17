@@ -5,6 +5,8 @@ import Link from 'next/link';
 import { useRef } from 'react';
 import { ROUTES } from '@/shared/routes';
 import type { MeetupDetailDTO } from '@/shared/api/meetup';
+import { parseEventStatus } from '@/entities/event';
+import { useLogined } from '@/entities/auth';
 import { useMeetupMembers } from '../api/use-meetup-members';
 import { FavoriteMeetupButton } from '@/features/favorite-meetup';
 import { ConfirmDialog } from '@/shared/ui';
@@ -39,7 +41,19 @@ export function MeetUpHeader({
   onDelete,
 }: MeetUpHeaderProps) {
   const { members } = useMeetupMembers(meetupId);
+  const logined = useLogined();
   const dialogRef = useRef<HTMLDialogElement>(null);
+
+  const favoriteMeetupTarget = {
+    id: String(detail.meetupId),
+    title: detail.title,
+    imageUrl: detail.thumbnailUrl ?? '',
+    location: detail.location,
+    dateInfo: { startDate: new Date(detail.scheduledAt), isRecurring: false },
+    currentMembers: detail.currentMembers,
+    maxMembers: detail.maxMembers,
+    status: parseEventStatus(detail.status),
+  };
 
   const openDialog = () => dialogRef.current?.showModal();
   const closeDialog = () => dialogRef.current?.close();
@@ -59,15 +73,11 @@ export function MeetUpHeader({
             className="object-cover"
           />
           {/* 모바일: 찜 버튼 이미지 우측 상단 오버레이 */}
-          <div className="absolute top-3 right-3 md:hidden">
-            <FavoriteMeetupButton
-              meetupId={detail.meetupId}
-              title={detail.title}
-              scheduledAt={detail.scheduledAt}
-              location={detail.location}
-              thumbnailUrl={detail.thumbnailUrl ?? ''}
-            />
-          </div>
+          {logined && (
+            <div className="absolute top-3 right-3 md:hidden">
+              <FavoriteMeetupButton meetup={favoriteMeetupTarget} />
+            </div>
+          )}
         </div>
       </div>
 
@@ -82,15 +92,11 @@ export function MeetUpHeader({
             {detail.title}
           </h1>
           {/* 데스크탑: 찜 버튼 제목 옆 */}
-          <div className="hidden md:block shrink-0">
-            <FavoriteMeetupButton
-              meetupId={detail.meetupId}
-              title={detail.title}
-              scheduledAt={detail.scheduledAt}
-              location={detail.location}
-              thumbnailUrl={detail.thumbnailUrl ?? ''}
-            />
-          </div>
+          {logined && (
+            <div className="hidden md:block shrink-0">
+              <FavoriteMeetupButton meetup={favoriteMeetupTarget} />
+            </div>
+          )}
         </div>
 
         {/* 날짜 */}

@@ -3,7 +3,7 @@
 import { useAuthStore } from '@/shared/auth';
 import { useOptimisticToggle } from '@/shared/lib/use-optimistic-toggle';
 import type { ApiResponse } from '@/shared/api';
-import { EventStatus } from '@/entities/event';
+import { serializeEventStatus } from '@/entities/event';
 import {
   FAVORITE_EVENT_QUERIES,
   type FavoriteEventListDTO,
@@ -12,13 +12,6 @@ import { getFavoriteEventStatus } from '../api/get-favorite-event-status';
 import { addFavoriteEvent } from '../api/add-favorite-event';
 import { deleteFavoriteEvent } from '../api/delete-favorite-event';
 import type { FavoriteEvent } from './favorite-event';
-
-// EventStatus(한글 라벨) → 찜 목록 API가 기대하는 원시 상태 문자열 역매핑
-const REVERSE_EVENT_STATUS: Record<EventStatus, string> = {
-  [EventStatus.UPCOMING]: 'UPCOMING',
-  [EventStatus.ONGOING]: 'ONGOING',
-  [EventStatus.ENDED]: 'CLOSED',
-};
 
 export function useEventFavoriteToggle({
   id,
@@ -67,7 +60,7 @@ export function useEventFavoriteToggle({
                   location,
                   price,
                   category,
-                  status: REVERSE_EVENT_STATUS[status],
+                  status: serializeEventStatus(status),
                   favoritedAt: new Date().toISOString(),
                 },
                 ...old.data.events,
