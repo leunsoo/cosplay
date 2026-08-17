@@ -40,7 +40,6 @@ export function useMeetupFavoriteList() {
     isLoading,
     totalCount: favorites?.totalCount ?? 0,
     meetups: pagedMeetups,
-    allMeetups,
     allMeetupsAsCards,
     currentPage,
     totalPages,

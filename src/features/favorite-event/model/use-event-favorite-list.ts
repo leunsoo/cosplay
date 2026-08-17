@@ -40,7 +40,6 @@ export function useEventFavoriteList() {
     isLoading,
     totalCount: favorites?.totalCount ?? 0,
     events: pagedEvents,
-    allEvents,
     allEventsAsCards,
     currentPage,
     totalPages,

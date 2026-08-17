@@ -5,15 +5,10 @@ import { useDeleteFavoriteMeetup } from '../model/use-delete-favorite-meetup';
 import { FavoriteMeetup } from './FavoriteMeetup';
 import { PageStepper } from '@/shared/ui';
 
-export function FavoriteMeetupList({
-  showPagination = true,
-}: {
-  showPagination?: boolean;
-}) {
+export function FavoriteMeetupList() {
   const {
     isLoading,
     meetups,
-    allMeetups,
     currentPage,
     totalPages,
     onPageChange,
@@ -21,17 +16,15 @@ export function FavoriteMeetupList({
   } = useMeetupFavoriteList();
   const { mutate: handleDelete } = useDeleteFavoriteMeetup();
 
-  const displayedMeetups = showPagination ? meetups : allMeetups;
-
   return (
     <div className="p-3">
       <div className="min-h-50 flex flex-col space-y-0.5">
-        {!isLoading && displayedMeetups.length === 0 ? (
+        {!isLoading && meetups.length === 0 ? (
           <div className="flex flex-1 items-center justify-center">
             <p className="text-gray-400 text-sm">찜한 개인 행사가 없습니다.</p>
           </div>
         ) : (
-          displayedMeetups.map((meetup) => (
+          meetups.map((meetup) => (
             <FavoriteMeetup
               key={meetup.id}
               title={meetup.title}
@@ -45,7 +38,7 @@ export function FavoriteMeetupList({
         )}
       </div>
 
-      {showPagination && totalPages > 1 && (
+      {totalPages > 1 && (
         <PageStepper
           currentPage={currentPage}
           totalPages={totalPages}

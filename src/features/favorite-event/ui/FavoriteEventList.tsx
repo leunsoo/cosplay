@@ -5,15 +5,10 @@ import { useDeleteFavoriteEvent } from '../model/use-delete-favorite-event';
 import { FavoriteEvent } from './FavoriteEvent';
 import { PageStepper } from '@/shared/ui';
 
-export function FavoriteEventList({
-  showPagination = true,
-}: {
-  showPagination?: boolean;
-}) {
+export function FavoriteEventList() {
   const {
     isLoading,
     events,
-    allEvents,
     currentPage,
     totalPages,
     onPageChange,
@@ -21,17 +16,15 @@ export function FavoriteEventList({
   } = useEventFavoriteList();
   const { mutate: handleDelete } = useDeleteFavoriteEvent();
 
-  const displayedEvents = showPagination ? events : allEvents;
-
   return (
     <div className="p-3">
       <div className="min-h-50 flex flex-col space-y-0.5">
-        {!isLoading && displayedEvents.length === 0 ? (
+        {!isLoading && events.length === 0 ? (
           <div className="flex flex-1 items-center justify-center">
             <p className="text-gray-400 text-sm">찜한 공식 행사가 없습니다.</p>
           </div>
         ) : (
-          displayedEvents.map((event) => (
+          events.map((event) => (
             <FavoriteEvent
               key={event.id}
               title={event.title}
@@ -46,7 +39,7 @@ export function FavoriteEventList({
         )}
       </div>
 
-      {showPagination && totalPages > 1 && (
+      {totalPages > 1 && (
         <PageStepper
           currentPage={currentPage}
           totalPages={totalPages}
