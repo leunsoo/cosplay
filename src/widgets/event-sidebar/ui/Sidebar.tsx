@@ -2,14 +2,10 @@
 
 import { useState } from 'react';
 import { useLogined } from '@/entities/auth';
-import {
-  FavoriteEventList,
-  useEventFavoriteList,
-} from '@/features/favorite-event';
-import {
-  FavoriteMeetupList,
-  useMeetupFavoriteList,
-} from '@/features/favorite-meetup';
+import { useEventFavoriteList } from '@/features/favorite-event';
+import { useMeetupFavoriteList } from '@/features/favorite-meetup';
+import { FavoriteEventList } from './FavoriteEventList';
+import { FavoriteMeetupList } from './FavoriteMeetupList';
 
 type Tab = 'official' | 'personal';
 

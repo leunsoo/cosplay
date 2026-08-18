@@ -1,7 +1,9 @@
 'use client';
 
-import { useMeetupFavoriteList } from '../model/use-meetup-favorite-list';
-import { useDeleteFavoriteMeetup } from '../model/use-delete-favorite-meetup';
+import {
+  useMeetupFavoriteList,
+  useDeleteFavoriteMeetup,
+} from '@/features/favorite-meetup';
 import { FavoriteMeetup } from './FavoriteMeetup';
 import { PageStepper } from '@/shared/ui';
 
