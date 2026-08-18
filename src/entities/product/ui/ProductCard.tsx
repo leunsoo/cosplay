@@ -1,23 +1,22 @@
+import Link from 'next/link';
 import { ProductImage } from './ProductImage';
 import { Product } from '../model/product';
 import { getRelativeTime } from '@/shared/lib/dateTime';
-
-interface ProductCardProps extends Product {
-  onClick?: () => void;
-}
+import { ROUTES } from '@/shared/routes';
 
 export function ProductCard({
+  id,
   image,
   title,
   price,
   createdAt,
   badges,
-  onClick,
-}: ProductCardProps) {
+}: Product) {
   return (
-    <div
-      className="group flex flex-col bg-white rounded-md overflow-hidden border border-gray-200 transition-all duration-300 cursor-pointer hover:shadow-md"
-      onClick={onClick}
+    <Link
+      href={ROUTES.PRODUCT.DETAIL(id)}
+      prefetch
+      className="group flex flex-col bg-white rounded-md overflow-hidden border border-gray-200 transition-all duration-300 hover:shadow-md"
     >
       <ProductImage imageUrl={image} badges={badges} />
 
@@ -38,6 +37,6 @@ export function ProductCard({
           </span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }

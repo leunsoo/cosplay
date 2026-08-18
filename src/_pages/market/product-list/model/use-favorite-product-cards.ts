@@ -1,7 +1,6 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { useRouter } from 'next/navigation';
 import { FAVORITE_PRODUCT_QUERIES } from '@/shared/api/favorite-product';
 import { mapFavoriteProductToProduct } from './mapper';
 
@@ -13,8 +12,6 @@ interface UseFavoriteProductCardsParams {
 export function useFavoriteProductCards({
   uuid,
 }: UseFavoriteProductCardsParams) {
-  const router = useRouter();
-
   const { data } = useQuery({
     ...FAVORITE_PRODUCT_QUERIES.list(uuid),
     staleTime: 0,
@@ -23,9 +20,5 @@ export function useFavoriteProductCards({
 
   const products = (data?.data.products ?? []).map(mapFavoriteProductToProduct);
 
-  const handleProductClick = (productId: number) => {
-    router.push(`/market/products/${productId}`);
-  };
-
-  return { products, handleProductClick };
+  return { products };
 }
