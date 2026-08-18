@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic';
 import { type Metadata } from 'next';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
-import { getProductListServer } from '@/entities/product';
+import { getProductListServer } from '@/_pages/market/product-list/index.server';
 import { ProductListView } from '@/_pages/market/product-list';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;

@@ -5,3 +5,5 @@ export {
   consumeLoginRedirectPath,
 } from './loginRedirectPath';
 export { isTokenExpired } from './jwt';
+export { reissueToken } from './reissueToken';
+export { isMe } from './is-me';

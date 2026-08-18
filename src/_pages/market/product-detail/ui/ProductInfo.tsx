@@ -4,7 +4,8 @@ import { useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { type Seller } from '@/entities/product';
-import { deleteProduct, updateProductStatus } from '@/entities/product';
+import { deleteProduct } from '../api/delete-product';
+import { updateProductStatus } from '../api/update-product-status';
 import { FAVORITE_PRODUCT_QUERIES } from '@/shared/api/favorite-product';
 import { useAuthStore } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
@@ -66,7 +67,9 @@ export function ProductInfo({
     mutationFn: (newStatus: ProductStatus) =>
       updateProductStatus({ uuid: userUuid, productId }, { status: newStatus }),
     onSuccess: (_, newStatus) => {
-      queryClient.invalidateQueries({ queryKey: FAVORITE_PRODUCT_QUERIES.all() });
+      queryClient.invalidateQueries({
+        queryKey: FAVORITE_PRODUCT_QUERIES.all(),
+      });
       queryClient.invalidateQueries({
         queryKey: ['recently-viewed', userUuid],
       });
@@ -79,7 +82,9 @@ export function ProductInfo({
     mutationFn: () => deleteProduct({ uuid: userUuid, productId }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['products'] });
-      queryClient.invalidateQueries({ queryKey: FAVORITE_PRODUCT_QUERIES.all() });
+      queryClient.invalidateQueries({
+        queryKey: FAVORITE_PRODUCT_QUERIES.all(),
+      });
       queryClient.invalidateQueries({
         queryKey: ['recently-viewed', userUuid],
       });

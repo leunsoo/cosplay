@@ -1,11 +1,9 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 
-import {
-  createProduct,
-  uploadProductImages,
-  updateProduct,
-} from '@/entities/product';
+import { createProduct } from '../api/create-product';
+import { uploadProductImages } from '../api/upload-product-images';
+import { updateProduct } from '../api/update-product';
 import { FAVORITE_PRODUCT_QUERIES } from '@/shared/api/favorite-product';
 import { useAuthStore } from '@/shared/auth';
 import { base64ToBlob, convertToWebp } from '@/shared/lib/imageFormat';

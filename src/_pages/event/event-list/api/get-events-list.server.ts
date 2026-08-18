@@ -6,7 +6,7 @@ import {
   resolveDemoEvents,
   type EventListDTO,
   type EventStatusParam,
-} from './get-events-list';
+} from './get-events-list.type';
 
 export const getEventsListServer = async (
   status: EventStatusParam = 'ALL',

@@ -1,38 +1,16 @@
 'use client';
 
-import { useLogined } from '@/entities/auth';
 import { FavoriteIconButton } from '@/entities/favorite';
-import { useMeetupFavoriteToggle } from '../model';
+import { useMeetupFavoriteToggle } from '../model/use-meetup-favorite-toggle';
+import type { FavoriteMeetup } from '../model/favorite-meetup';
 
 interface FavoriteMeetupButtonProps {
-  meetupId: number;
-  title: string;
-  thumbnailUrl: string;
-  scheduledAt: string;
-  location: string;
+  meetup: FavoriteMeetup;
 }
 
-export function FavoriteMeetupButton(props: FavoriteMeetupButtonProps) {
-  const logined = useLogined();
-  if (!logined) return null;
-  return <FavoriteMeetupButtonInner {...props} />;
-}
-
-function FavoriteMeetupButtonInner({
-  meetupId,
-  title,
-  thumbnailUrl,
-  scheduledAt,
-  location,
-}: FavoriteMeetupButtonProps) {
+export function FavoriteMeetupButton({ meetup }: FavoriteMeetupButtonProps) {
   const { displayedFavorited, isPending, isLoading, handleClick } =
-    useMeetupFavoriteToggle({
-      meetupId,
-      title,
-      thumbnailUrl,
-      scheduledAt,
-      location,
-    });
+    useMeetupFavoriteToggle(meetup);
 
   return (
     <FavoriteIconButton

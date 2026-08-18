@@ -4,6 +4,7 @@ import {
   formatEventDate,
   getStatusColor,
 } from '@/entities/event';
+import { useLogined } from '@/entities/auth';
 import { FavoriteMeetupButton } from '@/features/favorite-meetup';
 import { formatMemberCount } from '../lib/format';
 import { SummaryCardShell } from './SummaryCardShell';
@@ -15,6 +16,7 @@ interface MeetupSummaryCardProps {
 
 export function MeetupSummaryCard({ event }: MeetupSummaryCardProps) {
   const statusColor = getStatusColor(event.status);
+  const logined = useLogined();
 
   return (
     <SummaryCardShell
@@ -28,15 +30,7 @@ export function MeetupSummaryCard({ event }: MeetupSummaryCardProps) {
           {event.status}
         </span>
       }
-      favoriteButton={
-        <FavoriteMeetupButton
-          meetupId={Number(event.id)}
-          title={event.title}
-          scheduledAt={event.dateInfo.startDate.toISOString()}
-          location={event.location}
-          thumbnailUrl={event.imageUrl ?? ''}
-        />
-      }
+      favoriteButton={logined && <FavoriteMeetupButton meetup={event} />}
       infoRows={
         <>
           <SummaryCardInfoRow

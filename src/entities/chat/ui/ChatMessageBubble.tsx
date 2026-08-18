@@ -1,6 +1,6 @@
 import { UserAvatar } from '@/entities/user';
 import { cn } from '@/shared/lib/cn';
-import type { ChatMessage } from '../model';
+import type { ChatMessage } from '../model/chat-message';
 
 interface ChatMessageBubbleProps {
   message: ChatMessage;

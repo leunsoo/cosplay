@@ -20,24 +20,6 @@ export function Footer() {
           <span className="text-sm text-text-sub">
             llowa.official@gmail.com
           </span>
-          {/* <a
-            href="mailto:llowa.official@gmail.com"
-            className="text-sm text-text-sub hover:text-primary transition-colors"
-          >
-            1:1 문의하기
-          </a> */}
-          {/* <Link
-            href="/privacy"
-            className="text-sm text-text-sub hover:text-primary transition-colors"
-          >
-            개인정보처리방침
-          </Link>
-          <Link
-            href="/terms"
-            className="text-sm text-text-sub hover:text-primary transition-colors"
-          >
-            이용약관
-          </Link> */}
         </div>
 
         {/* 서비스 이용 주의사항 */}

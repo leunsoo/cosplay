@@ -1,1 +1,0 @@
-export { MeetupGroupChat } from './MeetupGroupChat';

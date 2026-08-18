@@ -3,7 +3,7 @@
 import { use } from 'react';
 import { useProductDetail } from '@/entities/product';
 import { ProductRegistView } from '@/_pages/market/product-regist';
-import { isMe } from '@/entities/auth';
+import { isMe } from '@/shared/auth';
 import { useRouter } from 'next/navigation';
 
 interface ProductEditPageProps {
@@ -22,7 +22,7 @@ export default function ProductEditPage({ params }: ProductEditPageProps) {
   if (!productDetail) return <div>상품을 찾을 수 없습니다.</div>;
 
   // 본인 상품이 아니면 접근 차단
-  if (!isMe(productDetail.seller.id)) {
+  if (!isMe(productDetail.seller.uuid)) {
     router.replace(`/market/products/${productId}`);
     return null;
   }
@@ -32,7 +32,7 @@ export default function ProductEditPage({ params }: ProductEditPageProps) {
   return (
     <ProductRegistView
       productId={productId}
-      initialImageUrl={product.image}
+      initialImageUrl={product.mainImageUrl}
       defaultValues={{
         title: product.title,
         price: product.price,

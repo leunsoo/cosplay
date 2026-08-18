@@ -1,41 +1,16 @@
 'use client';
 
-import { useLogined } from '@/entities/auth';
 import { FavoriteIconButton } from '@/entities/favorite';
-import { useEventFavoriteToggle } from '../model';
+import { useEventFavoriteToggle } from '../model/use-event-favorite-toggle';
+import type { FavoriteEvent } from '../model/favorite-event';
 
-interface EventFavoriteButtonProps {
-  eventId: number;
-  title: string;
-  startDate: string;
-  endDate: string;
-  location: string;
-  thumbnailUrl: string;
+interface FavoriteButtonProps {
+  event: FavoriteEvent;
 }
 
-export function FavoriteButton(props: EventFavoriteButtonProps) {
-  const logined = useLogined();
-  if (!logined) return null;
-  return <FavoriteButtonInner {...props} />;
-}
-
-function FavoriteButtonInner({
-  eventId,
-  title,
-  startDate,
-  endDate,
-  location,
-  thumbnailUrl,
-}: EventFavoriteButtonProps) {
+export function FavoriteButton({ event }: FavoriteButtonProps) {
   const { displayedFavorited, isPending, isLoading, handleClick } =
-    useEventFavoriteToggle({
-      eventId,
-      title,
-      startDate,
-      endDate,
-      location,
-      thumbnailUrl,
-    });
+    useEventFavoriteToggle(event);
 
   return (
     <FavoriteIconButton

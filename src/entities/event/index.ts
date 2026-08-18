@@ -4,3 +4,4 @@ export { EventStatus, EventSource } from './model/event';
 
 // Utilities
 export { formatEventDate, getStatusColor } from './lib/dateTime';
+export { parseEventStatus, serializeEventStatus } from './lib/eventStatus';

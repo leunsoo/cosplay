@@ -1,4 +1,4 @@
-import type { RecentlyViewedListDTO } from '@/features/product-recently-viewed/model/schema/getRecentlyViewedList';
+import type { RecentlyViewedListDTO } from '@/widgets/market-sidebar/api/get-recently-viewed-list';
 import { mockProductDetails } from './product';
 
 // 데모 모드 최근 본 상품 상태 (메모리 유지, 새로고침 시 초기화)

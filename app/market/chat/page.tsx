@@ -1,7 +1,7 @@
 import { AuthGuard } from '@/_app/providers/AuthGuard';
-import { ChatView } from '@/_pages/market/product-chat';
+import { ChatPage } from '@/_pages/market/product-chat';
 
-interface ChatPageProps {
+interface ChatRouteProps {
   searchParams: Promise<{
     productId?: string;
     sellerUuid?: string;
@@ -9,11 +9,11 @@ interface ChatPageProps {
   }>;
 }
 
-export default async function ChatPage({ searchParams }: ChatPageProps) {
+export default async function ChatRoute({ searchParams }: ChatRouteProps) {
   const { productId, sellerUuid, roomId } = await searchParams;
   return (
     <AuthGuard>
-      <ChatView productId={productId} sellerUuid={sellerUuid} roomId={roomId} />
+      <ChatPage productId={productId} sellerUuid={sellerUuid} roomId={roomId} />
     </AuthGuard>
   );
 }

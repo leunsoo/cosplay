@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import { formatEventDate } from '@/entities/event';
+import { useLogined } from '@/entities/auth';
 import type { OfficialEventDetail } from '../model';
 import { FavoriteButton } from '@/features/favorite-event';
 
@@ -21,6 +22,8 @@ interface EventHeaderProps {
 }
 
 export function EventHeader({ event }: EventHeaderProps) {
+  const logined = useLogined();
+
   return (
     <div className="flex flex-col md:flex-row gap-8 items-stretch bg-white md:border md:border-gray-200 md:rounded-xs md:shadow-sm md:p-12">
       {/* 이미지 */}
@@ -33,18 +36,11 @@ export function EventHeader({ event }: EventHeaderProps) {
             className="object-cover"
           />
           {/* 모바일: 찜 버튼 이미지 우측 상단 오버레이 */}
-          <div className="absolute top-3 right-3 md:hidden">
-            <FavoriteButton
-              eventId={Number(event.id)}
-              title={event.title}
-              startDate={event.dateInfo.startDate.toISOString()}
-              endDate={(
-                event.dateInfo.endDate ?? event.dateInfo.startDate
-              ).toISOString()}
-              location={event.location}
-              thumbnailUrl={event.imageUrl}
-            />
-          </div>
+          {logined && (
+            <div className="absolute top-3 right-3 md:hidden">
+              <FavoriteButton event={event} />
+            </div>
+          )}
         </div>
       </div>
 
@@ -55,18 +51,11 @@ export function EventHeader({ event }: EventHeaderProps) {
             {event.title}
           </h1>
           {/* 데스크탑: 찜 버튼 제목 옆 */}
-          <div className="hidden md:block">
-            <FavoriteButton
-              eventId={Number(event.id)}
-              title={event.title}
-              startDate={event.dateInfo.startDate.toISOString()}
-              endDate={(
-                event.dateInfo.endDate ?? event.dateInfo.startDate
-              ).toISOString()}
-              location={event.location}
-              thumbnailUrl={event.imageUrl}
-            />
-          </div>
+          {logined && (
+            <div className="hidden md:block">
+              <FavoriteButton event={event} />
+            </div>
+          )}
         </div>
 
         <div className="flex flex-col flex-1 divide-y divide-gray-100">

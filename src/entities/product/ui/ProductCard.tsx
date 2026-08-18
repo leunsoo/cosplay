@@ -1,5 +1,5 @@
 import { ProductImage } from './ProductImage';
-import { Product } from '../model';
+import { Product } from '../model/product';
 import { getRelativeTime } from '@/shared/lib/dateTime';
 
 interface ProductCardProps extends Product {

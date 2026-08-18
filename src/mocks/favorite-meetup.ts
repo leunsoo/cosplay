@@ -1,5 +1,5 @@
-import type { FavoriteMeetupListDTO } from '@/features/favorite-meetup/model/schema/getFavoriteMeetupList';
-import type { FavoriteMeetupStatusDTO } from '@/features/favorite-meetup/model/schema/getFavoriteMeetupStatus';
+import type { FavoriteMeetupListDTO } from '@/shared/api/favorite-meetup';
+import type { FavoriteMeetupStatusDTO } from '@/features/favorite-meetup/api/get-favorite-meetup-status';
 import { mockMeetupList } from './meetup';
 
 // 데모 모드 찜 상태 (메모리 유지, 새로고침 시 초기화)
