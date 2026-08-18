@@ -1,2 +1,2 @@
-export { RecentlyViewedList } from './ui';
-export { useAddRecentlyViewed } from './model';
+export { RecentlyViewedList } from './ui/RecentlyViewedList';
+export { useAddRecentlyViewed } from './model/use-add-recently-viewed';

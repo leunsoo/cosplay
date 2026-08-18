@@ -1,6 +1,8 @@
 'use client';
 
-import { useRecentlyViewedList, useDeleteAllRecentlyViewed } from '../model';
+import { useRef } from 'react';
+import { useRecentlyViewedList } from '../model/use-recently-viewed-list';
+import { useDeleteAllRecentlyViewed } from '../api/delete-all-recently-viewed';
 import { ProductSidePanel } from '@/entities/product';
 import { ConfirmDialog } from '@/shared/ui';
 
@@ -19,17 +21,35 @@ export function RecentlyViewedList({ uuid }: RecentlyViewedListProps) {
     handleProductClick,
   } = useRecentlyViewedList({ uuid });
 
-  const {
-    dialogRef,
-    isPending,
-    openDialog,
-    closeDialog,
-    handleBackdropClick,
-    handleConfirm,
-  } = useDeleteAllRecentlyViewed({
-    uuid,
-    onSuccess: () => setCurrentPage(1),
-  });
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const openDialog = () => dialogRef.current?.showModal();
+  const closeDialog = () => dialogRef.current?.close();
+
+  const handleBackdropClick = (e: React.MouseEvent<HTMLDialogElement>) => {
+    const dialog = dialogRef.current;
+    if (!dialog) return;
+
+    const rect = dialog.getBoundingClientRect();
+    const clickedInDialog =
+      rect.top <= e.clientY &&
+      e.clientY <= rect.top + rect.height &&
+      rect.left <= e.clientX &&
+      e.clientX <= rect.left + rect.width;
+
+    if (!clickedInDialog) {
+      dialog.close();
+    }
+  };
+
+  const deleteAllMutation = useDeleteAllRecentlyViewed(uuid);
+  const handleConfirm = () => {
+    deleteAllMutation.mutate(undefined, {
+      onSuccess: () => {
+        setCurrentPage(1);
+        closeDialog();
+      },
+    });
+  };
 
   return (
     <ProductSidePanel
@@ -65,7 +85,7 @@ export function RecentlyViewedList({ uuid }: RecentlyViewedListProps) {
             cancelLabel: '아니오',
             pendingLabel: '삭제 중...',
           }}
-          isPending={isPending}
+          isPending={deleteAllMutation.isPending}
           onConfirm={handleConfirm}
           onCancel={closeDialog}
           onBackdropClick={handleBackdropClick}

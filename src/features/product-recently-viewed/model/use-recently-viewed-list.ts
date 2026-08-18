@@ -1,8 +1,8 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { getRecentlyViewedList } from '../../api';
-import { mapRecentlyViewedProductToSidePanelProduct } from '../mapper';
+import { getRecentlyViewedList } from '../api/get-recently-viewed-list';
+import { mapRecentlyViewedProductToSidePanelProduct } from '../api/mapper';
 
 const ITEMS_PER_PAGE = 3;
 

@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { addRecentlyViewed } from '../../api';
+import { addRecentlyViewed } from '../api/add-recently-viewed';
 import { useLogined } from '@/entities/auth';
 
 interface UseAddRecentlyViewedParams {

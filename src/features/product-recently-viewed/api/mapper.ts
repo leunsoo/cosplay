@@ -1,5 +1,5 @@
 import type { SidePanelProduct } from '@/entities/product';
-import type { RecentlyViewedListDTO } from './schema/getRecentlyViewedList';
+import type { RecentlyViewedListDTO } from './get-recently-viewed-list';
 
 export function mapRecentlyViewedProductToSidePanelProduct(
   dto: RecentlyViewedListDTO['products'][number]
