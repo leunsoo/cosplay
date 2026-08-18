@@ -2,6 +2,7 @@ import { z } from 'zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient, type ApiResponse } from '@/shared/api';
 import { IS_DEMO } from '@/shared/lib/isDemo';
+import { RECENTLY_VIEWED_QUERIES } from '@/shared/api/recently-viewed';
 import { clearDemoRecentlyViewed } from '@/mocks';
 
 // 최근 본 상품 기록 전체 삭제 API
@@ -43,7 +44,9 @@ export function useDeleteAllRecentlyViewed(uuid: string) {
   return useMutation({
     mutationFn: () => deleteAllRecentlyViewed({ uuid }),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['recently-viewed', uuid] });
+      queryClient.invalidateQueries({
+        queryKey: RECENTLY_VIEWED_QUERIES.list(uuid),
+      });
     },
   });
 }

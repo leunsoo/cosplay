@@ -1,22 +1,27 @@
+'use client';
+
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
+import { RECENTLY_VIEWED_QUERIES } from '@/shared/api/recently-viewed';
 import { getRecentlyViewedList } from '../api/get-recently-viewed-list';
-import { mapRecentlyViewedProductToSidePanelProduct } from '../api/mapper';
+import { mapRecentlyViewedProductToSidePanelProduct } from './mapper';
 
 const ITEMS_PER_PAGE = 3;
 
-interface UseRecentlyViewedListParams {
+interface UseRecentlyViewedPanelParams {
   uuid: string;
 }
 
-export function useRecentlyViewedList({ uuid }: UseRecentlyViewedListParams) {
+// 사이드바 최근 본 상품 패널 전용: 페이지네이션 + 클릭 이동
+export function useRecentlyViewedPanel({ uuid }: UseRecentlyViewedPanelParams) {
   const router = useRouter();
   const [currentPage, setCurrentPage] = useState(1);
 
   const { data, isLoading } = useQuery({
-    queryKey: ['recently-viewed', uuid],
+    queryKey: RECENTLY_VIEWED_QUERIES.list(uuid),
     queryFn: () => getRecentlyViewedList({ uuid }),
+    enabled: !!uuid,
     staleTime: 0,
     gcTime: 0,
   });
@@ -25,8 +30,8 @@ export function useRecentlyViewedList({ uuid }: UseRecentlyViewedListParams) {
   const products = (recentlyViewed?.products ?? []).map(
     mapRecentlyViewedProductToSidePanelProduct
   );
-  const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
 
+  const totalPages = Math.ceil(products.length / ITEMS_PER_PAGE);
   const startIndex = (currentPage - 1) * ITEMS_PER_PAGE;
   const currentProducts = products.slice(
     startIndex,

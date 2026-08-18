@@ -1,7 +1,7 @@
 'use client';
 
 import { useRef } from 'react';
-import { useRecentlyViewedList } from '../model/use-recently-viewed-list';
+import { useRecentlyViewedPanel } from '../model/use-recently-viewed-panel';
 import { useDeleteAllRecentlyViewed } from '../api/delete-all-recently-viewed';
 import { ProductSidePanel } from '@/entities/product';
 import { ConfirmDialog } from '@/shared/ui';
@@ -19,7 +19,7 @@ export function RecentlyViewedList({ uuid }: RecentlyViewedListProps) {
     totalPages,
     setCurrentPage,
     handleProductClick,
-  } = useRecentlyViewedList({ uuid });
+  } = useRecentlyViewedPanel({ uuid });
 
   const dialogRef = useRef<HTMLDialogElement>(null);
   const openDialog = () => dialogRef.current?.showModal();

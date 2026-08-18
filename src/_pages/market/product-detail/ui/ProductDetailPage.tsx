@@ -8,7 +8,7 @@ import { ProductDescription } from './ProductDescription';
 import { SellerProductsSection } from './SellerProductsSection';
 import { useProductDetail } from '@/entities/product';
 import { mapSellerProductDTOToProduct } from '../api/mapper';
-import { useAddRecentlyViewed } from '@/features/product-recently-viewed';
+import { useAddRecentlyViewed } from '../model/use-add-recently-viewed';
 import { useAuthStore, isMe } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
 import { ROUTES } from '@/shared/routes';
