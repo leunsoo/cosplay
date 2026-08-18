@@ -1,8 +1,8 @@
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';
-import { ProductInfo } from '../model/types';
+import { ChatProductInfo } from '../model/chat';
 
-interface ChatHeaderProps extends ProductInfo {
+interface ChatHeaderProps extends ChatProductInfo {
   onLeave?: () => void;
 }
 

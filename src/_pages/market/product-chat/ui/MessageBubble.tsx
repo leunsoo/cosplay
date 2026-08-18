@@ -1,6 +1,7 @@
-import { Message } from '../model/types';
+import { Message } from '../model/chat';
 import Image from 'next/image';
 import { cn } from '@/shared/lib/cn';
+import { formatChatTimestamp } from './format-chat-timestamp';
 
 export function MessageBubble({ type, message, imageUrl, timestamp }: Message) {
   const isSender = type === 'sender';
@@ -42,7 +43,7 @@ export function MessageBubble({ type, message, imageUrl, timestamp }: Message) {
           </div>
         )}
         <span className="text-[10px] text-gray-400 whitespace-nowrap mb-1 shrink-0">
-          {timestamp}
+          {formatChatTimestamp(timestamp)}
         </span>
       </div>
     </div>

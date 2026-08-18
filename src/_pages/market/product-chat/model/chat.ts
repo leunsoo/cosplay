@@ -15,13 +15,12 @@ export interface Message {
   type: 'receiver' | 'sender';
   message?: string;
   imageUrl?: string;
-  timestamp: string;
-  rawTimestamp?: string; // ISO 문자열, 날짜 구분선 계산용
+  timestamp: string; // ISO 문자열 — 표시 포맷팅은 MessageBubble에서 처리
   userName?: string;
   userAvatar?: string;
 }
 
-export interface ProductInfo {
+export interface ChatProductInfo {
   productImage: string;
   productTitle: string;
   productPrice?: number; // getChatRoom 응답에 가격 없어 optional

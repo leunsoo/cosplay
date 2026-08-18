@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { cn } from '@/shared/lib/cn';
-import { ChatRoom } from '../model/types';
+import { ChatRoom } from '../model/chat';
 import { ChatRoomItem } from './ChatRoomItem';
 
 interface ChatRoomListProps {

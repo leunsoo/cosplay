@@ -1,8 +1,8 @@
-import type { ChatRoomListDTO } from '@/features/product-trade-chat/model/schema/getChatRoomList';
-import type { ChatRoomDetailDTO } from '@/features/product-trade-chat/model/schema/getChatRoom';
-import type { ResolveChatRoomDTO } from '@/features/product-trade-chat/model/schema/resolveChatRoom';
-import type { MessageListDTO } from '@/features/product-trade-chat/model/schema/getChatMessages';
-import type { CreateChatRoomBody } from '@/features/product-trade-chat/model/schema/createChatRoom';
+import type { ChatRoomListDTO } from '@/_pages/market/product-chat/api/get-chat-room-list';
+import type { ChatRoomDetailDTO } from '@/_pages/market/product-chat/api/get-chat-room';
+import type { ResolveChatRoomDTO } from '@/_pages/market/product-chat/api/resolve-chat-room';
+import type { MessageListDTO } from '@/_pages/market/product-chat/api/get-chat-messages';
+import type { CreateChatRoomBody } from '@/_pages/market/product-chat/api/create-chat-room';
 import { DEMO_USER_UUID } from './user';
 import { mockProductDetails } from './product';
 

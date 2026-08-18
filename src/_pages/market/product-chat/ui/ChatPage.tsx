@@ -2,18 +2,16 @@
 
 import React, { useState, useRef, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import {
-  ChatRoomList,
-  ChatHeader,
-  MessageInput,
-  MessageBubble,
-  DateDivider,
-  SystemNotification,
-} from '@/features/product-trade-chat';
+import { ChatRoomList } from './ChatRoomList';
+import { ChatHeader } from './ChatHeader';
+import { MessageInput } from './MessageInput';
+import { MessageBubble } from './MessageBubble';
+import { DateDivider } from './DateDivider';
+import { SystemNotification } from './SystemNotification';
 import { ConfirmDialog } from '@/shared/ui';
-import { useChatView } from './model';
+import { useProductChat } from '../model/use-product-chat';
 
-interface ChatViewProps {
+interface ChatPageProps {
   productId?: string;
   sellerUuid?: string;
   roomId?: string;
@@ -32,7 +30,7 @@ function isSameDay(a: string, b: string): boolean {
   return new Date(a).toDateString() === new Date(b).toDateString();
 }
 
-export function ChatView({ productId, sellerUuid, roomId }: ChatViewProps) {
+export function ChatPage({ productId, sellerUuid, roomId }: ChatPageProps) {
   const router = useRouter();
   // UI 전용 상태: 모바일에서 목록/채팅 뷰 전환
   const [mobileView, setMobileView] = useState<'list' | 'chat'>(
@@ -41,7 +39,7 @@ export function ChatView({ productId, sellerUuid, roomId }: ChatViewProps) {
   const messagesContainerRef = useRef<HTMLDivElement>(null);
   const leaveDialogRef = useRef<HTMLDialogElement>(null);
 
-  // 비즈니스 로직은 useChatView 훅에 위임
+  // 비즈니스 로직은 useProductChat 훅에 위임
   const {
     chatRoomsWithActive,
     messages,
@@ -55,7 +53,7 @@ export function ChatView({ productId, sellerUuid, roomId }: ChatViewProps) {
     handleMessageSend,
     handleSendImage,
     handleLeave,
-  } = useChatView({ productId, sellerUuid, roomId });
+  } = useProductChat({ productId, sellerUuid, roomId });
 
   const handleLeaveConfirm = () => {
     leaveDialogRef.current?.close();
@@ -169,13 +167,13 @@ export function ChatView({ productId, sellerUuid, roomId }: ChatViewProps) {
               {messages.map((msg, index) => {
                 const prevMsg = messages[index - 1];
                 const showDivider =
-                  msg.rawTimestamp &&
-                  (!prevMsg?.rawTimestamp ||
-                    !isSameDay(msg.rawTimestamp, prevMsg.rawTimestamp));
+                  msg.timestamp &&
+                  (!prevMsg?.timestamp ||
+                    !isSameDay(msg.timestamp, prevMsg.timestamp));
                 return (
                   <React.Fragment key={msg.id}>
                     {showDivider && (
-                      <DateDivider date={formatDateLabel(msg.rawTimestamp!)} />
+                      <DateDivider date={formatDateLabel(msg.timestamp)} />
                     )}
                     <MessageBubble {...msg} />
                   </React.Fragment>

@@ -1,6 +1,6 @@
-import { formatChatTimestamp } from '../lib';
-import type { ChatRoomDTO, ChatRoomDetailDTO, MessageDTO } from './schema';
-import type { ChatRoom, Message, ProductInfo } from './types';
+import type { ChatRoomDTO } from '../api/get-chat-room-list';
+import type { MessageDTO } from '../api/get-chat-messages';
+import type { ChatRoom, Message } from './chat';
 
 interface OpponentInfo {
   userName: string;
@@ -21,21 +21,6 @@ export function transformChatRoomDTO(dto: ChatRoomDTO): ChatRoom {
     thumbnailImage: dto.productPhotoUrl,
     unreadCount: dto.unreadCount,
     isActive: false,
-  };
-}
-
-/**
- * ChatRoomDetailDTO를 ProductInfo 타입으로 변환
- */
-export function transformChatRoomDetailDTO(
-  dto: ChatRoomDetailDTO
-): ProductInfo {
-  return {
-    productImage: dto.productPhotoUrl,
-    productTitle: dto.productTitle,
-    productPrice: dto.productPrice,
-    opponentUuid: dto.opponentUuid,
-    productId: dto.productId,
   };
 }
 
@@ -64,8 +49,7 @@ export function mapMessageDTOToMessage(
     type: isSender ? 'sender' : 'receiver',
     message: isImage ? undefined : dto.message,
     imageUrl: isImage ? dto.message : undefined,
-    timestamp: formatChatTimestamp(dto.createdAt),
-    rawTimestamp: dto.createdAt,
+    timestamp: dto.createdAt,
     userName: isSender ? undefined : opponentInfo.userName,
     userAvatar: isSender ? undefined : opponentInfo.userAvatar,
   };
