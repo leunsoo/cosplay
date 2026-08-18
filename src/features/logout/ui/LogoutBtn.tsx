@@ -2,7 +2,7 @@
 
 import { LogOut } from 'lucide-react';
 import { useAuthStore } from '@/shared/auth';
-import { useLogout } from '../model';
+import { useLogout } from '../api/logout';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';
 

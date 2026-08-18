@@ -1,6 +1,12 @@
+import { z } from 'zod';
+import { useMutation } from '@tanstack/react-query';
 import { apiClient, type ApiResponse } from '@/shared/api';
-import { LogoutResponseSchema, type LogoutResponse } from '../model/schema';
 import { IS_DEMO } from '@/shared/lib/isDemo';
+
+// 로그아웃 API
+
+export const LogoutResponseSchema = z.null().or(z.undefined());
+export type LogoutResponse = z.infer<typeof LogoutResponseSchema>;
 
 export const logout = async (): Promise<ApiResponse<LogoutResponse>> => {
   if (IS_DEMO) return { status: 'SUCCESS', message: '성공', data: null };
@@ -10,3 +16,9 @@ export const logout = async (): Promise<ApiResponse<LogoutResponse>> => {
     LogoutResponseSchema
   );
 };
+
+export function useLogout() {
+  return useMutation({
+    mutationFn: logout,
+  });
+}
