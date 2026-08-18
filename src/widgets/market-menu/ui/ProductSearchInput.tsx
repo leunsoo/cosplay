@@ -1,13 +1,11 @@
 'use client';
 
-import { KeywordList } from '@/entities/search-keywords';
+import { KeywordList } from './KeywordList';
 import { useProductSearch } from '../model/use-product-search';
-import { useRecentKeywords } from '../model/use-recent-keywords';
 
 export function ProductSearchInput() {
   const { keyword, setKeyword, handleSearch, handleKeyDown } =
     useProductSearch();
-  const { keywords, deleteSingle, deleteAll } = useRecentKeywords();
 
   return (
     <div className="flex-1 flex flex-col gap-3">
@@ -34,12 +32,7 @@ export function ProductSearchInput() {
       </div>
 
       {/* Recent Searches */}
-      <KeywordList
-        keywords={keywords}
-        onSearch={handleSearch}
-        onDeleteSingle={deleteSingle}
-        onDeleteAll={deleteAll}
-      />
+      <KeywordList onSearch={handleSearch} />
     </div>
   );
 }

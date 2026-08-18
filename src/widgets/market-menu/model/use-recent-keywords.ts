@@ -1,10 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuthStore } from '@/shared/auth';
-import {
-  getSearchKeywords,
-  deleteAllSearchKeywords,
-  deleteSearchKeyword,
-} from '@/entities/search-keywords';
+import { getSearchKeywords } from '../api/get-search-keywords';
+import { deleteAllSearchKeywords } from '../api/delete-all-search-keywords';
+import { deleteSearchKeyword } from '../api/delete-search-keyword';
 
 export function useRecentKeywords() {
   const queryClient = useQueryClient();

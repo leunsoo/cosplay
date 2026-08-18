@@ -1,19 +1,15 @@
-import type { SearchKeywordsDTO } from '../model';
+'use client';
+
+import { useRecentKeywords } from '../model/use-recent-keywords';
 import { KeywordItem } from './KeywordItem';
 
 interface KeywordListProps {
-  keywords: SearchKeywordsDTO['keywords'];
   onSearch: (keyword: string) => void;
-  onDeleteSingle: (keywordId: number) => void;
-  onDeleteAll: () => void;
 }
 
-export function KeywordList({
-  keywords,
-  onSearch,
-  onDeleteSingle,
-  onDeleteAll,
-}: KeywordListProps) {
+export function KeywordList({ onSearch }: KeywordListProps) {
+  const { keywords, deleteSingle, deleteAll } = useRecentKeywords();
+
   if (keywords.length === 0) return null;
 
   return (
@@ -27,11 +23,11 @@ export function KeywordList({
             key={item.id}
             keyword={item.keyword}
             onSearch={onSearch}
-            onDelete={() => onDeleteSingle(item.id)}
+            onDelete={() => deleteSingle(item.id)}
           />
         ))}
         <button
-          onClick={onDeleteAll}
+          onClick={() => deleteAll()}
           className="text-xs text-gray-400 hover:text-gray-600 ml-2"
         >
           전체 삭제

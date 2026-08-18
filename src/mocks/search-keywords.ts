@@ -1,4 +1,4 @@
-import type { SearchKeywordsDTO } from '@/entities/search-keywords/model/schema/getSearchKeywords';
+import type { SearchKeywordsDTO } from '@/widgets/market-menu/api/get-search-keywords';
 
 // 데모 모드 최근 검색어 상태 (메모리 유지, 새로고침 시 초기화)
 // 최신 검색이 앞에 오도록 배열 순서 자체로 관리한다.
