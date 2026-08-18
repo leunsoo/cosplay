@@ -1,6 +1,4 @@
 import { ProductCard, type Product, type Seller } from '@/entities/product';
-import { useRouter } from 'next/navigation';
-import { ROUTES } from '@/shared/routes';
 import { UserAvatar } from '@/entities/user';
 
 interface SellerProductsSectionProps {
@@ -14,8 +12,6 @@ export function SellerProductsSection({
   products,
   onViewMore,
 }: SellerProductsSectionProps) {
-  const router = useRouter();
-
   return (
     <div>
       <div className="flex items-center gap-3 mb-6">
@@ -42,11 +38,7 @@ export function SellerProductsSection({
       {/* Products Grid */}
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {products.map((product) => (
-          <ProductCard
-            key={product.id}
-            {...product}
-            onClick={() => router.push(ROUTES.PRODUCT.DETAIL(product.id))}
-          />
+          <ProductCard key={product.id} {...product} />
         ))}
       </div>
     </div>

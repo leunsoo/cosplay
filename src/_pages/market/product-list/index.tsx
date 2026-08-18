@@ -1,7 +1,6 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { useRouter } from 'next/navigation';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { ProductGrid, mapProductDTOsToProducts } from '@/entities/product';
 import { getProductList } from './api/get-product-list';
@@ -17,7 +16,6 @@ interface ProductListViewProps {
 }
 
 export function ProductListView({ keyword = '' }: ProductListViewProps) {
-  const router = useRouter();
   const userUuid = useAuthStore((state) => state.userUuid);
   const isLogined = useLogined();
   const [currentPage, setCurrentPage] = useState(1);
@@ -40,10 +38,9 @@ export function ProductListView({ keyword = '' }: ProductListViewProps) {
         : getProductList({ page: currentPage }),
   });
 
-  const {
-    products: allProductsAsCards,
-    handleProductClick: handleFavoriteClick,
-  } = useFavoriteProductCards({ uuid: userUuid });
+  const { products: allProductsAsCards } = useFavoriteProductCards({
+    uuid: userUuid,
+  });
 
   useEffect(() => {
     if (isSearchMode && data && userUuid) {
@@ -84,20 +81,12 @@ export function ProductListView({ keyword = '' }: ProductListViewProps) {
                 찜한 상품이 없습니다.
               </p>
             ) : (
-              <ProductGrid
-                products={allProductsAsCards}
-                onProductClick={handleFavoriteClick}
-              />
+              <ProductGrid products={allProductsAsCards} />
             )}
           </div>
         ) : (
           <>
-            <ProductGrid
-              products={products}
-              onProductClick={(productId) =>
-                router.push(`/market/products/${productId}`)
-              }
-            />
+            <ProductGrid products={products} />
             <PaginationControl
               currentPage={currentPage}
               totalPages={totalPages}

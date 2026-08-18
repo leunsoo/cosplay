@@ -1,13 +1,12 @@
 'use client';
 
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import { ProductGrid } from '@/entities/product';
 import { PaginationControl, ErrorState } from '@/shared/ui';
 import { SellerProfileCard, TabNavigation, LoadingState } from './ui';
 import { useSellerData, type Tab } from './model';
 
 export function SellerProductsListView() {
-  const router = useRouter();
   const params = useParams();
   const sellerUuid = params.id as string;
 
@@ -90,12 +89,7 @@ export function SellerProductsListView() {
       ) : (
         /* 상품 그리드 */
         <>
-          <ProductGrid
-            products={products}
-            onProductClick={(productId: number) =>
-              router.push(`/market/products/${productId}`)
-            }
-          />
+          <ProductGrid products={products} />
           <PaginationControl
             currentPage={currentPage}
             totalPages={pagination?.totalPages || 1}
