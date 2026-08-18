@@ -2,8 +2,7 @@
 
 import { useEffect, useRef } from 'react';
 import { apiClient } from '@/shared/api';
-import { useAuthStore, DEMO_REGISTERED_KEY } from '@/shared/auth';
-import { reissueToken } from '@/entities/auth';
+import { useAuthStore, DEMO_REGISTERED_KEY, reissueToken } from '@/shared/auth';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {

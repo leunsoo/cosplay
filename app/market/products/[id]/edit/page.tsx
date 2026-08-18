@@ -3,7 +3,7 @@
 import { use } from 'react';
 import { useProductDetail } from '@/entities/product';
 import { ProductRegistView } from '@/_pages/market/product-regist';
-import { isMe } from '@/entities/auth';
+import { isMe } from '@/shared/auth';
 import { useRouter } from 'next/navigation';
 
 interface ProductEditPageProps {

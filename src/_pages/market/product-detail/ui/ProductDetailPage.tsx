@@ -2,23 +2,21 @@
 
 import { useRouter } from 'next/navigation';
 
-import {
-  ProductImage,
-  ProductInfo,
-  ProductDescription,
-  SellerProductsSection,
-} from './ui';
+import { ProductImage } from './ProductImage';
+import { ProductInfo } from './ProductInfo';
+import { ProductDescription } from './ProductDescription';
+import { SellerProductsSection } from './SellerProductsSection';
 import { useProductDetail } from '@/entities/product';
 import { useAddRecentlyViewed } from '@/features/product-recently-viewed';
-import { useAuthStore } from '@/shared/auth';
-import { isMe, useLogined } from '@/entities/auth';
+import { useAuthStore, isMe } from '@/shared/auth';
+import { useLogined } from '@/entities/auth';
 import { ROUTES } from '@/shared/routes';
 
-interface ProductDetailViewProps {
+interface ProductDetailPageProps {
   productId: number;
 }
 
-export function ProductDetailView({ productId }: ProductDetailViewProps) {
+export function ProductDetailPage({ productId }: ProductDetailPageProps) {
   const router = useRouter();
   const userUuid = useAuthStore((state) => state.userUuid);
   const logined = useLogined();

@@ -6,7 +6,7 @@ import { notFound } from 'next/navigation';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
 import { getProductDetailServer } from '@/entities/product';
-import { ProductDetailView } from '@/_pages/market/product-detail';
+import { ProductDetailPage } from '@/_pages/market/product-detail';
 import { ProductJsonLd } from './_components/ProductJsonLd';
 
 interface ProductDetailPageProps {
@@ -67,7 +67,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function ProductDetailPage({
+export default async function ProductDetailRoute({
   params,
 }: ProductDetailPageProps) {
   const { id } = await params;
@@ -84,14 +84,14 @@ export default async function ProductDetailPage({
       queryFn: () => fetchProductDetail(id),
     });
   } catch {
-    // JSON-LD/prefetch 실패 시 무시 (ProductDetailView는 자체적으로 에러 처리)
+    // JSON-LD/prefetch 실패 시 무시 (ProductDetailPage는 자체적으로 에러 처리)
     notFound();
   }
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       {productData && <ProductJsonLd product={productData.product} id={id} />}
-      <ProductDetailView productId={Number(id)} />
+      <ProductDetailPage productId={Number(id)} />
     </HydrationBoundary>
   );
 }
