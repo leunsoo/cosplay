@@ -3,12 +3,9 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
-import {
-  ProductGrid,
-  getProductList,
-  getProductSearch,
-  mapProductDTOsToProducts,
-} from '@/entities/product';
+import { ProductGrid, mapProductDTOsToProducts } from '@/entities/product';
+import { getProductList } from './api/get-product-list';
+import { getProductSearch } from './api/get-product-search';
 import { useAuthStore } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
 import { useFavoriteProductCards } from './model/use-favorite-product-cards';

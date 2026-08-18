@@ -5,7 +5,7 @@ import { type Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
-import { getProductDetailServer } from '@/entities/product';
+import { getProductDetailServer } from '@/_pages/market/product-detail/index.server';
 import { ProductDetailPage } from '@/_pages/market/product-detail';
 import { ProductJsonLd } from './_components/ProductJsonLd';
 

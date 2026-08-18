@@ -3,26 +3,23 @@ export { ProductCard, ProductGrid, ProductSidePanel } from './ui';
 // Types
 export type {
   Product,
+  BadgeInfo,
+  ProductStatus,
   SidePanelProduct,
-  ProductDetail,
-  Seller,
-  ProductDetailWithSeller,
-} from './model';
+} from './model/product';
+export { isProductInactive } from './model/product';
 
+// 상품 상세 조회 (product-detail 페이지 + product-chat에서 재사용)
 export {
-  getProductList,
-  getProductListServer,
   getProductDetail,
-  getProductDetailServer,
-  getProductSearch,
-  createProduct,
-  uploadProductImages,
-  updateProduct,
-  deleteProduct,
-  updateProductStatus,
-} from './api';
-export {
-  mapProductDTOsToProducts,
-  mapProductDetailResponseDTOToProductDetailWithSeller,
   useProductDetail,
-} from './model';
+  GetProductDetailParamsSchema,
+  ProductDetailResponseDTOSchema,
+  resolveDemoProductDetail,
+  type GetProductDetailParams,
+  type ProductDetailResponseDTO,
+  type Seller,
+} from './api/get-product-detail';
+
+// 매퍼 (product-list, seller-product-list에서 재사용)
+export { mapProductDTOsToProducts } from './api/mapper';

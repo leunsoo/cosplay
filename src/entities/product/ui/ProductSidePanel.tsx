@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { PageStepper } from '@/shared/ui';
-import type { SidePanelProduct } from '../model';
-import { isProductInactive } from '../model';
+import type { SidePanelProduct } from '../model/product';
+import { isProductInactive } from '../model/product';
 
 interface ProductSidePanelProps {
   title: string;

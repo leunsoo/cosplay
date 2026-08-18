@@ -1,7 +1,7 @@
-import type { ProductListDTO } from '@/entities/product/model';
-import type { ProductDetailResponseDTO } from '@/entities/product/model/schema/getProductDetail';
-import type { CreateProductBody } from '@/entities/product/model/schema/createProduct';
-import type { UpdateProductBody } from '@/entities/product/model/schema/updateProduct';
+import type { ProductListDTO } from '@/_pages/market/product-list/api/get-product-list';
+import type { ProductDetailResponseDTO } from '@/entities/product';
+import type { CreateProductBody } from '@/_pages/market/product-regist/api/create-product';
+import type { UpdateProductBody } from '@/_pages/market/product-regist/api/update-product';
 import { DEMO_USER_UUID, mockMyProfile } from './user';
 
 const SELLER_UUID = 'demo-seller-uuid-0001';

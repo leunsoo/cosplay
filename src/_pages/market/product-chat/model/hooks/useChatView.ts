@@ -13,7 +13,7 @@ import {
   type ChatRoom,
 } from '@/features/product-trade-chat';
 import { useAuthStore } from '@/shared/auth';
-import { getProductDetail } from '@/entities/product';
+import { useProductDetail } from '@/entities/product';
 import { useChatRoom } from './useChatRoom';
 
 interface UseChatViewParams {
@@ -98,11 +98,9 @@ export function useChatView({
   })();
 
   // productId 진입 시: 상품 상세 조회 → ChatHeader 표시 + createChatRoom 인자
-  const { data: productDetailData } = useQuery({
-    queryKey: ['product', Number(productId)],
-    queryFn: () => getProductDetail({ productId: Number(productId!) }),
-    enabled: !!productId,
-  });
+  const { productDetail } = useProductDetail(
+    productId ? Number(productId) : undefined
+  );
 
   // 방 선택 시: 채팅방 상품 정보 조회 → ChatHeader 표시
   // roomId 기반 진입이거나 사이드바에서 방 선택 시 사용
@@ -115,13 +113,13 @@ export function useChatView({
   // ChatHeader 표시용 상품 정보 결정
   // 우선순위: productDetail(productId 진입, 가격 포함) > chatRoomDetail(roomId 진입/사이드바) > 기본값
   const headerProductInfo = (() => {
-    if (productId && productDetailData?.data) {
+    if (productId && productDetail) {
       return {
-        productImage: productDetailData.data.product.mainImageUrl,
-        productTitle: productDetailData.data.product.title,
-        productPrice: productDetailData.data.product.price,
+        productImage: productDetail.product.mainImageUrl,
+        productTitle: productDetail.product.title,
+        productPrice: productDetail.product.price,
         productId: Number(productId),
-        opponentUuid: productDetailData.data.seller.uuid,
+        opponentUuid: productDetail.seller.uuid,
       };
     }
     if (chatRoomDetailData?.data) {
@@ -175,7 +173,7 @@ export function useChatView({
       createRoomMutation.mutate({
         productId: Number(pendingProductId),
         buyerUuid: userUuid,
-        sellerUuid: sellerUuid ?? productDetailData?.data?.seller.uuid ?? '',
+        sellerUuid: sellerUuid ?? productDetail?.seller.uuid ?? '',
       });
     } else {
       handleSend(messageText);

@@ -1,5 +1,5 @@
 import { Badge } from './Badge';
-import { BadgeInfo } from '../model';
+import { BadgeInfo } from '../model/product';
 
 interface ProductImageProps {
   imageUrl: string;

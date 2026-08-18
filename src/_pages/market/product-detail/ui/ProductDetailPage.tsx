@@ -7,6 +7,7 @@ import { ProductInfo } from './ProductInfo';
 import { ProductDescription } from './ProductDescription';
 import { SellerProductsSection } from './SellerProductsSection';
 import { useProductDetail } from '@/entities/product';
+import { mapSellerProductDTOToProduct } from '../api/mapper';
 import { useAddRecentlyViewed } from '@/features/product-recently-viewed';
 import { useAuthStore, isMe } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
@@ -28,7 +29,7 @@ export function ProductDetailPage({ productId }: ProductDetailPageProps) {
 
   // 채팅하기 버튼 클릭 핸들러
   const handleChatClick = () => {
-    const sellerUuid = productDetail?.seller.id ?? '';
+    const sellerUuid = productDetail?.seller.uuid ?? '';
     const chatPath = `/market/chat?productId=${productId}&sellerUuid=${sellerUuid}`;
 
     if (!logined) {
@@ -62,23 +63,25 @@ export function ProductDetailPage({ productId }: ProductDetailPageProps) {
         <div className="bg-white rounded-xl shadow-sm border border-border-color p-6 lg:p-8 mb-8">
           <div className="flex flex-col lg:flex-row gap-10 min-w-0">
             {/* Product Images */}
-            <ProductImage mainImage={productDetail.product.image} />
+            <ProductImage mainImage={productDetail.product.mainImageUrl} />
 
             {/* Product Info */}
             <ProductInfo
               productId={productDetail.product.id}
               title={productDetail.product.title}
-              mainImageUrl={productDetail.product.image}
+              mainImageUrl={productDetail.product.mainImageUrl}
               price={productDetail.product.price}
               shippingType={productDetail.product.shippingType}
               deliveryMethod={productDetail.product.deliveryMethod}
               directTradeLocation={productDetail.product.directTradeLocation}
               deliveryPrice={productDetail.product.standardShipping}
               directTradePlace={productDetail.product.directTradePlace}
-              registeredDate={productDetail.product.createdAt.toLocaleDateString()}
+              registeredDate={new Date(
+                productDetail.product.createdAt
+              ).toLocaleDateString()}
               seller={productDetail.seller}
               currentStatus={productDetail.product.status}
-              isOwner={isMe(productDetail.seller.id)}
+              isOwner={isMe(productDetail.seller.uuid)}
               onChatClick={handleChatClick}
             />
           </div>
@@ -95,9 +98,13 @@ export function ProductDetailPage({ productId }: ProductDetailPageProps) {
           {/* Seller's Other Products */}
           <SellerProductsSection
             seller={productDetail.seller}
-            products={productDetail.sellerOtherProducts}
+            products={productDetail.sellerOtherProducts.map(
+              mapSellerProductDTOToProduct
+            )}
             onViewMore={() =>
-              router.push(`/market/seller/${productDetail.seller.id}/products`)
+              router.push(
+                `/market/seller/${productDetail.seller.uuid}/products`
+              )
             }
           />
         </div>

@@ -26,7 +26,7 @@ export function SellerInfoCard({ seller }: SellerInfoCardProps) {
         <div className="flex items-center gap-3 text-xs text-gray-500 mt-0.5"></div>
       </div>
       <button
-        onClick={() => router.push(ROUTES.SELLER.PRODUCTS(seller.id))}
+        onClick={() => router.push(ROUTES.SELLER.PRODUCTS(seller.uuid))}
         className="text-xs font-bold text-gray-600 border border-gray-300 bg-white px-3 py-1.5 rounded hover:bg-gray-50 transition-colors"
       >
         상점방문

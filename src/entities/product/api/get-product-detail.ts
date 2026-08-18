@@ -1,8 +1,11 @@
 import { z } from 'zod';
+import { useQuery } from '@tanstack/react-query';
+import { apiClient, type ApiResponse } from '@/shared/api';
+import { IS_DEMO } from '@/shared/lib/isDemo';
+import { mockProductDetails } from '@/mocks';
 
-// 상품 상세 조회 API 스키마
+// 상품 상세 조회 API
 
-// ------------------ Internal 스키마 (파일 내부에서만 사용)
 const ProductDetailDTOSchema = z.object({
   id: z.number().int().positive(),
   title: z.string().min(1),
@@ -38,22 +41,53 @@ const SellerProductDTOSchema = z.object({
   status: z.string(),
 });
 
-// ------------------ Request 스키마 (외부에서 사용)
 export const GetProductDetailParamsSchema = z.object({
   productId: z.number().int().positive(),
 });
+export type GetProductDetailParams = z.infer<
+  typeof GetProductDetailParamsSchema
+>;
 
-// ------------------ Response 스키마 (외부에서 사용)
 export const ProductDetailResponseDTOSchema = z.object({
   product: ProductDetailDTOSchema,
   seller: SellerDTOSchema,
   sellerOtherProducts: z.array(SellerProductDTOSchema),
 });
-
-// ------------------ 타입 추론
-export type GetProductDetailParams = z.infer<
-  typeof GetProductDetailParamsSchema
->;
 export type ProductDetailResponseDTO = z.infer<
   typeof ProductDetailResponseDTOSchema
 >;
+export type Seller = ProductDetailResponseDTO['seller'];
+
+export function resolveDemoProductDetail(
+  productId: number
+): ApiResponse<ProductDetailResponseDTO> {
+  const detail = mockProductDetails[productId] ?? mockProductDetails[1];
+  return { status: 'SUCCESS', message: '성공', data: detail };
+}
+
+export const getProductDetail = async (
+  params: GetProductDetailParams
+): Promise<ApiResponse<ProductDetailResponseDTO>> => {
+  const validatedParams = GetProductDetailParamsSchema.parse(params);
+
+  if (IS_DEMO) return resolveDemoProductDetail(validatedParams.productId);
+
+  return apiClient.getWithValidation(
+    `/api/v1/products/${validatedParams.productId}`,
+    ProductDetailResponseDTOSchema
+  );
+};
+
+export function useProductDetail(productId: number | undefined) {
+  const { data, isLoading, error } = useQuery({
+    queryKey: ['product', productId],
+    queryFn: () => getProductDetail({ productId: productId! }),
+    enabled: !!productId,
+  });
+
+  return {
+    productDetail: data?.data ?? null,
+    isLoading,
+    error,
+  };
+}

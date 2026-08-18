@@ -1,8 +1,10 @@
 import { z } from 'zod';
+import { apiClient, type ApiResponse } from '@/shared/api';
+import { IS_DEMO } from '@/shared/lib/isDemo';
+import { mockProductList } from '@/mocks';
 
-// 상품 목록 조회 API 스키마
+// 상품 전체 조회 API
 
-// ------------------ Internal 스키마 (파일 내부에서만 사용)
 const BadgeLabelSchema = z.enum(['거래제안가능', '배송비포함', '직거래가능']);
 
 const BadgeDTOSchema = z.object({
@@ -27,17 +29,26 @@ const PaginationDTOSchema = z.object({
   hasPrevious: z.boolean(),
 });
 
-// ------------------ Request 스키마 (외부에서 사용)
 export const GetProductListParamsSchema = z.object({
   page: z.number().int().positive(),
 });
+export type GetProductListParams = z.infer<typeof GetProductListParamsSchema>;
 
-// ------------------ Response 스키마 (외부에서 사용)
 export const ProductListDTOSchema = z.object({
   products: z.array(ProductDTOSchema),
   pagination: PaginationDTOSchema,
 });
-
-// ------------------ 타입 추론
-export type GetProductListParams = z.infer<typeof GetProductListParamsSchema>;
 export type ProductListDTO = z.infer<typeof ProductListDTOSchema>;
+
+export const getProductList = async (
+  params: GetProductListParams
+): Promise<ApiResponse<ProductListDTO>> => {
+  const validatedParams = GetProductListParamsSchema.parse(params);
+
+  if (IS_DEMO)
+    return { status: 'SUCCESS', message: '성공', data: mockProductList };
+
+  return apiClient.getWithValidation('/api/v1/products', ProductListDTOSchema, {
+    params: validatedParams,
+  });
+};

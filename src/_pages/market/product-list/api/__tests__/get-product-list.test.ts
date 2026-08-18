@@ -1,8 +1,7 @@
 import { describe, test, expect } from 'vitest';
 import { http, HttpResponse } from 'msw';
-import { getProductList } from '../productApi';
+import { getProductList, type ProductListDTO } from '../get-product-list';
 import type { ApiResponse } from '@/shared/api';
-import type { ProductListDTO } from '../../model';
 import { server } from '@/shared/testing/msw/server';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
