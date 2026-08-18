@@ -9,4 +9,6 @@ export const FAVORITE_EVENT_QUERIES = {
       queryFn: () => getFavoriteEventList({ uuid }),
       enabled: !!uuid,
     }),
+  status: (uuid: string, eventId: number) =>
+    ['favorite-event-status', uuid, eventId] as const,
 };

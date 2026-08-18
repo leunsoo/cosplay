@@ -29,7 +29,7 @@ export function useEventFavoriteToggle({
   const { displayedActive, isPending, isLoading, handleClick } =
     useOptimisticToggle<ApiResponse<FavoriteEventListDTO>>({
       enabled: !!userUuid && !!eventId,
-      statusQueryKey: ['favorite-event-status', userUuid, eventId],
+      statusQueryKey: FAVORITE_EVENT_QUERIES.status(userUuid, eventId),
       listQueryKey: FAVORITE_EVENT_QUERIES.list(userUuid).queryKey,
       fetchIsActive: () => getFavoriteEventStatus({ uuid: userUuid, eventId }),
       activate: () => addFavoriteEvent({ uuid: userUuid }, { eventId }),

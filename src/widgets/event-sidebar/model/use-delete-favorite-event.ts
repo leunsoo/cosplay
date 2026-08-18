@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuthStore } from '@/shared/auth';
 import { FAVORITE_EVENT_QUERIES } from '@/shared/api/favorite-event';
-import { deleteFavoriteEvent } from '../api/delete-favorite-event';
+import { deleteFavoriteEvent } from '@/features/favorite-event';
 
 export function useDeleteFavoriteEvent() {
   const queryClient = useQueryClient();
@@ -14,14 +14,14 @@ export function useDeleteFavoriteEvent() {
       deleteFavoriteEvent({ uuid: userUuid, eventId }),
     onMutate: (eventId: number) => {
       queryClient.setQueryData(
-        ['favorite-event-status', userUuid, eventId],
+        FAVORITE_EVENT_QUERIES.status(userUuid, eventId),
         (old: { data: { isFavorited: boolean } } | undefined) =>
           old ? { ...old, data: { isFavorited: false } } : old
       );
     },
     onError: (_error, eventId) => {
       queryClient.invalidateQueries({
-        queryKey: ['favorite-event-status', userUuid, eventId],
+        queryKey: FAVORITE_EVENT_QUERIES.status(userUuid, eventId),
       });
     },
     onSettled: () => {

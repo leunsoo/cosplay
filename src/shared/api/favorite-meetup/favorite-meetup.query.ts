@@ -9,4 +9,6 @@ export const FAVORITE_MEETUP_QUERIES = {
       queryFn: () => getFavoriteMeetupList({ uuid }),
       enabled: !!uuid,
     }),
+  status: (uuid: string, meetupId: number) =>
+    ['favorite-meetup-status', uuid, meetupId] as const,
 };

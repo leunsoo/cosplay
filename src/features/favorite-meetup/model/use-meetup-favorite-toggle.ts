@@ -29,7 +29,7 @@ export function useMeetupFavoriteToggle({
   const { displayedActive, isPending, isLoading, handleClick } =
     useOptimisticToggle<ApiResponse<FavoriteMeetupListDTO>>({
       enabled: !!userUuid && !!meetupId,
-      statusQueryKey: ['favorite-meetup-status', userUuid, meetupId],
+      statusQueryKey: FAVORITE_MEETUP_QUERIES.status(userUuid, meetupId),
       listQueryKey: FAVORITE_MEETUP_QUERIES.list(userUuid).queryKey,
       fetchIsActive: () =>
         getFavoriteMeetupStatus({ uuid: userUuid, meetupId }),

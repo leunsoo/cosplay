@@ -1,9 +1,7 @@
 'use client';
 
-import {
-  useEventFavoriteList,
-  useDeleteFavoriteEvent,
-} from '@/features/favorite-event';
+import { useEventFavoriteList } from '@/features/favorite-event';
+import { useDeleteFavoriteEvent } from '../model/use-delete-favorite-event';
 import { FavoriteEvent } from './FavoriteEvent';
 import { PageStepper } from '@/shared/ui';
 
