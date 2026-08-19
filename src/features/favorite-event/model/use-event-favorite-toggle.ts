@@ -7,10 +7,10 @@ import { serializeEventStatus } from '@/entities/event';
 import {
   FAVORITE_EVENT_QUERIES,
   type FavoriteEventListDTO,
+  getFavoriteEventStatus,
+  addFavoriteEvent,
+  deleteFavoriteEvent,
 } from '@/shared/api/endpoints/favorite-event';
-import { getFavoriteEventStatus } from '../api/get-favorite-event-status';
-import { addFavoriteEvent } from '../api/add-favorite-event';
-import { deleteFavoriteEvent } from '../api/delete-favorite-event';
 import type { FavoriteEvent } from './favorite-event';
 
 export function useEventFavoriteToggle({

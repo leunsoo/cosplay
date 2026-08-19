@@ -10,6 +10,7 @@ export {
   type RegisterUserBody,
   type RegisterUserResponse,
 } from './register-user';
+export { logout, type LogoutResponse } from './logout';
 export {
   generateProfileImageUploadUrl,
   type ProfileImageUploadUrlBody,

@@ -7,7 +7,7 @@ import { FAVORITE_EVENT_QUERIES } from '@/shared/api/endpoints/favorite-event';
 import {
   mapFavoriteEventToBookmarkedEvent,
   mapFavoriteEventToOfficialEvent,
-} from '../api/mapper';
+} from './mapper';
 
 const PAGE_SIZE = 3;
 

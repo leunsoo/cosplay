@@ -7,7 +7,7 @@ import { FAVORITE_MEETUP_QUERIES } from '@/shared/api/endpoints/favorite-meetup'
 import {
   mapFavoriteMeetupToBookmarkedMeetup,
   mapFavoriteMeetupToPersonalEvent,
-} from '../api/mapper';
+} from './mapper';
 
 const PAGE_SIZE = 3;
 

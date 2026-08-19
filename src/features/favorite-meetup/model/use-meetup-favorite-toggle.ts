@@ -7,10 +7,10 @@ import { serializeEventStatus } from '@/entities/event';
 import {
   FAVORITE_MEETUP_QUERIES,
   type FavoriteMeetupListDTO,
+  getFavoriteMeetupStatus,
+  addFavoriteMeetup,
+  deleteFavoriteMeetup,
 } from '@/shared/api/endpoints/favorite-meetup';
-import { getFavoriteMeetupStatus } from '../api/get-favorite-meetup-status';
-import { addFavoriteMeetup } from '../api/add-favorite-meetup';
-import { deleteFavoriteMeetup } from '../api/delete-favorite-meetup';
 import type { FavoriteMeetup } from './favorite-meetup';
 
 export function useMeetupFavoriteToggle({
