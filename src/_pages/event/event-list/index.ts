@@ -1,3 +1,3 @@
-export { default as EventListView } from './ui/EventListView';
-export { EVENT_QUERIES, type EventListDTO } from '@/shared/api/endpoints/event';
-export { BANNER_QUERIES, type BannersDTO } from '@/shared/api/endpoints/banner';
+export { EventListPage } from './ui/EventListPage';
+export { EVENT_QUERIES } from '@/shared/api/endpoints/event';
+export { BANNER_QUERIES } from '@/shared/api/endpoints/banner';

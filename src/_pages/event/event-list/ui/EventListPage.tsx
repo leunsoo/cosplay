@@ -16,7 +16,7 @@ import { useEventFavoriteList } from '@/features/favorite-event';
 import { useMeetupFavoriteList } from '@/features/favorite-meetup';
 import { MobileFab } from '@/shared/ui';
 
-export default function EventListView() {
+export function EventListPage() {
   const isLogined = useLogined();
   const { allEventsAsCards } = useEventFavoriteList();
   const { allMeetupsAsCards } = useMeetupFavoriteList();
