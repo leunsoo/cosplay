@@ -15,7 +15,7 @@ function RequiredLabel({ children }: { children: string }) {
   );
 }
 
-interface EventFormProps {
+interface MeetupFormProps {
   formData: MeetupFormData;
   onChange: (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -27,7 +27,7 @@ interface EventFormProps {
   onLocationChange: (location: string) => void;
 }
 
-export function EventForm({
+export function MeetupForm({
   formData,
   onChange,
   onDateChange,
@@ -35,7 +35,7 @@ export function EventForm({
   onImageUpload,
   onImageRemove,
   onLocationChange,
-}: EventFormProps) {
+}: MeetupFormProps) {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
   const [isPostcodeOpen, setIsPostcodeOpen] = useState(false);

@@ -1,7 +1,7 @@
 'use client';
 
-import { MeetUpRegistPage } from '@/_pages/event/meetup-regist';
+import { MeetupRegistPage } from '@/_pages/event/meetup-regist';
 
-export default function MeetUpRegisterPage() {
-  return <MeetUpRegistPage />;
+export default function MeetupRegisterPage() {
+  return <MeetupRegistPage />;
 }

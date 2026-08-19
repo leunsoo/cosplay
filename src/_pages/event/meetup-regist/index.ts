@@ -1,2 +1,2 @@
-export { MeetUpRegistPage } from './ui/MeetUpRegistPage';
-export { MeetUpEditPage } from './ui/MeetUpEditPage';
+export { MeetupRegistPage } from './ui/MeetupRegistPage';
+export { MeetupEditPage } from './ui/MeetupEditPage';
