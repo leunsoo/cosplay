@@ -5,22 +5,19 @@ import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { ROUTES } from '@/shared/routes';
 import { getEventDetail } from '@/shared/api/endpoints/event';
-import { mapEventDetailDtoToEventDetailWithUploader } from './model';
-import {
-  EventHeader,
-  EventTabs,
-  EventAbout,
-  EventSchedule,
-  EventLocation,
-  EventGroupChat,
-  type EventTabType,
-} from './ui';
+import { mapEventDetailDtoToEventDetailWithUploader } from '../model';
+import { EventHeader } from './EventHeader';
+import { EventTabs, type EventTabType } from './EventTabs';
+import { EventAbout } from './EventAbout';
+import { EventSchedule } from './EventSchedule';
+import { EventLocation } from './EventLocation';
+import { EventGroupChat } from './EventGroupChat';
 
-interface EventDetailViewProps {
+interface EventDetailPageProps {
   eventId: string;
 }
 
-export function EventDetailView({ eventId }: EventDetailViewProps) {
+export function EventDetailPage({ eventId }: EventDetailPageProps) {
   const [activeTab, setActiveTab] = useState<EventTabType>('details');
 
   const { data, isLoading, error } = useQuery({

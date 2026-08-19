@@ -5,8 +5,8 @@ import {
   getMeetupChatRoom,
   getMeetupChatMessages,
   getMeetupChatActiveCount,
+  MeetupChatReceivePayloadSchema,
 } from '@/shared/api/endpoints/meetup-chat';
-import { MeetupChatReceivePayloadSchema } from '../api/meetup-chat-stomp';
 import {
   mapMeetupChatMessageDTOToMessage,
   mapMeetupChatMessageDTOsToMessages,

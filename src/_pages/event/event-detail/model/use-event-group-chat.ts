@@ -5,12 +5,12 @@ import {
   getEventChatRoom,
   getEventChatMessages,
   getEventChatActiveCount,
+  EventChatReceivePayloadSchema,
 } from '@/shared/api/endpoints/event-chat';
-import { EventChatReceivePayloadSchema } from '../api/event-chat-stomp';
 import {
   mapEventChatMessageDTOToMessage,
   mapEventChatMessageDTOsToMessages,
-} from '../api/mapper';
+} from './mapper';
 
 interface UseEventGroupChatParams {
   eventId: number;

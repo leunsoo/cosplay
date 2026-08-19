@@ -21,3 +21,7 @@ export {
   type GetEventChatActiveCountParams,
   type EventChatActiveCountDTO,
 } from './get-event-chat-active-count';
+export {
+  EventChatReceivePayloadSchema,
+  type EventChatReceivePayload,
+} from './event-chat-stomp';

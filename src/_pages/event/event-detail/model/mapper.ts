@@ -1,6 +1,8 @@
 import type { EventDetailDTO } from '@/shared/api/endpoints/event';
+import type { EventChatMessageDTO } from '@/shared/api/endpoints/event-chat';
 import { EventStatus, EventSource } from '@/entities/event';
 import type { OfficialEventDetail } from './event';
+import type { EventChatMessage } from './event-chat';
 
 const statusMap: Record<'UPCOMING' | 'ONGOING' | 'CLOSED', EventStatus> = {
   UPCOMING: EventStatus.UPCOMING,
@@ -10,11 +12,6 @@ const statusMap: Record<'UPCOMING' | 'ONGOING' | 'CLOSED', EventStatus> = {
 
 export interface EventDetailWithUploader {
   event: OfficialEventDetail;
-  // uploader: {
-  //   uploaderUuid: string;
-  //   nickname: string;
-  //   profileImageUrl: string | null;
-  // } | null;
   recommended: boolean;
 }
 
@@ -42,13 +39,31 @@ export function mapEventDetailDtoToEventDetailWithUploader(
 
   return {
     event,
-    // uploader: dto.uploader
-    //   ? {
-    //       uploaderUuid: dto.uploader.uuid,
-    //       nickname: dto.uploader.nickname,
-    //       profileImageUrl: dto.uploader.profileImageUrl,
-    //     }
-    //   : null,
     recommended: dto.recommended,
   };
+}
+
+export function mapEventChatMessageDTOToMessage(
+  dto: EventChatMessageDTO,
+  myUuid: string
+): EventChatMessage {
+  return {
+    id: dto.id,
+    roomId: dto.roomId,
+    eventId: dto.eventId,
+    senderUuid: dto.senderUuid,
+    senderNickname: dto.senderNickname,
+    senderProfileImageUri: dto.senderProfileImageUri ?? null,
+    content: dto.content,
+    type: dto.type,
+    createdAt: dto.createdAt,
+    isMyMessage: dto.senderUuid === myUuid,
+  };
+}
+
+export function mapEventChatMessageDTOsToMessages(
+  dtos: EventChatMessageDTO[],
+  myUuid: string
+): EventChatMessage[] {
+  return dtos.map((dto) => mapEventChatMessageDTOToMessage(dto, myUuid));
 }

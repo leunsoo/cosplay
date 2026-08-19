@@ -1,8 +1,4 @@
-interface ScheduleItem {
-  content: string;
-  date: string;
-  time: string;
-}
+import type { ScheduleItem } from '@/shared/api/endpoints/event';
 
 interface EventScheduleProps {
   schedules: ScheduleItem[];

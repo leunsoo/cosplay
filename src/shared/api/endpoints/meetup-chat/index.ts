@@ -21,3 +21,7 @@ export {
   type GetMeetupChatActiveCountParams,
   type MeetupChatActiveCountDTO,
 } from './get-meetup-chat-active-count';
+export {
+  MeetupChatReceivePayloadSchema,
+  type MeetupChatReceivePayload,
+} from './meetup-chat-stomp';

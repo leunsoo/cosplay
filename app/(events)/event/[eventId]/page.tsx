@@ -5,10 +5,10 @@ import { type Metadata } from 'next';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
 import { getEventDetailServer } from '@/shared/api/endpoints/event/index.server';
-import { EventDetailView } from '@/_pages/event/event-detail';
+import { EventDetailPage } from '@/_pages/event/event-detail';
 import { EventJsonLd } from './_components/EventJsonLd';
 
-interface EventDetailPageProps {
+interface EventDetailRouteProps {
   params: Promise<{ eventId: string }>;
 }
 
@@ -35,7 +35,7 @@ async function fetchEventDetail(eventId: string) {
  */
 export async function generateMetadata({
   params,
-}: EventDetailPageProps): Promise<Metadata> {
+}: EventDetailRouteProps): Promise<Metadata> {
   const { eventId } = await params;
 
   try {
@@ -66,9 +66,9 @@ export async function generateMetadata({
   }
 }
 
-export default async function EventDetailPage({
+export default async function EventDetailRoute({
   params,
-}: EventDetailPageProps) {
+}: EventDetailRouteProps) {
   const { eventId } = await params;
   const queryClient = getQueryClient();
 
@@ -76,20 +76,20 @@ export default async function EventDetailPage({
   try {
     event = await fetchEventDetail(eventId);
 
-    // prefetchQuery: EventDetailView의 useQuery(['event', eventId])와 동일한 queryKey
+    // prefetchQuery: EventDetailPage의 useQuery(['event', eventId])와 동일한 queryKey
     // → 클라이언트에서 API 재호출 없이 캐시에서 즉시 데이터를 가져옴 → SEO 가능
     await queryClient.prefetchQuery({
       queryKey: ['event', eventId],
       queryFn: async () => ({ data: await fetchEventDetail(eventId) }),
     });
   } catch {
-    // JSON-LD/prefetch 실패 시 무시 (EventDetailView는 자체적으로 에러 처리)
+    // JSON-LD/prefetch 실패 시 무시 (EventDetailPage는 자체적으로 에러 처리)
   }
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
       {event && <EventJsonLd event={event} eventId={eventId} />}
-      <EventDetailView eventId={eventId} />
+      <EventDetailPage eventId={eventId} />
     </HydrationBoundary>
   );
 }
