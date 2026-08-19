@@ -2,13 +2,10 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useQuery } from '@tanstack/react-query';
 import { ROUTES } from '@/shared/routes';
 import { LogoutBtn } from '@/features/logout';
 import { useLogined } from '@/entities/auth';
-import { UserAvatar } from '@/entities/user';
-import { USER_QUERIES } from '@/shared/api/endpoints/user';
-import { useAuthStore } from '@/shared/auth';
+import { UserAvatar, useMyProfile } from '@/entities/user';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 
 export function MainMenu() {
@@ -16,13 +13,7 @@ export function MainMenu() {
   const isActive = (path: string) => pathname.includes(path);
 
   const logined = useLogined();
-  const userUuid = useAuthStore((state) => state.userUuid);
-
-  const { data: profile } = useQuery({
-    ...USER_QUERIES.myProfile(userUuid),
-    enabled: logined && !!userUuid,
-    staleTime: Infinity,
-  });
+  const { data: profile } = useMyProfile();
 
   return (
     <div
