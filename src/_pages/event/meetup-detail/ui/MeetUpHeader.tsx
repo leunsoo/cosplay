@@ -4,7 +4,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useRef } from 'react';
 import { ROUTES } from '@/shared/routes';
-import type { MeetupDetailDTO } from '@/shared/api/meetup';
+import type { MeetupDetailDTO } from '@/shared/api/endpoints/meetup';
 import { parseEventStatus } from '@/entities/event';
 import { useLogined } from '@/entities/auth';
 import { useMeetupMembers } from '../api/use-meetup-members';

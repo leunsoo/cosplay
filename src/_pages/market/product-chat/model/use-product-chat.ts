@@ -2,8 +2,10 @@
 
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getChatRoomList } from '../api/get-chat-room-list';
-import { CHAT_ROOM_LIST_QUERIES } from '../api/chat-room-list.query';
+import {
+  getChatRoomList,
+  CHAT_ROOM_LIST_QUERIES,
+} from '@/shared/api/endpoints/product-chat';
 import { transformChatRoomList } from './mapper';
 import { useChatRoom } from './use-chat-room';
 import { useProductChatEntry } from './use-product-chat-entry';

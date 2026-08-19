@@ -2,7 +2,7 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuthStore } from '@/shared/auth';
-import { FAVORITE_MEETUP_QUERIES } from '@/shared/api/favorite-meetup';
+import { FAVORITE_MEETUP_QUERIES } from '@/shared/api/endpoints/favorite-meetup';
 import { deleteFavoriteMeetup } from '@/features/favorite-meetup';
 
 export function useDeleteFavoriteMeetup() {

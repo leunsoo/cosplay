@@ -2,7 +2,7 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { CHAT_ROOM_LIST_QUERIES } from '../api/chat-room-list.query';
+import { CHAT_ROOM_LIST_QUERIES } from '@/shared/api/endpoints/product-chat';
 import { useChatStomp, type StompMessagePayload } from '../api/use-chat-stomp';
 import { useChatMessages } from './use-chat-messages';
 import type { ChatRoom } from './chat';

@@ -1,4 +1,4 @@
-import type { FavoriteEventListDTO } from '@/shared/api/favorite-event';
+import type { FavoriteEventListDTO } from '@/shared/api/endpoints/favorite-event';
 import {
   EventSource,
   parseEventStatus,

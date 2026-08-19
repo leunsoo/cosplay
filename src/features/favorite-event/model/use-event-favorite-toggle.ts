@@ -7,7 +7,7 @@ import { serializeEventStatus } from '@/entities/event';
 import {
   FAVORITE_EVENT_QUERIES,
   type FavoriteEventListDTO,
-} from '@/shared/api/favorite-event';
+} from '@/shared/api/endpoints/favorite-event';
 import { getFavoriteEventStatus } from '../api/get-favorite-event-status';
 import { addFavoriteEvent } from '../api/add-favorite-event';
 import { deleteFavoriteEvent } from '../api/delete-favorite-event';

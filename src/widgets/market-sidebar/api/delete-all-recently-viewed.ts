@@ -2,7 +2,7 @@ import { z } from 'zod';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { apiClient, type ApiResponse } from '@/shared/api';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { RECENTLY_VIEWED_QUERIES } from '@/shared/api/recently-viewed';
+import { RECENTLY_VIEWED_QUERIES } from '@/shared/api/endpoints/recently-viewed';
 import { clearDemoRecentlyViewed } from '@/mocks';
 
 // 최근 본 상품 기록 전체 삭제 API

@@ -6,7 +6,7 @@ import { useRouter } from 'next/navigation';
 import {
   deleteFavorite,
   FAVORITE_PRODUCT_QUERIES,
-} from '@/shared/api/favorite-product';
+} from '@/shared/api/endpoints/favorite-product';
 import { mapFavoriteProductToSidePanelProduct } from './mapper';
 
 const ITEMS_PER_PAGE = 3;

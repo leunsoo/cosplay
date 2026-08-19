@@ -1,5 +1,5 @@
-import type { FavoriteListDTO } from '@/shared/api/favorite-product';
-import type { FavoriteStatusDTO } from '@/_pages/market/product-detail/api/get-favorite-status';
+import type { FavoriteListDTO } from '@/shared/api/endpoints/favorite-product';
+import type { FavoriteStatusDTO } from '@/shared/api/endpoints/favorite-product';
 import { mockProductDetails } from './product';
 
 // 데모 모드 찜 상태 (메모리 유지, 새로고침 시 초기화)

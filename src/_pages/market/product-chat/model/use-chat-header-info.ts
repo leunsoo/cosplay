@@ -1,8 +1,8 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { getChatRoom } from '../api/get-chat-room';
-import type { ProductDetailResponseDTO } from '@/entities/product';
+import { getChatRoom } from '@/shared/api/endpoints/product-chat';
+import type { ProductDetailResponseDTO } from '@/shared/api/endpoints/product';
 import type { ChatProductInfo } from './chat';
 
 interface UseChatHeaderInfoParams {

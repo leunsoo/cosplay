@@ -6,7 +6,7 @@ import { z } from 'zod';
 import { apiClient, type ApiResponse } from '@/shared/api';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import { addDemoRecentlyViewed } from '@/mocks';
-import { RECENTLY_VIEWED_QUERIES } from '@/shared/api/recently-viewed';
+import { RECENTLY_VIEWED_QUERIES } from '@/shared/api/endpoints/recently-viewed';
 import { useLogined } from '@/entities/auth';
 
 // 상품 기록 추가 API

@@ -4,7 +4,7 @@ export const dynamic = 'force-dynamic';
 import { type Metadata } from 'next';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
-import { getEventDetailServer } from '@/_pages/event/event-detail/api';
+import { getEventDetailServer } from '@/shared/api/endpoints/event/index.server';
 import { EventDetailView } from '@/_pages/event/event-detail';
 import { EventJsonLd } from './_components/EventJsonLd';
 

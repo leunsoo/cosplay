@@ -3,10 +3,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';
-import { apiClient, type ApiResponse } from '@/shared/api';
 import { IS_DEMO } from '@/shared/lib/isDemo';
-import { updateDemoMyProfile } from '@/mocks';
-import { USER_QUERIES, type Gender } from '@/shared/api/user';
+import { USER_QUERIES, registerUser } from '@/shared/api/endpoints/user';
 import {
   useAuthStore,
   DEMO_REGISTERED_KEY,
@@ -14,50 +12,10 @@ import {
 } from '@/shared/auth';
 import type { UserProfileFormValues } from '@/features/user-profile-form';
 
-interface RegisterUserResponse {
-  accessToken: string;
-}
-
 interface RegisterUserVariables {
   formValues: UserProfileFormValues;
   uploadProfileImage: () => Promise<string>;
 }
-
-// register의 회원가입 요청 바디 형태 (registerUser가 실제로 기대하는 형태)
-export interface RegisterUserBody {
-  nickname: string;
-  name: string;
-  gender: Gender;
-  phone: string;
-  birthDate: string;
-  email: string;
-  profileImageUri?: string | null;
-  introduction?: string | null;
-}
-
-const registerUser = async (
-  body: RegisterUserBody
-): Promise<ApiResponse<RegisterUserResponse>> => {
-  if (IS_DEMO) {
-    updateDemoMyProfile({
-      nickname: body.nickname,
-      name: body.name,
-      gender: body.gender,
-      phone: body.phone,
-      birthDate: body.birthDate,
-      email: body.email,
-      profileImageUri: body.profileImageUri ?? null,
-      introduction: body.introduction ?? null,
-    });
-    return {
-      status: 'SUCCESS',
-      message: '성공',
-      data: { accessToken: 'demo-token' },
-    };
-  }
-
-  return apiClient.post('/api/v1/auth/register', body);
-};
 
 export function useRegisterUser() {
   const router = useRouter();

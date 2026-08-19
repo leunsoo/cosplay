@@ -9,7 +9,14 @@
       "Bash(do sed -i '' 's|from \"\"./types\"\"|from \"\"../model/types\"\"|g' \"$file\")",
       "Bash(done)",
       "Bash(tree:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(mkdir -p /Users/leeeunsoo/Desktop/cosplay/src/shared/api/chat *)",
+      "Bash(git mv *)",
+      "Bash(npx tsc *)",
+      "Bash(npx eslint *)"
+    ],
+    "additionalDirectories": [
+      "/Users/leeeunsoo/Desktop/cosplay/src/shared/api"
     ]
   }
 }

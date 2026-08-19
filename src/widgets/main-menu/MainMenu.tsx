@@ -7,7 +7,7 @@ import { ROUTES } from '@/shared/routes';
 import { LogoutBtn } from '@/features/logout';
 import { useLogined } from '@/entities/auth';
 import { UserAvatar } from '@/entities/user';
-import { USER_QUERIES } from '@/shared/api/user';
+import { USER_QUERIES } from '@/shared/api/endpoints/user';
 import { useAuthStore } from '@/shared/auth';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 

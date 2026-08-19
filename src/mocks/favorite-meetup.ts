@@ -1,4 +1,4 @@
-import type { FavoriteMeetupListDTO } from '@/shared/api/favorite-meetup';
+import type { FavoriteMeetupListDTO } from '@/shared/api/endpoints/favorite-meetup';
 import type { FavoriteMeetupStatusDTO } from '@/features/favorite-meetup/api/get-favorite-meetup-status';
 import { mockMeetupList } from './meetup';
 

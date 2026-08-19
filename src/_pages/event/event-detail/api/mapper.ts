@@ -1,4 +1,4 @@
-import type { EventChatMessageDTO } from './get-event-chat-messages';
+import type { EventChatMessageDTO } from '@/shared/api/endpoints/event-chat';
 import type { EventChatMessage } from '../model/event-chat';
 
 export function mapEventChatMessageDTOToMessage(

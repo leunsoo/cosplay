@@ -1,2 +1,2 @@
-export { getEventsListServer } from './api/get-events-list.server';
-export { getBannerListServer } from './api/get-banner-list.server';
+export { getEventsListServer } from '@/shared/api/endpoints/event/index.server';
+export { getBannerListServer } from '@/shared/api/endpoints/banner/index.server';

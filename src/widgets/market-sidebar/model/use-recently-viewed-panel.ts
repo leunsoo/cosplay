@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { RECENTLY_VIEWED_QUERIES } from '@/shared/api/recently-viewed';
+import { RECENTLY_VIEWED_QUERIES } from '@/shared/api/endpoints/recently-viewed';
 import { getRecentlyViewedList } from '../api/get-recently-viewed-list';
 import { mapRecentlyViewedProductToSidePanelProduct } from './mapper';
 

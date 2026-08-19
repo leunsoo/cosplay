@@ -1,4 +1,4 @@
-import type { SellerProfileDTO } from './schema';
+import type { SellerProfileDTO } from '@/shared/api/endpoints/seller';
 import type { SellerProfile } from './types';
 
 /**

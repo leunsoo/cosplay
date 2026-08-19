@@ -1,8 +1,10 @@
 'use client';
 
 import { useState, useCallback, useEffect } from 'react';
-import { getChatMessages } from '../api/get-chat-messages';
-import { markMessagesAsRead } from '../api/mark-messages-as-read';
+import {
+  getChatMessages,
+  markMessagesAsRead,
+} from '@/shared/api/endpoints/product-chat';
 import { mapMessageDTOToMessage, mapMessageDTOsToMessages } from './mapper';
 import type { ChatRoom, Message } from './chat';
 import type { StompReceivePayload } from '../api/use-chat-stomp';

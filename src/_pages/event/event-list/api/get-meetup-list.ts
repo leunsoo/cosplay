@@ -1,45 +1,13 @@
 'use client';
 
-import { z } from 'zod';
 import { useQuery, keepPreviousData } from '@tanstack/react-query';
-import { apiClient, type ApiResponse } from '@/shared/api';
-import { IS_DEMO } from '@/shared/lib/isDemo';
-import { mockMeetupList } from '@/mocks';
-import { MEETUP_QUERIES } from '@/shared/api/meetup';
+import {
+  MEETUP_QUERIES,
+  getMeetupList,
+  type MeetupStatus,
+} from '@/shared/api/endpoints/meetup';
 
-export type MeetupStatus = 'ALL' | 'ONGOING' | 'CLOSED';
-
-const MeetupItemDTOSchema = z.object({
-  meetupId: z.number().int().positive(),
-  title: z.string(),
-  thumbnailUrl: z.string().nullable(),
-  scheduledAt: z.string(),
-  location: z.string(),
-  maxMembers: z.number(),
-  currentMembers: z.number(),
-  status: z.enum(['ONGOING', 'CLOSED']),
-});
-
-export const MeetupListDTOSchema = z.array(MeetupItemDTOSchema);
-
-export type MeetupListDTO = z.infer<typeof MeetupListDTOSchema>;
-export type MeetupItemDTO = z.infer<typeof MeetupItemDTOSchema>;
-
-export const getMeetupList = async (
-  status: MeetupStatus = 'ALL'
-): Promise<ApiResponse<MeetupListDTO>> => {
-  if (IS_DEMO) {
-    const filtered =
-      status === 'ALL'
-        ? mockMeetupList
-        : mockMeetupList.filter((m) => m.status === status);
-    return { status: 'SUCCESS', message: '성공', data: filtered };
-  }
-  return apiClient.getWithValidation(
-    `/api/v1/meetups?status=${status}`,
-    MeetupListDTOSchema
-  );
-};
+export type { MeetupStatus };
 
 export function useMeetupList(status: MeetupStatus, enabled: boolean) {
   return useQuery({

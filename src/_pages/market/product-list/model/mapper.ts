@@ -1,5 +1,5 @@
 import type { Product } from '@/entities/product';
-import type { FavoriteListDTO } from '@/shared/api/favorite-product';
+import type { FavoriteListDTO } from '@/shared/api/endpoints/favorite-product';
 
 export function mapFavoriteProductToProduct(
   dto: FavoriteListDTO['products'][number]

@@ -1,7 +1,10 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { mapProductDTOsToProducts } from '@/entities/product';
-import { getSellerProfile, getSellerProducts } from '../../api';
+import {
+  getSellerProfile,
+  getSellerProducts,
+} from '@/shared/api/endpoints/seller';
 import { mapSellerProfileDTOToSellerProfile } from '../mapper';
 
 const PAGE_SIZE = 50;

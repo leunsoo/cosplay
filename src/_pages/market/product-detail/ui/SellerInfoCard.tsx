@@ -1,5 +1,5 @@
 import { useRouter } from 'next/navigation';
-import { type Seller } from '@/entities/product';
+import { type Seller } from '@/shared/api/endpoints/product';
 import { UserAvatar } from '@/entities/user';
 import { ROUTES } from '@/shared/routes';
 

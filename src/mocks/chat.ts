@@ -1,8 +1,10 @@
-import type { ChatRoomListDTO } from '@/_pages/market/product-chat/api/get-chat-room-list';
-import type { ChatRoomDetailDTO } from '@/_pages/market/product-chat/api/get-chat-room';
-import type { ResolveChatRoomDTO } from '@/_pages/market/product-chat/api/resolve-chat-room';
-import type { MessageListDTO } from '@/_pages/market/product-chat/api/get-chat-messages';
-import type { CreateChatRoomBody } from '@/_pages/market/product-chat/api/create-chat-room';
+import type {
+  ChatRoomListDTO,
+  ChatRoomDetailDTO,
+  ResolveChatRoomDTO,
+  MessageListDTO,
+  CreateChatRoomBody,
+} from '@/shared/api/endpoints/product-chat';
 import { DEMO_USER_UUID } from './user';
 import { mockProductDetails } from './product';
 

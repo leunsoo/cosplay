@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { useBannerList } from '../api/get-banner-list';
-import type { BannersDTO } from '../api/get-banner-list';
+import type { BannersDTO } from '@/shared/api/endpoints/banner';
 
 export function useHeroBanner() {
   const [currentSlide, setCurrentSlide] = useState(0);

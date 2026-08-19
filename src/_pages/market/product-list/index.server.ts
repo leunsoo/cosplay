@@ -1,1 +1,1 @@
-export { getProductListServer } from './api/get-product-list.server';
+export { getProductListServer } from '@/shared/api/endpoints/product/index.server';

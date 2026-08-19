@@ -3,8 +3,10 @@
 import { useState, useEffect } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { ProductGrid, mapProductDTOsToProducts } from '@/entities/product';
-import { getProductList } from './api/get-product-list';
-import { getProductSearch } from './api/get-product-search';
+import {
+  getProductList,
+  getProductSearch,
+} from '@/shared/api/endpoints/product';
 import { useAuthStore } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
 import { useFavoriteProductCards } from './model/use-favorite-product-cards';

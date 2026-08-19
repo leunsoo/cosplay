@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { ROUTES } from '@/shared/routes';
-import { getEventDetail } from './api';
+import { getEventDetail } from '@/shared/api/endpoints/event';
 import { mapEventDetailDtoToEventDetailWithUploader } from './model';
 import {
   EventHeader,

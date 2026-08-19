@@ -1,5 +1,7 @@
-import type { ChatRoomDTO } from '../api/get-chat-room-list';
-import type { MessageDTO } from '../api/get-chat-messages';
+import type {
+  ChatRoomDTO,
+  MessageDTO,
+} from '@/shared/api/endpoints/product-chat';
 import type { ChatRoom, Message } from './chat';
 
 interface OpponentInfo {

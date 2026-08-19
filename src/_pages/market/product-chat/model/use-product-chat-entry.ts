@@ -3,9 +3,11 @@
 import { useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { resolveChatRoom } from '../api/resolve-chat-room';
-import { createChatRoom } from '../api/create-chat-room';
-import { CHAT_ROOM_LIST_QUERIES } from '../api/chat-room-list.query';
+import {
+  resolveChatRoom,
+  createChatRoom,
+  CHAT_ROOM_LIST_QUERIES,
+} from '@/shared/api/endpoints/product-chat';
 import { useProductDetail } from '@/entities/product';
 
 interface UseProductChatEntryParams {

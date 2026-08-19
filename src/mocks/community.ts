@@ -1,5 +1,8 @@
-import type { NoticeList, NoticeDetail } from '@/shared/api/notice/notice';
-import type { QnaList, QnaDetail } from '@/shared/api/qna/qna';
+import type {
+  NoticeList,
+  NoticeDetail,
+} from '@/shared/api/endpoints/notice/notice';
+import type { QnaList, QnaDetail } from '@/shared/api/endpoints/qna/qna';
 import { mockMyProfile } from './user';
 
 export const mockNoticeList: NoticeList = [

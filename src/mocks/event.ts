@@ -1,5 +1,7 @@
-import type { EventListDTO } from '@/_pages/event/event-list/api/get-events-list';
-import type { EventDetailDTO } from '@/_pages/event/event-detail/model';
+import type {
+  EventListDTO,
+  EventDetailDTO,
+} from '@/shared/api/endpoints/event';
 
 export const mockEventList: EventListDTO = [
   {

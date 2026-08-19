@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { MEETUP_QUERIES, getMeetupDetail } from '@/shared/api/meetup';
+import { MEETUP_QUERIES, getMeetupDetail } from '@/shared/api/endpoints/meetup';
 import { MeetUpRegistPage } from './MeetUpRegistPage';
 import type { MeetupFormData } from '../model/meetup-form';
 

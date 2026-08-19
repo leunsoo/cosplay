@@ -1,5 +1,5 @@
 import type { SidePanelProduct } from '@/entities/product';
-import type { FavoriteListDTO } from '@/shared/api/favorite-product';
+import type { FavoriteListDTO } from '@/shared/api/endpoints/favorite-product';
 import type { RecentlyViewedListDTO } from '../api/get-recently-viewed-list';
 
 export function mapFavoriteProductToSidePanelProduct(

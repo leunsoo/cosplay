@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { GenderSchema } from '@/shared/api/user';
+import { GenderSchema } from '@/shared/api/endpoints/user';
 
 export const GENDER_OPTIONS = GenderSchema.options;
 

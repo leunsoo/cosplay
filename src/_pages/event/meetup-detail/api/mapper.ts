@@ -1,4 +1,4 @@
-import type { MeetupChatMessageDTO } from './get-meetup-chat-messages';
+import type { MeetupChatMessageDTO } from '@/shared/api/endpoints/meetup-chat';
 import type { MeetupChatMessage } from '../model/meetup-chat';
 
 export function mapMeetupChatMessageDTOToMessage(

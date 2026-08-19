@@ -1,5 +1,5 @@
 import { useState, useRef } from 'react';
-import { getChatImageUploadUrl } from '../api/get-chat-image-upload-url';
+import { getChatImageUploadUrl } from '@/shared/api/endpoints/product-chat';
 import { uploadToS3 } from '@/shared/lib/s3';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 import { ChatImageCropModal } from './ChatImageCropModal';

@@ -1,9 +1,11 @@
 'use client';
 
 import { useGroupChat } from '@/shared/stomp';
-import { getEventChatRoom } from '../api/get-event-chat-room';
-import { getEventChatMessages } from '../api/get-event-chat-messages';
-import { getEventChatActiveCount } from '../api/get-event-chat-active-count';
+import {
+  getEventChatRoom,
+  getEventChatMessages,
+  getEventChatActiveCount,
+} from '@/shared/api/endpoints/event-chat';
 import { EventChatReceivePayloadSchema } from '../api/event-chat-stomp';
 import {
   mapEventChatMessageDTOToMessage,

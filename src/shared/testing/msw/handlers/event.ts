@@ -1,7 +1,7 @@
 import { http, HttpResponse } from 'msw';
 import { mockEventList } from '@/mocks';
 import type { ApiResponse } from '@/shared/api';
-import type { EventListDTO } from '@/_pages/event/event-list/api/get-events-list';
+import type { EventListDTO } from '@/shared/api/endpoints/event';
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 

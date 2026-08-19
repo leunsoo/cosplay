@@ -5,11 +5,11 @@ import { useOptimisticToggle } from '@/shared/lib/use-optimistic-toggle';
 import type { ApiResponse } from '@/shared/api';
 import {
   deleteFavorite,
+  addFavorite,
+  getFavoriteStatus,
   FAVORITE_PRODUCT_QUERIES,
   type FavoriteListDTO,
-} from '@/shared/api/favorite-product';
-import { getFavoriteStatus } from '../api/get-favorite-status';
-import { addFavorite } from '../api/add-favorite';
+} from '@/shared/api/endpoints/favorite-product';
 
 interface UseProductFavoriteToggleParams {
   productId: number;

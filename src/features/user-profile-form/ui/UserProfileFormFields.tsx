@@ -7,7 +7,7 @@ import {
 } from '../model/user-profile-form';
 import { formatPhoneKorea, normalizePhone } from '@/shared/lib/formatPhone';
 import { UserAvatar } from '@/entities/user';
-import { type Gender } from '@/shared/api/user';
+import { type Gender } from '@/shared/api/endpoints/user';
 import { BirthDatePicker } from './BirthDatePicker';
 
 const GENDER_LABELS: Record<Gender, string> = {

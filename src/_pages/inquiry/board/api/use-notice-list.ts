@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { NOTICE_QUERIES } from '@/shared/api/notice';
+import { NOTICE_QUERIES } from '@/shared/api/endpoints/notice';
 
 export function useNoticeList() {
   const { data, isLoading, error } = useQuery(NOTICE_QUERIES.list());

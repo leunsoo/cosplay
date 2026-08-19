@@ -1,6 +1,6 @@
-import type { UserProfileDTO } from '@/shared/api/user';
+import type { UserProfileDTO } from '@/shared/api/endpoints/user';
 import type { UserProfileFormValues } from '@/features/user-profile-form';
-import type { UpdateMyProfileBody } from './use-update-my-profile';
+import type { UpdateMyProfileBody } from '@/shared/api/endpoints/user';
 
 export function mapMyProfileDTOToUserProfileFormModel(
   dto: UserProfileDTO

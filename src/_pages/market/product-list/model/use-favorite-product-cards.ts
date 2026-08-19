@@ -1,7 +1,7 @@
 'use client';
 
 import { useQuery } from '@tanstack/react-query';
-import { FAVORITE_PRODUCT_QUERIES } from '@/shared/api/favorite-product';
+import { FAVORITE_PRODUCT_QUERIES } from '@/shared/api/endpoints/favorite-product';
 import { mapFavoriteProductToProduct } from './mapper';
 
 interface UseFavoriteProductCardsParams {

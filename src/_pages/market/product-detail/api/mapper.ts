@@ -1,4 +1,5 @@
-import type { ProductDetailResponseDTO, Product } from '@/entities/product';
+import type { ProductDetailResponseDTO } from '@/shared/api/endpoints/product';
+import type { Product } from '@/entities/product';
 
 // Seller의 다른 상품 DTO를 Product 도메인 타입으로 변환
 export function mapSellerProductDTOToProduct(

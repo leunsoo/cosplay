@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { generateProfileImageUploadUrl } from '@/shared/api/user';
+import { generateProfileImageUploadUrl } from '@/shared/api/endpoints/user';
 import { convertToWebp } from '@/shared/lib/imageFormat';
 import { uploadToS3 } from '@/shared/lib/s3';
 import { IS_DEMO } from '@/shared/lib/isDemo';

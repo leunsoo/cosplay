@@ -2,8 +2,10 @@
 
 import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { leaveChatRoom } from '../api/leave-chat-room';
-import { CHAT_ROOM_LIST_QUERIES } from '../api/chat-room-list.query';
+import {
+  leaveChatRoom,
+  CHAT_ROOM_LIST_QUERIES,
+} from '@/shared/api/endpoints/product-chat';
 
 interface UseLeaveChatRoomParams {
   userUuid: string;

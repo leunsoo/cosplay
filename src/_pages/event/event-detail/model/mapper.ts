@@ -1,4 +1,4 @@
-import type { EventDetailDTO } from './schema';
+import type { EventDetailDTO } from '@/shared/api/endpoints/event';
 import { EventStatus, EventSource } from '@/entities/event';
 import type { OfficialEventDetail } from './event';
 

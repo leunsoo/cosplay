@@ -1,4 +1,4 @@
-import type { FavoriteEventListDTO } from '@/shared/api/favorite-event';
+import type { FavoriteEventListDTO } from '@/shared/api/endpoints/favorite-event';
 import type { FavoriteEventStatusDTO } from '@/features/favorite-event/api/get-favorite-event-status';
 import { mockEventList } from './event';
 

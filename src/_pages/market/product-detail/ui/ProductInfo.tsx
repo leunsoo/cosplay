@@ -3,10 +3,12 @@
 import { useRef, useState } from 'react';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { type Seller } from '@/entities/product';
-import { deleteProduct } from '../api/delete-product';
-import { updateProductStatus } from '../api/update-product-status';
-import { FAVORITE_PRODUCT_QUERIES } from '@/shared/api/favorite-product';
+import {
+  type Seller,
+  deleteProduct,
+  updateProductStatus,
+} from '@/shared/api/endpoints/product';
+import { FAVORITE_PRODUCT_QUERIES } from '@/shared/api/endpoints/favorite-product';
 import { useAuthStore } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
 import { SellerInfoCard } from './SellerInfoCard';

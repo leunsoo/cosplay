@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { MEETUP_QUERIES } from '@/shared/api/meetup';
+import { MEETUP_QUERIES } from '@/shared/api/endpoints/meetup';
 
 export function useMeetupMembers(meetupId: number, enabled = true) {
   const isValidId = Number.isFinite(meetupId) && meetupId > 0;
