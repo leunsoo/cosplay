@@ -1,9 +1,3 @@
-export interface EventChatRoom {
-  roomId: number;
-  eventId: number;
-  status: string;
-}
-
 export interface EventChatMessage {
   id: number;
   roomId: number;
@@ -15,8 +9,4 @@ export interface EventChatMessage {
   type: string;
   createdAt: string;
   isMyMessage: boolean;
-}
-
-export interface EventChatActiveCount {
-  count: number;
 }
