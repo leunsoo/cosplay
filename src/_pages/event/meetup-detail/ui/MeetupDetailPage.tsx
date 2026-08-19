@@ -5,20 +5,19 @@ import { useMeetupDetail } from '../api/use-meetup-detail';
 import { useMeetupJoinToggle } from '../model/use-meetup-join-toggle';
 import { EventStatus } from '@/entities/event';
 import { useLogined } from '@/entities/auth';
-import { MeetUpHeader } from './MeetUpHeader';
+import { MeetupHeader } from './MeetupHeader';
 import { MeetupGroupChat } from './MeetupGroupChat';
-import { MeetUpTabs, type MeetUpTabType } from './MeetUpTabs';
-import { MeetUpAbout } from './MeetUpAbout';
-import { MeetUpMobileMenu } from './MeetUpMobileMenu';
-// import { MeetUpLocation } from './MeetUpLocation';
+import { MeetupTabs, type MeetupTabType } from './MeetupTabs';
+import { MeetupAbout } from './MeetupAbout';
+import { MeetupMobileMenu } from './MeetupMobileMenu';
 import { MobileHeaderCustom } from '@/widgets/mobile-header/MobileHeader';
 
-interface MeetUpDetailPageProps {
+interface MeetupDetailPageProps {
   meetupId: string;
 }
 
-export function MeetUpDetailPage({ meetupId }: MeetUpDetailPageProps) {
-  const [activeTab, setActiveTab] = useState<MeetUpTabType>('details');
+export function MeetupDetailPage({ meetupId }: MeetupDetailPageProps) {
+  const [activeTab, setActiveTab] = useState<MeetupTabType>('details');
   const meetupIdNum = Number(meetupId);
 
   const logined = useLogined();
@@ -58,7 +57,7 @@ export function MeetUpDetailPage({ meetupId }: MeetUpDetailPageProps) {
       <MobileHeaderCustom
         actions={
           isHost ? (
-            <MeetUpMobileMenu
+            <MeetupMobileMenu
               meetupId={meetupIdNum}
               isDeleting={isDeleting}
               onDelete={() => handleDelete()}
@@ -68,7 +67,7 @@ export function MeetUpDetailPage({ meetupId }: MeetUpDetailPageProps) {
       />
       <main className="flex-1 container-custom pt-8 md:pb-20">
         <div className="space-y-4 md:space-y-8">
-          <MeetUpHeader
+          <MeetupHeader
             meetupId={meetupIdNum}
             detail={detail}
             isHost={isHost}
@@ -76,12 +75,11 @@ export function MeetUpDetailPage({ meetupId }: MeetUpDetailPageProps) {
             onDelete={() => handleDelete()}
           />
 
-          <MeetUpTabs activeTab={activeTab} onTabChange={setActiveTab} />
+          <MeetupTabs activeTab={activeTab} onTabChange={setActiveTab} />
 
           {activeTab === 'details' && (
             <div className="px-2 md:px-0 space-y-6 md:space-y-12">
-              <MeetUpAbout description={detail.description} />
-              {/* <MeetUpLocation /> */}
+              <MeetupAbout description={detail.description} />
             </div>
           )}
 

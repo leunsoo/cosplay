@@ -11,7 +11,7 @@ import { useMeetupMembers } from '../api/use-meetup-members';
 import { FavoriteMeetupButton } from '@/features/favorite-meetup';
 import { ConfirmDialog } from '@/shared/ui';
 
-export interface MeetUpHeaderProps {
+export interface MeetupHeaderProps {
   meetupId: number;
   detail: MeetupDetailDTO;
   isHost: boolean;
@@ -33,13 +33,13 @@ function formatScheduledAt(scheduledAt: string): string {
   return `${year}년 ${month}월 ${day}일 (${dayName}) · ${ampm} ${displayHours}:${minutes}`;
 }
 
-export function MeetUpHeader({
+export function MeetupHeader({
   meetupId,
   detail,
   isHost,
   isDeleting,
   onDelete,
-}: MeetUpHeaderProps) {
+}: MeetupHeaderProps) {
   const { members } = useMeetupMembers(meetupId);
   const logined = useLogined();
   const dialogRef = useRef<HTMLDialogElement>(null);

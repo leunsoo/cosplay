@@ -4,17 +4,17 @@ import { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { ROUTES } from '@/shared/routes';
 
-interface MeetUpMobileMenuProps {
+interface MeetupMobileMenuProps {
   meetupId: number;
   isDeleting: boolean;
   onDelete: () => void;
 }
 
-export function MeetUpMobileMenu({
+export function MeetupMobileMenu({
   meetupId,
   isDeleting,
   onDelete,
-}: MeetUpMobileMenuProps) {
+}: MeetupMobileMenuProps) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 

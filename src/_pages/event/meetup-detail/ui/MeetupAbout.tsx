@@ -1,8 +1,8 @@
-interface MeetUpAboutProps {
+interface MeetupAboutProps {
   description: string;
 }
 
-export function MeetUpAbout({ description }: MeetUpAboutProps) {
+export function MeetupAbout({ description }: MeetupAboutProps) {
   return (
     <div>
       <h3 className="text-lg md:text-2xl font-bold mb-2 md:mb-4 text-gray-900 flex items-center gap-2">

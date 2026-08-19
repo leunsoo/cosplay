@@ -1,11 +1,11 @@
-export type MeetUpTabType = 'details' | 'community';
+export type MeetupTabType = 'details' | 'community';
 
-interface MeetUpTabsProps {
-  activeTab: MeetUpTabType;
-  onTabChange: (tab: MeetUpTabType) => void;
+interface MeetupTabsProps {
+  activeTab: MeetupTabType;
+  onTabChange: (tab: MeetupTabType) => void;
 }
 
-export function MeetUpTabs({ activeTab, onTabChange }: MeetUpTabsProps) {
+export function MeetupTabs({ activeTab, onTabChange }: MeetupTabsProps) {
   return (
     <div className="border-b border-gray-200">
       <nav aria-label="Tabs" className="-mb-px flex md:gap-12">

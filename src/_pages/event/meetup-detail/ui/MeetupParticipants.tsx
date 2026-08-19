@@ -8,11 +8,11 @@ import { useMeetupMembers } from '../api/use-meetup-members';
 
 const PAGE_SIZE = 5;
 
-interface MeetUpParticipantsProps {
+interface MeetupParticipantsProps {
   meetupId: number;
 }
 
-export function MeetUpParticipants({ meetupId }: MeetUpParticipantsProps) {
+export function MeetupParticipants({ meetupId }: MeetupParticipantsProps) {
   const { detail } = useMeetupDetail(meetupId);
   const { members } = useMeetupMembers(meetupId);
   const [currentPage, setCurrentPage] = useState(1);

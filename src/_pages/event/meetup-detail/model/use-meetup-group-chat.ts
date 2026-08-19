@@ -10,7 +10,7 @@ import {
 import {
   mapMeetupChatMessageDTOToMessage,
   mapMeetupChatMessageDTOsToMessages,
-} from '../api/mapper';
+} from './mapper';
 
 interface UseMeetupGroupChatParams {
   meetupId: number;
