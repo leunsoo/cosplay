@@ -1,6 +1,6 @@
-import { convertToWebp } from '@/shared/lib/imageFormat';
+import { convertToWebp } from '@/shared/lib/image-format';
 import { uploadToS3 } from '@/shared/lib/s3';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { getMeetupPresignedUrl } from '@/shared/api/endpoints/meetup';
 
 // 썸네일 업로드: 데모 모드는 로컬 미리보기 URL, 실제 모드는 presigned URL로 S3 업로드

@@ -1,6 +1,6 @@
 import type { UseFormRegisterReturn } from 'react-hook-form';
 import { SHIPPING_OPTIONS } from '../model/product-form';
-import { formatPrice, parsePrice } from '@/shared/lib/formatPrice';
+import { formatPrice, parsePrice } from '@/shared/lib/format-price';
 
 interface ShippingSectionProps {
   shippingType: 'included' | 'separate';

@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { apiClient, type ApiResponse } from '@/shared/api';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { mockProductList } from '@/mocks';
 
 // 상품 전체 조회 API

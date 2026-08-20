@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { apiClient } from '@/shared/api';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { leaveDemoChatRoom } from '@/mocks';
 
 // Request 스키마

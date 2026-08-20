@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { apiClient, type ApiResponse } from '@/shared/api';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { mockMeetupDetails } from '@/mocks';
 
 // 개인 행사(모임) 관련 API 전반에서 host/참여자 표시에 공통으로 쓰는 사용자 요약 정보

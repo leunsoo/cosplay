@@ -2,8 +2,7 @@
 
 import { useState } from 'react';
 import { ProductGrid } from '@/entities/product';
-import { useAuthStore } from '@/shared/auth';
-import { useLogined } from '@/entities/auth';
+import { useAuthStore, useLogined } from '@/shared/auth';
 import { useProductListing } from '../model/use-product-listing';
 import { useFavoriteProductCards } from '../api/use-favorite-product-cards';
 import { PaginationControl } from '@/shared/ui';

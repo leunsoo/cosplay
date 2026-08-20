@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { apiClient, type ApiResponse } from '@/shared/api';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { mockEventChatActiveCount } from '@/mocks';
 
 // 행사 채팅 접속 인원 조회 API

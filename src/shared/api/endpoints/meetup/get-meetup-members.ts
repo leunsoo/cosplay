@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { apiClient, type ApiResponse } from '@/shared/api';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { getDemoMeetupMembers } from '@/mocks';
 import { MeetupUserSummarySchema } from './get-meetup-detail';
 
@@ -12,7 +12,6 @@ const MeetupMemberDTOSchema = z.object({
 export const MeetupMembersDTOSchema = z.array(MeetupMemberDTOSchema);
 
 export type MeetupMembersDTO = z.infer<typeof MeetupMembersDTOSchema>;
-export type MeetupMemberDTO = z.infer<typeof MeetupMemberDTOSchema>;
 
 export const getMeetupMembers = async (
   meetupId: number

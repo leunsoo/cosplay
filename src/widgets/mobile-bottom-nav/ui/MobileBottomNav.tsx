@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';
-import { useLogined } from '@/entities/auth';
+import { useLogined } from '@/shared/auth';
 
 const NAV_ITEMS = [
   { label: '행사 일정', icon: 'event', href: ROUTES.HOME },

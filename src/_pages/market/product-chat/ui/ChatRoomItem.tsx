@@ -1,6 +1,6 @@
 import { cn } from '@/shared/lib/cn';
 import { ChatRoom } from '../model/chat';
-import { UserAvatar } from '@/entities/user';
+import { UserAvatar } from '@/shared/ui';
 
 interface ChatRoomItemProps extends ChatRoom {
   onClick?: () => void;

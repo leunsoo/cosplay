@@ -3,7 +3,7 @@
 import { useEffect, useRef } from 'react';
 import { apiClient } from '@/shared/api';
 import { useAuthStore, DEMO_REGISTERED_KEY, reissueToken } from '@/shared/auth';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 
 export function AuthProvider({ children }: { children: React.ReactNode }) {
   const hasBootstrapped = useRef(false);
@@ -62,7 +62,12 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     return () => {
       cancelled = true;
     };
-  }, [setAuthenticated, setAuthChecking, setUnauthenticated]);
+  }, [
+    setAuthenticated,
+    setAuthChecking,
+    setDemoAuthenticated,
+    setUnauthenticated,
+  ]);
 
   return <>{children}</>;
 }

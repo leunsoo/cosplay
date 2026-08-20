@@ -4,7 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { useQuery } from '@tanstack/react-query';
 import { ROUTES } from '@/shared/routes';
-import { getEventDetail } from '@/shared/api/endpoints/event';
+import { EVENT_QUERIES, getEventDetail } from '@/shared/api/endpoints/event';
 import { mapEventDetailDtoToEventDetailWithUploader } from '../model';
 import { EventHeader } from './EventHeader';
 import { EventTabs, type EventTabType } from './EventTabs';
@@ -21,7 +21,7 @@ export function EventDetailPage({ eventId }: EventDetailPageProps) {
   const [activeTab, setActiveTab] = useState<EventTabType>('details');
 
   const { data, isLoading, error } = useQuery({
-    queryKey: ['event', eventId],
+    queryKey: EVENT_QUERIES.detail(eventId),
     queryFn: () => getEventDetail({ eventId: Number(eventId) }),
   });
 

@@ -1,5 +1,5 @@
 import { apiClient, type ApiResponse } from '@/shared/api';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { joinDemoMeetup } from '@/mocks';
 
 export const joinMeetup = (meetupId: number): Promise<ApiResponse<void>> => {

@@ -9,8 +9,7 @@ import { SellerProductsSection } from './SellerProductsSection';
 import { useProductDetail } from '@/entities/product';
 import { mapSellerProductDTOToProduct } from '../api/mapper';
 import { useAddRecentlyViewed } from '../api/use-add-recently-viewed';
-import { useAuthStore, isMe } from '@/shared/auth';
-import { useLogined } from '@/entities/auth';
+import { useAuthStore, isMe, useLogined } from '@/shared/auth';
 import { ROUTES } from '@/shared/routes';
 
 interface ProductDetailPageProps {

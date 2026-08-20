@@ -1,9 +1,6 @@
 export {
   getEventDetail,
-  EventDetailDTOSchema,
-  type GetEventDetailParams,
   type EventDetailDTO,
-  type UploaderDTO,
   type ScheduleItem,
 } from './get-event-detail';
 export {

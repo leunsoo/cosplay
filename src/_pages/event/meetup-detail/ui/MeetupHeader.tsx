@@ -6,7 +6,7 @@ import { useRef } from 'react';
 import { ROUTES } from '@/shared/routes';
 import type { MeetupDetailDTO } from '@/shared/api/endpoints/meetup';
 import { parseEventStatus } from '@/entities/event';
-import { useLogined } from '@/entities/auth';
+import { useLogined } from '@/shared/auth';
 import { useMeetupMembers } from '../api/use-meetup-members';
 import { FavoriteMeetupButton } from '@/features/favorite-meetup';
 import { ConfirmDialog } from '@/shared/ui';

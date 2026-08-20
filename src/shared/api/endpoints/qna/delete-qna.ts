@@ -1,5 +1,5 @@
 import { apiClient, type ApiResponse } from '@/shared/api';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { deleteDemoQna } from '@/mocks';
 
 export const deleteQna = (qnaPostId: number): Promise<ApiResponse<string>> => {

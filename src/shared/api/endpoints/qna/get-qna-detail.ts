@@ -1,6 +1,6 @@
-import { apiClient } from '../../apiClient';
+import { apiClient } from '../../api-client';
 import { type ApiResponse } from '../../response';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { mockQnaDetails } from '@/mocks';
 import { QnaDetailSchema, type QnaDetail } from './qna';
 

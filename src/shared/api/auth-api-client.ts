@@ -4,7 +4,7 @@ import axios, {
   type AxiosResponse,
   type InternalAxiosRequestConfig,
 } from 'axios';
-import { getApiConfig } from './apiConfig';
+import { getApiConfig } from './api-config';
 import { type ApiResponse } from './response';
 
 class AuthApiClient {

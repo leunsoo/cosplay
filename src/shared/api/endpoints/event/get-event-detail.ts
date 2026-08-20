@@ -1,6 +1,6 @@
 import { z } from 'zod';
-import { apiClient, serverFetch, type ApiResponse } from '@/shared/api';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { apiClient, type ApiResponse } from '@/shared/api';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { mockEventDetails } from '@/mocks';
 
 const UploaderDTOSchema = z.object({
@@ -8,7 +8,6 @@ const UploaderDTOSchema = z.object({
   nickname: z.string(),
   profileImageUrl: z.string().nullable(),
 });
-export type UploaderDTO = z.infer<typeof UploaderDTOSchema>;
 
 const ScheduleItemSchema = z.object({
   content: z.string(),
@@ -39,7 +38,10 @@ export interface GetEventDetailParams {
   eventId: number;
 }
 
-function resolveDemoEventDetail(eventId: number): ApiResponse<EventDetailDTO> {
+// getEventDetail/getEventDetailServer가 공통으로 쓰는 데모 모드 조회
+export function resolveDemoEventDetail(
+  eventId: number
+): ApiResponse<EventDetailDTO> {
   const detail = mockEventDetails[eventId] ?? mockEventDetails[1];
   return { status: 'SUCCESS', message: '성공', data: detail };
 }
@@ -52,16 +54,4 @@ export const getEventDetail = async (
     `/api/v1/events/${params.eventId}`,
     EventDetailDTOSchema
   );
-};
-
-// 서버 컴포넌트 / prefetchQuery 전용: apiClient(axios)는 내부적으로
-// Zustand(useAuthStore)를 참조해 서버 컴포넌트에서 사용할 수 없음
-export const getEventDetailServer = async (
-  params: GetEventDetailParams
-): Promise<ApiResponse<EventDetailDTO>> => {
-  if (IS_DEMO) return resolveDemoEventDetail(params.eventId);
-  return serverFetch(`/api/v1/events/${params.eventId}`, EventDetailDTOSchema, {
-    revalidate: 300,
-    tags: ['events'],
-  });
 };

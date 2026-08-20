@@ -1,8 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { generateProfileImageUploadUrl } from '@/shared/api/endpoints/user';
-import { convertToWebp, blobToBase64 } from '@/shared/lib/imageFormat';
+import { convertToWebp, blobToBase64 } from '@/shared/lib/image-format';
 import { uploadToS3 } from '@/shared/lib/s3';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 
 const revokePreviewUrl = (url: string) => {
   if (url.startsWith('blob:')) {

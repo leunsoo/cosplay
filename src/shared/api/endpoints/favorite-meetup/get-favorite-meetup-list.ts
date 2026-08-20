@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { apiClient, type ApiResponse } from '@/shared/api';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { getDemoFavoriteMeetupList } from '@/mocks';
 
 // 찜한 개인 행사(모임) 목록 조회 API

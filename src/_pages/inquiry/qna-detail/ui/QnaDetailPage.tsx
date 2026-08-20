@@ -3,7 +3,7 @@
 import { ROUTES } from '@/shared/routes';
 import { LoadingState, NotFoundState, BackLink } from '@/shared/ui';
 import { useMyProfile } from '@/entities/user';
-import { MobileHeaderCustom } from '@/widgets/mobile-header/MobileHeader';
+import { MobileHeaderCustom } from '@/widgets/mobile-header';
 import { useQnaDetail } from '../api/use-qna-detail';
 import { useQnaEditForm } from '../model/use-qna-edit-form';
 import { useQnaDelete } from '../model/use-qna-delete';

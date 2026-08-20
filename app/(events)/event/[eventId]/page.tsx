@@ -3,7 +3,8 @@ export const dynamic = 'force-dynamic';
 
 import { type Metadata } from 'next';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { getQueryClient } from '@/shared/lib/getQueryClient';
+import { getQueryClient } from '@/shared/lib/get-query-client';
+import { EVENT_QUERIES } from '@/shared/api/endpoints/event';
 import { getEventDetailServer } from '@/shared/api/endpoints/event/index.server';
 import { EventDetailPage } from '@/_pages/event/event-detail';
 import { EventJsonLd } from './_components/EventJsonLd';
@@ -76,10 +77,10 @@ export default async function EventDetailRoute({
   try {
     event = await fetchEventDetail(eventId);
 
-    // prefetchQuery: EventDetailPage의 useQuery(['event', eventId])와 동일한 queryKey
+    // prefetchQuery: EventDetailPage의 useQuery(EVENT_QUERIES.detail(eventId))와 동일한 queryKey
     // → 클라이언트에서 API 재호출 없이 캐시에서 즉시 데이터를 가져옴 → SEO 가능
     await queryClient.prefetchQuery({
-      queryKey: ['event', eventId],
+      queryKey: EVENT_QUERIES.detail(eventId),
       queryFn: async () => ({ data: await fetchEventDetail(eventId) }),
     });
   } catch {

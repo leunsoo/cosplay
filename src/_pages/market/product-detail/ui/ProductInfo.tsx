@@ -3,8 +3,7 @@
 import { useRef, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { type Seller } from '@/shared/api/endpoints/product';
-import { useAuthStore } from '@/shared/auth';
-import { useLogined } from '@/entities/auth';
+import { useAuthStore, useLogined } from '@/shared/auth';
 import { ROUTES } from '@/shared/routes';
 import { useUpdateProductStatus } from '../api/use-update-product-status';
 import { useDeleteProduct } from '../api/use-delete-product';
@@ -18,7 +17,7 @@ const PRODUCT_STATUS_OPTIONS = [
   { value: 'SOLD', label: '판매완료' },
 ] as const;
 
-type ProductStatus = (typeof PRODUCT_STATUS_OPTIONS)[number]['value'];
+type ProductStatusOption = (typeof PRODUCT_STATUS_OPTIONS)[number]['value'];
 
 interface ProductInfoProps {
   productId: number;
@@ -57,8 +56,8 @@ export function ProductInfo({
   const logined = useLogined();
   const userUuid = useAuthStore((state) => state.userUuid);
   const deleteDialogRef = useRef<HTMLDialogElement>(null);
-  const [status, setStatus] = useState<ProductStatus>(
-    (currentStatus as ProductStatus) ?? 'SELLING'
+  const [status, setStatus] = useState<ProductStatusOption>(
+    (currentStatus as ProductStatusOption) ?? 'SELLING'
   );
 
   const { mutate: changeStatus, isPending: isStatusPending } =
@@ -68,7 +67,7 @@ export function ProductInfo({
     useDeleteProduct({ userUuid, productId });
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newStatus = e.target.value as ProductStatus;
+    const newStatus = e.target.value as ProductStatusOption;
     changeStatus(newStatus, { onSuccess: () => setStatus(newStatus) });
   };
 

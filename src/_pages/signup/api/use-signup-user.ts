@@ -3,7 +3,7 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { USER_QUERIES, registerUser } from '@/shared/api/endpoints/user';
 import {
   useAuthStore,

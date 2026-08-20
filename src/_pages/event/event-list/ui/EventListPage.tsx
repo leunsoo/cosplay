@@ -10,7 +10,7 @@ import { EventSummaryCard } from './EventSummaryCard';
 import { MeetupSummaryCard } from './MeetupSummaryCard';
 import { isPersonalEvent, isOfficialEvent } from '../model/event';
 import { EventCalendarView } from './EventCalendarView';
-import { useLogined } from '@/entities/auth';
+import { useLogined } from '@/shared/auth';
 import { ROUTES } from '@/shared/routes';
 import { useEventFavoriteList } from '@/features/favorite-event';
 import { useMeetupFavoriteList } from '@/features/favorite-meetup';

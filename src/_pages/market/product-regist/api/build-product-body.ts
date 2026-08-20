@@ -1,7 +1,7 @@
 import { uploadProductImages } from '@/shared/api/endpoints/product';
-import { base64ToBlob, convertToWebp } from '@/shared/lib/imageFormat';
+import { base64ToBlob, convertToWebp } from '@/shared/lib/image-format';
 import { uploadToS3 } from '@/shared/lib/s3';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import type { ProductFormValues } from '../model/product-form';
 
 /** description HTML에서 base64 img src 목록 추출 */

@@ -1,4 +1,4 @@
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 
 export function DemoBanner() {
   if (!IS_DEMO) return null;

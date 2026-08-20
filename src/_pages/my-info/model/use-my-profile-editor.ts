@@ -2,13 +2,13 @@
 
 import { useEffect, useMemo, useState } from 'react';
 import { useAuthStore } from '@/shared/auth';
+import { useMyProfile } from '@/entities/user';
 import {
   type UserProfileFormValues,
   EMPTY_USER_PROFILE_FORM_VALUES,
   useProfileImageUpload,
 } from '@/features/user-profile-form';
 import { mapMyProfileDTOToUserProfileFormModel } from '../api/mapper';
-import { useMyProfile } from '../api/use-my-profile';
 import { useUpdateMyProfile } from '../api/use-update-my-profile';
 import { useDeleteMyAccount } from '../api/use-delete-my-account';
 
@@ -21,7 +21,7 @@ export function useMyProfileEditor() {
   );
   const profileImage = useProfileImageUpload('');
 
-  const myProfileQuery = useMyProfile(userUuid);
+  const myProfileQuery = useMyProfile();
   const updateProfileMutation = useUpdateMyProfile(userUuid);
   const deleteAccountMutation = useDeleteMyAccount(userUuid);
 

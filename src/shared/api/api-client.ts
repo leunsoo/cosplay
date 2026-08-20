@@ -8,7 +8,7 @@ import axios, {
 import { z, ZodError } from 'zod';
 import { useAuthStore } from '@/shared/auth';
 import { isTokenExpired } from '@/shared/auth';
-import { getApiConfig } from './apiConfig';
+import { getApiConfig } from './api-config';
 import { type ApiResponse } from './response';
 
 export type ReissueFn = () => Promise<{ accessToken: string }>;

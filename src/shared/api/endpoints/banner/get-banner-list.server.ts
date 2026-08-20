@@ -1,6 +1,6 @@
 import 'server-only';
 import { serverFetch, type ApiResponse } from '@/shared/api';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { mockBanners } from '@/mocks';
 import { BannersDTOSchema, type BannersDTO } from './get-banner-list.type';
 

@@ -3,7 +3,7 @@
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 
 const CUSTOM_HEADER_PATHS = [
   ROUTES.MY_INFO,

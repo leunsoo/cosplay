@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { getChatImageUploadUrl } from '@/shared/api/endpoints/product-chat';
 import { uploadToS3 } from '@/shared/lib/s3';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { ChatImageCropModal } from './ChatImageCropModal';
 
 interface MessageInputProps {

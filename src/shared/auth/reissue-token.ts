@@ -1,5 +1,5 @@
 import type { ApiResponse } from '@/shared/api';
-import { authApiClient } from '@/shared/api/authApiClient';
+import { authApiClient } from '@/shared/api/auth-api-client';
 
 interface ReissueResponse {
   accessToken: string;

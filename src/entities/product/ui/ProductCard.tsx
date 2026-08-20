@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { ProductImage } from './ProductImage';
 import { Product } from '../model/product';
-import { getRelativeTime } from '@/shared/lib/dateTime';
+import { getRelativeTime } from '@/shared/lib/date-time';
 import { ROUTES } from '@/shared/routes';
 
 export function ProductCard({

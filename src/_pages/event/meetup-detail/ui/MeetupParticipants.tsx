@@ -1,8 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { PageStepper } from '@/shared/ui';
-import { UserAvatar } from '@/entities/user';
+import { PageStepper, UserAvatar } from '@/shared/ui';
 import { useMeetupDetail } from '../api/use-meetup-detail';
 import { useMeetupMembers } from '../api/use-meetup-members';
 

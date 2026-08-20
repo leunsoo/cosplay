@@ -3,7 +3,7 @@
 import { usePathname, useParams } from 'next/navigation';
 import { Sidebar } from '@/widgets/event-sidebar';
 import { MeetupParticipants } from '@/_pages/event/meetup-detail';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 
 export default function EventsLayout({
   children,

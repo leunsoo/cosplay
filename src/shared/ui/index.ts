@@ -8,4 +8,6 @@ export { LoadingState } from './LoadingState';
 export { ErrorState } from './ErrorState';
 export { NotFoundState } from './NotFoundState';
 export { BackLink } from './BackLink';
-export { formatDate, formatDateTime } from './formatDate';
+export { formatDate, formatDateTime } from './format-date';
+export { UserAvatar } from './UserAvatar';
+export { FavoriteIconButton } from './FavoriteIconButton';

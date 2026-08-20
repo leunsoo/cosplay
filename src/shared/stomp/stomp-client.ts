@@ -1,12 +1,12 @@
 import { Client, IFrame, IMessage } from '@stomp/stompjs';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import SockJS from 'sockjs-client';
 import {
   StompClientCallbacks,
   StompPublishOptions,
   SubscribeInput,
   SubscribeInfo,
-} from './types';
+} from './stomp-client.types';
 import { getStompConfig, StompConfig } from './config';
 
 export class StompClient {

@@ -1,5 +1,5 @@
 import { apiClient, type ApiResponse } from '@/shared/api';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { updateDemoMeetup } from '@/mocks';
 import type { CreateMeetupBody } from './create-meetup';
 

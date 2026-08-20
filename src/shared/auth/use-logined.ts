@@ -1,6 +1,6 @@
 'use client';
 
-import { useAuthStore } from '@/shared/auth';
+import { useAuthStore } from './auth-store';
 
 /**
  * 현재 유저가 member 권한으로 로그인한 상태인지 구독합니다.

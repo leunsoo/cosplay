@@ -6,7 +6,7 @@ import {
   addRecentlyViewed,
   RECENTLY_VIEWED_QUERIES,
 } from '@/shared/api/endpoints/recently-viewed';
-import { useLogined } from '@/entities/auth';
+import { useLogined } from '@/shared/auth';
 
 interface UseAddRecentlyViewedParams {
   uuid: string;

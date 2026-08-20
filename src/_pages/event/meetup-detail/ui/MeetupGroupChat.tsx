@@ -1,12 +1,11 @@
 'use client';
 
-import { useAuthStore } from '@/shared/auth';
-import { useLogined } from '@/entities/auth';
+import { useAuthStore, useLogined } from '@/shared/auth';
 import { EventStatus } from '@/entities/event';
 import { useMeetupGroupChat } from '../model/use-meetup-group-chat';
 import { GroupChatHeader, GroupMessageInput } from '@/entities/chat';
 import { MeetupGroupMessageList } from './MeetupGroupMessageList';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 
 interface MeetupGroupChatProps {
   meetupId: string;

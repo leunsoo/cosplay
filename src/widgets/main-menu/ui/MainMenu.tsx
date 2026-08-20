@@ -4,9 +4,10 @@ import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';
 import { LogoutBtn } from '@/features/logout';
-import { useLogined } from '@/entities/auth';
-import { UserAvatar, useMyProfile } from '@/entities/user';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { useLogined } from '@/shared/auth';
+import { useMyProfile } from '@/entities/user';
+import { UserAvatar } from '@/shared/ui';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 
 export function MainMenu() {
   const pathname = usePathname();

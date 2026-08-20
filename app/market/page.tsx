@@ -3,7 +3,7 @@ export const dynamic = 'force-dynamic';
 
 import { type Metadata } from 'next';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { getQueryClient } from '@/shared/lib/getQueryClient';
+import { getQueryClient } from '@/shared/lib/get-query-client';
 import { getProductListServer } from '@/shared/api/endpoints/product/index.server';
 import { PRODUCT_QUERIES } from '@/shared/api/endpoints/product';
 import { ProductListPage } from '@/_pages/market/product-list';

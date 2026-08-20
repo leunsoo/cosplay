@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { apiClient, type ApiResponse } from '@/shared/api';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { mockMeetupChatMessages } from '@/mocks';
 
 // 개인 행사(모임) 최근 채팅 메시지 조회 API

@@ -12,7 +12,7 @@ interface ProductListItemDTO {
 }
 
 // ProductDTO를 Product 타입으로 변환
-export function mapProductDTOToProduct(dto: ProductListItemDTO): Product {
+function mapProductDTOToProduct(dto: ProductListItemDTO): Product {
   return {
     id: dto.id,
     image: dto.mainImageUrl,

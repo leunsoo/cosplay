@@ -4,13 +4,13 @@ import { useState } from 'react';
 import { useMeetupDetail } from '../api/use-meetup-detail';
 import { useMeetupJoinToggle } from '../model/use-meetup-join-toggle';
 import { EventStatus } from '@/entities/event';
-import { useLogined } from '@/entities/auth';
+import { useLogined } from '@/shared/auth';
 import { MeetupHeader } from './MeetupHeader';
 import { MeetupGroupChat } from './MeetupGroupChat';
 import { MeetupTabs, type MeetupTabType } from './MeetupTabs';
 import { MeetupAbout } from './MeetupAbout';
 import { MeetupMobileMenu } from './MeetupMobileMenu';
-import { MobileHeaderCustom } from '@/widgets/mobile-header/MobileHeader';
+import { MobileHeaderCustom } from '@/widgets/mobile-header';
 
 interface MeetupDetailPageProps {
   meetupId: string;

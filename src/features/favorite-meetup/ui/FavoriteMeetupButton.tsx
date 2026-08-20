@@ -1,6 +1,6 @@
 'use client';
 
-import { FavoriteIconButton } from '@/entities/favorite';
+import { FavoriteIconButton } from '@/shared/ui';
 import { useMeetupFavoriteToggle } from '../model/use-meetup-favorite-toggle';
 import type { FavoriteMeetup } from '../model/favorite-meetup';
 

@@ -1,4 +1,4 @@
-import { UserAvatar } from '@/entities/user';
+import { UserAvatar } from '@/shared/ui';
 import type { SellerProfileDTO } from '@/shared/api/endpoints/seller';
 
 export function SellerProfileCard({

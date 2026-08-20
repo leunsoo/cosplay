@@ -4,7 +4,7 @@ import {
   formatEventDate,
   getStatusColor,
 } from '@/entities/event';
-import { useLogined } from '@/entities/auth';
+import { useLogined } from '@/shared/auth';
 import { FavoriteMeetupButton } from '@/features/favorite-meetup';
 import { formatMemberCount } from '../lib/format';
 import { SummaryCardShell } from './SummaryCardShell';

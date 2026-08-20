@@ -8,7 +8,7 @@ import {
 } from '@/shared/api/endpoints/product-chat';
 import { useChatStomp } from '../api/use-chat-stomp';
 import { useChatMessages } from './use-chat-messages';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { sendDemoMessage } from '@/mocks';
 
 interface UseChatRoomParams {
