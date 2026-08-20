@@ -1,3 +1,13 @@
+/** File/Blob → base64 data URL 변환 */
+export function blobToBase64(blob: Blob): Promise<string> {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = () => resolve(reader.result as string);
+    reader.onerror = () => reject(new Error('이미지 읽기 실패'));
+    reader.readAsDataURL(blob);
+  });
+}
+
 /** base64 문자열 → Blob 변환 */
 export function base64ToBlob(base64: string): Blob {
   const [header, data] = base64.split(',');

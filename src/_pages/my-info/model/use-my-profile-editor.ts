@@ -105,10 +105,9 @@ export function useMyProfileEditor() {
     isLoading: myProfileQuery.isLoading,
     isError: myProfileQuery.isError,
     isEditMode,
-    values: {
-      ...(isEditMode ? draftInfo : currentProfile),
-      profileImageUri: profileImage.imageUri,
-    },
+    values: isEditMode
+      ? { ...draftInfo, profileImageUri: profileImage.imageUri }
+      : currentProfile,
     isSaving: updateProfileMutation.isPending,
     isDeleting: deleteAccountMutation.isPending,
     onFieldChange: updateDraftInfo,

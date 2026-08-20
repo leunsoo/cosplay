@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { generateProfileImageUploadUrl } from '@/shared/api/endpoints/user';
-import { convertToWebp } from '@/shared/lib/imageFormat';
+import { convertToWebp, blobToBase64 } from '@/shared/lib/imageFormat';
 import { uploadToS3 } from '@/shared/lib/s3';
 import { IS_DEMO } from '@/shared/lib/isDemo';
 
@@ -45,8 +45,10 @@ export function useProfileImageUpload(initialImageUri: string) {
     }
 
     if (IS_DEMO) {
-      // 데모 모드: 실제 업로드 없이 이미 만들어둔 로컬 미리보기 URL을 그대로 사용
-      return imageUri;
+      // 데모 모드: 실제 업로드 없이 base64 data URL로 변환해 사용.
+      // blob: URL은 이 훅이 언마운트되면(페이지 이동 등) 자동으로 해제되어
+      // "저장된" 값으로 영구 사용할 수 없다 — data: URL은 해제 개념이 없어 안전하다.
+      return blobToBase64(file);
     }
 
     const webp = await convertToWebp(file);
