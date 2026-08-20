@@ -58,4 +58,10 @@ export {
   type UploadChatImageBody,
   type UploadChatImageDTO,
 } from './get-chat-image-upload-url';
-export { CHAT_ROOM_LIST_QUERIES } from './chat-room-list.query';
+export { CHAT_ROOM_QUERIES } from './chat-room.query';
+export {
+  StompMessagePayloadSchema,
+  StompReceivePayloadSchema,
+  type StompMessagePayload,
+  type StompReceivePayload,
+} from './product-chat-stomp';

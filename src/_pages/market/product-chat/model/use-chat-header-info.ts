@@ -1,7 +1,6 @@
 'use client';
 
-import { useQuery } from '@tanstack/react-query';
-import { getChatRoom } from '@/shared/api/endpoints/product-chat';
+import { useChatRoomDetail } from '../api/use-chat-room-detail';
 import type { ProductDetailResponseDTO } from '@/shared/api/endpoints/product';
 import type { ChatProductInfo } from './chat';
 
@@ -22,10 +21,10 @@ export function useChatHeaderInfo({
 }: UseChatHeaderInfoParams): ChatProductInfo {
   // 방 선택 시: 채팅방 상품 정보 조회 → ChatHeader 표시
   // roomId 기반 진입이거나 사이드바에서 방 선택 시 사용
-  const { data: chatRoomDetailData } = useQuery({
-    queryKey: ['chatRoom', selectedRoomId, userUuid],
-    queryFn: () => getChatRoom({ roomId: Number(selectedRoomId!), userUuid }),
-    enabled: !!selectedRoomId && !!userUuid && !productId,
+  const { data: chatRoomDetailData } = useChatRoomDetail({
+    roomId: Number(selectedRoomId),
+    userUuid,
+    enabled: !!selectedRoomId && !productId,
   });
 
   if (productId && productDetail) {

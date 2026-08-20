@@ -4,8 +4,9 @@ import { useRouter } from 'next/navigation';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import {
   leaveChatRoom,
-  CHAT_ROOM_LIST_QUERIES,
+  CHAT_ROOM_QUERIES,
 } from '@/shared/api/endpoints/product-chat';
+import { ROUTES } from '@/shared/routes';
 
 interface UseLeaveChatRoomParams {
   userUuid: string;
@@ -22,10 +23,10 @@ export function useLeaveChatRoom({ userUuid, onLeft }: UseLeaveChatRoomParams) {
     onSuccess: () => {
       onLeft();
       queryClient.invalidateQueries({
-        queryKey: CHAT_ROOM_LIST_QUERIES.list(userUuid),
+        queryKey: CHAT_ROOM_QUERIES.list(userUuid),
       });
-      queryClient.invalidateQueries({ queryKey: ['resolveChatRoom'] });
-      router.replace('/market/chat');
+      queryClient.invalidateQueries({ queryKey: CHAT_ROOM_QUERIES.resolves() });
+      router.replace(ROUTES.CHAT);
     },
     onError: (error) => {
       console.error('[leaveChatRoom] API 오류:', error);

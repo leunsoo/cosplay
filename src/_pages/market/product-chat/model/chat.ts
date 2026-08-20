@@ -16,8 +16,6 @@ export interface Message {
   message?: string;
   imageUrl?: string;
   timestamp: string; // ISO 문자열 — 표시 포맷팅은 MessageBubble에서 처리
-  userName?: string;
-  userAvatar?: string;
 }
 
 export interface ChatProductInfo {
