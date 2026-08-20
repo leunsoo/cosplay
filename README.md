@@ -8,6 +8,7 @@
 
 - `NEXT_PUBLIC_DEMO_MODE=true` 환경 변수로 활성화됩니다.
 - API 함수 레벨에서 `IS_DEMO` 분기를 적용해 목 데이터를 반환합니다.
+- MSW 로 전환할 예정입니다.
 
 ---
 
