@@ -1,8 +1,8 @@
-interface ProductImage {
+interface ProductImageProps {
   mainImage: string;
 }
 
-export function ProductImage({ mainImage }: ProductImage) {
+export function ProductImage({ mainImage }: ProductImageProps) {
   return (
     <div className="w-full max-w-120 shrink-0 flex flex-col gap-4">
       {/* Main Image */}

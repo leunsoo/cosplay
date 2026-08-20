@@ -62,3 +62,4 @@ export {
   type UploadProductImagesBody,
   type UploadProductImagesDTO,
 } from './upload-product-images';
+export { PRODUCT_QUERIES } from './product.query';

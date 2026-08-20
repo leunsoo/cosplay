@@ -5,12 +5,15 @@ import {
   createProduct,
   uploadProductImages,
   updateProduct,
+  PRODUCT_QUERIES,
 } from '@/shared/api/endpoints/product';
 import { FAVORITE_PRODUCT_QUERIES } from '@/shared/api/endpoints/favorite-product';
+import { RECENTLY_VIEWED_QUERIES } from '@/shared/api/endpoints/recently-viewed';
 import { useAuthStore } from '@/shared/auth';
 import { base64ToBlob, convertToWebp } from '@/shared/lib/imageFormat';
 import { uploadToS3 } from '@/shared/lib/s3';
 import { IS_DEMO } from '@/shared/lib/isDemo';
+import { ROUTES } from '@/shared/routes';
 import type { ProductFormData } from './types';
 
 interface UseProductRegistOptions {
@@ -129,16 +132,16 @@ export function useProductRegist({
       return createProduct({ uuid: userUuid }, productBody);
     },
     onSuccess: (response) => {
-      queryClient.invalidateQueries({ queryKey: ['products'] });
+      queryClient.invalidateQueries({ queryKey: PRODUCT_QUERIES.all() });
       if (isEditMode) {
         queryClient.invalidateQueries({
           queryKey: FAVORITE_PRODUCT_QUERIES.all(),
         });
         queryClient.invalidateQueries({
-          queryKey: ['recently-viewed', userUuid],
+          queryKey: RECENTLY_VIEWED_QUERIES.list(userUuid),
         });
       }
-      router.push(`/market/products/${response.data.id}`);
+      router.push(ROUTES.PRODUCT.DETAIL(response.data.id));
     },
     onError: (error) => {
       console.error(isEditMode ? '상품 수정 실패:' : '상품 등록 실패:', error);

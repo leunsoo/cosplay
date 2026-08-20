@@ -29,7 +29,7 @@ export function useProductFavoriteToggle({
   const { displayedActive, isPending, isLoading, handleClick } =
     useOptimisticToggle<ApiResponse<FavoriteListDTO>>({
       enabled: !!userUuid && !!productId,
-      statusQueryKey: ['favorite-status', userUuid, productId],
+      statusQueryKey: FAVORITE_PRODUCT_QUERIES.status(userUuid, productId),
       listQueryKey: FAVORITE_PRODUCT_QUERIES.list(userUuid).queryKey,
       fetchIsActive: () => getFavoriteStatus({ uuid: userUuid, productId }),
       activate: () =>

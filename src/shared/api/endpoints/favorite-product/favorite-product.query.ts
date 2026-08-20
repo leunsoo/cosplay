@@ -9,4 +9,8 @@ export const FAVORITE_PRODUCT_QUERIES = {
       queryFn: () => getFavoriteList({ uuid }),
       enabled: !!uuid,
     }),
+
+  statuses: () => [...FAVORITE_PRODUCT_QUERIES.all(), 'status'] as const,
+  status: (uuid: string, productId: number) =>
+    [...FAVORITE_PRODUCT_QUERIES.statuses(), uuid, productId] as const,
 };

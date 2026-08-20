@@ -8,7 +8,7 @@ import { ProductDescription } from './ProductDescription';
 import { SellerProductsSection } from './SellerProductsSection';
 import { useProductDetail } from '@/entities/product';
 import { mapSellerProductDTOToProduct } from '../api/mapper';
-import { useAddRecentlyViewed } from '../model/use-add-recently-viewed';
+import { useAddRecentlyViewed } from '../api/use-add-recently-viewed';
 import { useAuthStore, isMe } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
 import { ROUTES } from '@/shared/routes';
@@ -30,7 +30,7 @@ export function ProductDetailPage({ productId }: ProductDetailPageProps) {
   // 채팅하기 버튼 클릭 핸들러
   const handleChatClick = () => {
     const sellerUuid = productDetail?.seller.uuid ?? '';
-    const chatPath = `/market/chat?productId=${productId}&sellerUuid=${sellerUuid}`;
+    const chatPath = `${ROUTES.CHAT}?productId=${productId}&sellerUuid=${sellerUuid}`;
 
     if (!logined) {
       router.push(`${ROUTES.LOGIN}?next=${encodeURIComponent(chatPath)}`);
@@ -50,14 +50,6 @@ export function ProductDetailPage({ productId }: ProductDetailPageProps) {
 
   return (
     <div className="flex flex-col gap-4 pb-20 lg:pb-4">
-      {/* 목록 버튼 */}
-      {/* <div className="flex items-center">
-        <button className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors">
-          <span className="material-symbols-outlined text-lg">list</span>
-          목록
-        </button>
-      </div> */}
-
       <main className="flex flex-col gap-6 min-w-0">
         {/* Product Detail Section */}
         <div className="bg-white rounded-xl shadow-sm border border-border-color p-6 lg:p-8 mb-8">
@@ -102,53 +94,10 @@ export function ProductDetailPage({ productId }: ProductDetailPageProps) {
               mapSellerProductDTOToProduct
             )}
             onViewMore={() =>
-              router.push(
-                `/market/seller/${productDetail.seller.uuid}/products`
-              )
+              router.push(ROUTES.SELLER.PRODUCTS(productDetail.seller.uuid))
             }
           />
         </div>
-
-        {/* Mobile Bottom Action Bar */}
-        {/* <div className="lg:hidden fixed bottom-18 left-0 w-full bg-white border-t border-gray-200 p-4 z-40 flex items-center gap-3 shadow-[0_-4px_6px_-1px_rgba(0,0,0,0.05)]">
-          {isMe(productDetail.seller.id) ? (
-            <>
-              <button
-                onClick={() =>
-                  router.push(
-                    `/market/products/${productDetail.product.id}/edit`
-                  )
-                }
-                className="flex-1 border border-gray-300 text-gray-700 font-bold h-11 rounded-lg flex items-center justify-center"
-              >
-                수정
-              </button>
-              <button
-                onClick={() =>
-                  router.push(`/market/products/${productDetail.product.id}`)
-                }
-                className="flex-1 border border-red-300 text-red-500 font-bold h-11 rounded-lg flex items-center justify-center"
-              >
-                삭제
-              </button>
-            </>
-          ) : (
-            <>
-              <button className="flex flex-col items-center justify-center text-gray-500 min-w-12.5">
-                <span className="material-symbols-outlined text-2xl">
-                  favorite
-                </span>
-                <span className="text-[10px]">찜</span>
-              </button>
-              <button
-                onClick={handleChatClick}
-                className="flex-1 bg-primary text-white font-bold h-11 rounded-lg flex items-center justify-center"
-              >
-                채팅하기
-              </button>
-            </>
-          )}
-        </div> */}
       </main>
     </div>
   );

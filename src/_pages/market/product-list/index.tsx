@@ -6,6 +6,7 @@ import { ProductGrid, mapProductDTOsToProducts } from '@/entities/product';
 import {
   getProductList,
   getProductSearch,
+  PRODUCT_QUERIES,
 } from '@/shared/api/endpoints/product';
 import { useAuthStore } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
@@ -28,8 +29,8 @@ export function ProductListView({ keyword = '' }: ProductListViewProps) {
 
   const { data, error } = useQuery({
     queryKey: isSearchMode
-      ? ['product-search', keyword, currentPage]
-      : ['products', currentPage],
+      ? PRODUCT_QUERIES.search(keyword, currentPage)
+      : PRODUCT_QUERIES.list(currentPage),
     queryFn: () =>
       isSearchMode
         ? getProductSearch({
