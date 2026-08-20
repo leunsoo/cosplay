@@ -1,10 +1,10 @@
 import { AuthGuard } from '@/_app/providers/AuthGuard';
-import { RegisterPage } from '@/_pages/register';
+import { SignupPage } from '@/_pages/signup';
 
 export default function Page() {
   return (
     <AuthGuard allowRoles={['temp']}>
-      <RegisterPage />
+      <SignupPage />
     </AuthGuard>
   );
 }

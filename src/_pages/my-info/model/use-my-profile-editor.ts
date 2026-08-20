@@ -4,6 +4,7 @@ import { useEffect, useMemo, useState } from 'react';
 import { useAuthStore } from '@/shared/auth';
 import {
   type UserProfileFormValues,
+  EMPTY_USER_PROFILE_FORM_VALUES,
   useProfileImageUpload,
 } from '@/features/user-profile-form';
 import { mapMyProfileDTOToUserProfileFormModel } from '../api/mapper';
@@ -11,24 +12,13 @@ import { useMyProfile } from '../api/use-my-profile';
 import { useUpdateMyProfile } from '../api/use-update-my-profile';
 import { useDeleteMyAccount } from '../api/use-delete-my-account';
 
-const EMPTY_USER_INFO: UserProfileFormValues = {
-  nickname: '',
-  name: '',
-  gender: 'WOMAN',
-  phone: '',
-  birthDate: '',
-  email: '',
-  profileImageUri: '',
-  introduction: '',
-  removeProfileImage: false,
-};
-
 export function useMyProfileEditor() {
   const userUuid = useAuthStore((state) => state.userUuid);
 
   const [isEditMode, setIsEditMode] = useState(false);
-  const [draftInfo, setDraftInfo] =
-    useState<UserProfileFormValues>(EMPTY_USER_INFO);
+  const [draftInfo, setDraftInfo] = useState<UserProfileFormValues>(
+    EMPTY_USER_PROFILE_FORM_VALUES
+  );
   const profileImage = useProfileImageUpload('');
 
   const myProfileQuery = useMyProfile(userUuid);
@@ -45,7 +35,7 @@ export function useMyProfileEditor() {
     () =>
       myProfileQuery.data
         ? mapMyProfileDTOToUserProfileFormModel(myProfileQuery.data.data)
-        : EMPTY_USER_INFO,
+        : EMPTY_USER_PROFILE_FORM_VALUES,
     [myProfileQuery.data]
   );
 

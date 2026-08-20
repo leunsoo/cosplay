@@ -5,27 +5,16 @@ import Link from 'next/link';
 import { ROUTES } from '@/shared/routes';
 import {
   type UserProfileFormValues,
+  EMPTY_USER_PROFILE_FORM_VALUES,
   UserProfileFormFields,
   useProfileImageUpload,
 } from '@/features/user-profile-form';
-import { useRegisterUser } from '../api/use-register-user';
+import { useSignupUser } from '../api/use-signup-user';
 
-const INITIAL_REGISTER_VALUES: UserProfileFormValues = {
-  nickname: '',
-  name: '',
-  gender: 'MAN',
-  phone: '',
-  birthDate: '',
-  email: '',
-  profileImageUri: '',
-  introduction: '',
-  removeProfileImage: false,
-};
-
-export function RegisterPage() {
-  const [formValues, setFormValues] = useState(INITIAL_REGISTER_VALUES);
+export function SignupPage() {
+  const [formValues, setFormValues] = useState(EMPTY_USER_PROFILE_FORM_VALUES);
   const profileImage = useProfileImageUpload('');
-  const registerMutation = useRegisterUser();
+  const signupMutation = useSignupUser();
 
   const updateFormValue = <K extends keyof UserProfileFormValues>(
     key: K,
@@ -37,7 +26,7 @@ export function RegisterPage() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    registerMutation.mutate({
+    signupMutation.mutate({
       formValues,
       uploadProfileImage: profileImage.upload,
     });
@@ -85,10 +74,10 @@ export function RegisterPage() {
         <div className="flex justify-end">
           <button
             type="submit"
-            disabled={registerMutation.isPending}
+            disabled={signupMutation.isPending}
             className="px-6 py-3 rounded-xl bg-black text-white font-bold hover:bg-gray-800 transition-colors"
           >
-            {registerMutation.isPending ? '가입 처리 중...' : '회원가입 완료'}
+            {signupMutation.isPending ? '가입 처리 중...' : '회원가입 완료'}
           </button>
         </div>
       </form>

@@ -12,12 +12,12 @@ import {
 } from '@/shared/auth';
 import type { UserProfileFormValues } from '@/features/user-profile-form';
 
-interface RegisterUserVariables {
+interface SignupUserVariables {
   formValues: UserProfileFormValues;
   uploadProfileImage: () => Promise<string>;
 }
 
-export function useRegisterUser() {
+export function useSignupUser() {
   const router = useRouter();
   const queryClient = useQueryClient();
   const setAuthenticated = useAuthStore((state) => state.setAuthenticated);
@@ -29,7 +29,7 @@ export function useRegisterUser() {
     mutationFn: async ({
       formValues,
       uploadProfileImage,
-    }: RegisterUserVariables) => {
+    }: SignupUserVariables) => {
       const profileImageUri = await uploadProfileImage();
 
       return registerUser({ ...formValues, profileImageUri });
