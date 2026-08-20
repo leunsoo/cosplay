@@ -8,6 +8,7 @@ import {
   getProductSearch,
   PRODUCT_QUERIES,
 } from '@/shared/api/endpoints/product';
+import { SEARCH_KEYWORDS_QUERIES } from '@/shared/api/endpoints/search-keywords';
 
 interface UseProductListingParams {
   keyword: string;
@@ -41,7 +42,7 @@ export function useProductListing({
   useEffect(() => {
     if (isSearchMode && data && userUuid) {
       queryClient.invalidateQueries({
-        queryKey: ['search-keywords', userUuid],
+        queryKey: SEARCH_KEYWORDS_QUERIES.list(userUuid),
       });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
