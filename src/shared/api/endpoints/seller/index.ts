@@ -12,3 +12,4 @@ export {
   type GetSellerProductsParams,
   type SellerProductsDTO,
 } from './get-seller-products';
+export { SELLER_QUERIES } from './seller.query';

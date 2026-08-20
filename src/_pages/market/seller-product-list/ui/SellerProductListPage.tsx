@@ -3,26 +3,36 @@
 import { useParams } from 'next/navigation';
 import { ProductGrid } from '@/entities/product';
 import { PaginationControl, ErrorState } from '@/shared/ui';
-import { SellerProfileCard, TabNavigation, LoadingState } from './ui';
-import { useSellerData, type Tab } from './model';
+import { SellerProfileCard } from './SellerProfileCard';
+import { TabNavigation, type Tab } from './TabNavigation';
+import { LoadingState } from './LoadingState';
+import { useSellerProfile } from '../api/use-seller-profile';
+import { useSellerProducts } from '../api/use-seller-products';
 
-export function SellerProductsListView() {
+export function SellerProductListPage() {
   const params = useParams();
   const sellerUuid = params.id as string;
 
   const {
     sellerProfile,
+    isLoading: isLoadingProfile,
+    error: profileError,
+  } = useSellerProfile(sellerUuid);
+  const {
     products,
     pagination,
     currentPage,
     setCurrentPage,
-    isLoading,
-    error,
-  } = useSellerData(sellerUuid);
+    isLoading: isLoadingProducts,
+    error: productsError,
+  } = useSellerProducts(sellerUuid);
+
+  const isLoading = isLoadingProfile || isLoadingProducts;
+  const error = profileError || productsError;
 
   // 잘못된 seller UUID
   if (!sellerUuid) {
-    return <ErrorState message="잘못된 판매자 UUID입니다." />;
+    return <ErrorState message="잘못된 판매자 입니다." />;
   }
 
   // 로딩 상태
@@ -50,12 +60,6 @@ export function SellerProductsListView() {
       count: productCount,
       isActive: true,
     },
-    // {
-    //   id: 'reviews',
-    //   label: '상점 후기',
-    //   count: 0,
-    //   isActive: false,
-    // },
   ];
 
   if (!sellerProfile) {
@@ -64,17 +68,6 @@ export function SellerProductsListView() {
 
   return (
     <main className="flex flex-col min-w-0 overflow-y-auto gap-4">
-      {/* 목록 버튼 */}
-      {/* <div className="flex items-center">
-        <button
-          onClick={() => router.back()}
-          className="flex items-center gap-2 px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
-        >
-          <span className="material-symbols-outlined text-lg">list</span>
-          목록
-        </button>
-      </div> */}
-
       {/* 프로필 카드 */}
       <SellerProfileCard {...sellerProfile} />
 
