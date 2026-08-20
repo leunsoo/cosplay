@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import DaumPostcodeEmbed from 'react-daum-postcode';
 import type { UseFormRegisterReturn } from 'react-hook-form';
-import { DIRECT_TRADE_OPTIONS } from '../model/const';
+import { DIRECT_TRADE_OPTIONS } from '../model/product-form';
 
 interface DirectTradeSectionProps {
   directTradeEnabled: 'possible' | 'impossible';

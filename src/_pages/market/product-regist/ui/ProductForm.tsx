@@ -4,38 +4,38 @@ import { useRef, useState } from 'react';
 import { useForm, Controller, useWatch } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 
+import { ImageUploadSection } from './ImageUploadSection';
+import { TitleSection } from './TitleSection';
+import { PriceField } from './PriceField';
+import { ShippingSection } from './ShippingSection';
+import { DirectTradeSection } from './DirectTradeSection';
+import { RichTextEditor } from './RichTextEditor/RichTextEditor';
+import { FormButtons } from './FormButtons';
 import {
-  ImageUploadSection,
-  TitleSection,
-  PriceField,
-  ShippingSection,
-  DirectTradeSection,
-  RichTextEditor,
-  FormButtons,
-} from './ui';
-import { useProductRegist } from './model/use-product-regist';
-import { INITIAL_FORM_DATA, TITLE_MAX_LENGTH } from './model/const';
-import { ProductFormSchema, type ProductFormValues } from './model/validation';
-import type { ProductFormData } from './model/types';
+  INITIAL_FORM_DATA,
+  TITLE_MAX_LENGTH,
+  ProductFormSchema,
+  type ProductFormValues,
+} from '../model/product-form';
 
-interface ProductRegistViewProps {
-  defaultValues?: Partial<ProductFormData>;
+interface ProductFormProps {
+  defaultValues?: Partial<ProductFormValues>;
   initialImageUrl?: string;
-  productId?: number;
+  onSubmit: (data: ProductFormValues) => void;
+  isPending: boolean;
+  isEditMode: boolean;
 }
 
-export function ProductRegistView({
+export function ProductForm({
   defaultValues,
-  initialImageUrl: initialImageUrlProp,
-  productId,
-}: ProductRegistViewProps = {}) {
+  initialImageUrl,
+  onSubmit,
+  isPending,
+  isEditMode,
+}: ProductFormProps) {
   const [currentInitialImageUrl, setCurrentInitialImageUrl] = useState<
     string | undefined
-  >(initialImageUrlProp);
-  const { submit, isPending } = useProductRegist({
-    productId,
-    initialImageUrl: currentInitialImageUrl,
-  });
+  >(initialImageUrl);
   const imageRef = useRef<HTMLDivElement>(null);
 
   const {
@@ -59,18 +59,18 @@ export function ProductRegistView({
     if (!file) setCurrentInitialImageUrl(undefined);
   };
 
-  const onSubmit = (data: ProductFormValues) => {
+  const handleValidSubmit = (data: ProductFormValues) => {
     if (!data.mainImageFile && !currentInitialImageUrl) {
       setError('mainImageFile', { message: '대표 이미지를 등록해주세요' });
       imageRef.current?.scrollIntoView({ behavior: 'smooth', block: 'center' });
       return;
     }
-    submit(data);
+    onSubmit(data);
   };
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    handleSubmit(onSubmit)(e);
+    handleSubmit(handleValidSubmit)(e);
   };
 
   return (
@@ -135,8 +135,6 @@ export function ProductRegistView({
               shippingTypeRegistration={register('shippingType')}
               standardShippingValue={field.value}
               onStandardShippingChange={field.onChange}
-              economyShipping="impossible"
-              onEconomyShippingChange={() => {}}
               error={errors.standardShipping?.message}
             />
           )}
@@ -174,7 +172,7 @@ export function ProductRegistView({
         )}
       />
 
-      <FormButtons isPending={isPending} />
+      <FormButtons isPending={isPending} isEditMode={isEditMode} />
     </form>
   );
 }

@@ -1,8 +1,15 @@
 interface FormButtonsProps {
   isPending?: boolean;
+  isEditMode?: boolean;
 }
 
-export function FormButtons({ isPending = false }: FormButtonsProps) {
+export function FormButtons({
+  isPending = false,
+  isEditMode = false,
+}: FormButtonsProps) {
+  const pendingLabel = isEditMode ? '수정 중...' : '등록 중...';
+  const idleLabel = isEditMode ? '수정하기' : '등록하기';
+
   return (
     <div className="flex items-center justify-end gap-3 mt-4 pt-6 border-t border-gray-100">
       <button
@@ -10,7 +17,7 @@ export function FormButtons({ isPending = false }: FormButtonsProps) {
         type="submit"
         disabled={isPending}
       >
-        {isPending ? '등록 중...' : '등록하기'}
+        {isPending ? pendingLabel : idleLabel}
       </button>
     </div>
   );

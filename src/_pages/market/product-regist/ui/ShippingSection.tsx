@@ -1,5 +1,5 @@
 import type { UseFormRegisterReturn } from 'react-hook-form';
-import { SHIPPING_OPTIONS } from '../model/const';
+import { SHIPPING_OPTIONS } from '../model/product-form';
 import { formatPrice, parsePrice } from '@/shared/lib/formatPrice';
 
 interface ShippingSectionProps {
@@ -7,8 +7,6 @@ interface ShippingSectionProps {
   shippingTypeRegistration: UseFormRegisterReturn<'shippingType'>;
   standardShippingValue: number;
   onStandardShippingChange: (value: number) => void;
-  economyShipping: 'possible' | 'impossible';
-  onEconomyShippingChange: (option: 'possible' | 'impossible') => void;
   error?: string;
 }
 
