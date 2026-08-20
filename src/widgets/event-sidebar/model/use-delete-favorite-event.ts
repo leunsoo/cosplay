@@ -2,8 +2,10 @@
 
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useAuthStore } from '@/shared/auth';
-import { FAVORITE_EVENT_QUERIES } from '@/shared/api/favorite-event';
-import { deleteFavoriteEvent } from '@/features/favorite-event';
+import {
+  FAVORITE_EVENT_QUERIES,
+  deleteFavoriteEvent,
+} from '@/shared/api/endpoints/favorite-event';
 
 export function useDeleteFavoriteEvent() {
   const queryClient = useQueryClient();

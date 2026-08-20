@@ -1,9 +1,3 @@
-export interface MeetupChatRoom {
-  roomId: number;
-  meetupId: number;
-  status: string;
-}
-
 export interface MeetupChatMessage {
   id: number;
   roomId: number;
@@ -15,8 +9,4 @@ export interface MeetupChatMessage {
   type: string;
   createdAt: string;
   isMyMessage: boolean;
-}
-
-export interface MeetupChatActiveCount {
-  count: number;
 }

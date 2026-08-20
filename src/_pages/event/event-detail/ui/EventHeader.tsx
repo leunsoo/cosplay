@@ -2,7 +2,7 @@
 
 import Image from 'next/image';
 import { formatEventDate } from '@/entities/event';
-import { useLogined } from '@/entities/auth';
+import { useLogined } from '@/shared/auth';
 import type { OfficialEventDetail } from '../model';
 import { FavoriteButton } from '@/features/favorite-event';
 

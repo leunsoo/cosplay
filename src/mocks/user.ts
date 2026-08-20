@@ -1,4 +1,4 @@
-import type { UserProfileDTO } from '@/shared/api/user';
+import type { UserProfileDTO } from '@/shared/api/endpoints/user';
 
 export const DEMO_USER_UUID = 'demo-user-uuid-0000';
 

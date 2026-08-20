@@ -6,7 +6,7 @@ import { formatEventDate } from '@/entities/event';
 import { type Event, isOfficialEvent, isPersonalEvent } from '../model/event';
 import { getEventsForDate, generateCalendarDays } from '../lib/calendar';
 import { formatEventPrice, formatMemberCount } from '../lib/format';
-import { isSameMonth, isToday } from '@/shared/lib/dateTime';
+import { isSameMonth, isToday } from '@/shared/lib/date-time';
 import { ROUTES } from '@/shared/routes';
 
 interface DayModal {

@@ -1,26 +1,18 @@
 'use client';
 
 import { useEffect, useRef, useState } from 'react';
-
-interface QnaMobileMenuProps {
-  isEditing: boolean;
-  isDeleting: boolean;
-  isUpdating: boolean;
-  onEdit: () => void;
-  onSave: () => void;
-  onCancel: () => void;
-  onDelete: () => void;
-}
+import type { QnaEditActions } from './qna-edit-actions';
 
 export function QnaMobileMenu({
   isEditing,
   isDeleting,
   isUpdating,
+  canSave,
   onEdit,
   onSave,
   onCancel,
   onDelete,
-}: QnaMobileMenuProps) {
+}: QnaEditActions) {
   const [open, setOpen] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
 
@@ -46,7 +38,7 @@ export function QnaMobileMenu({
         </button>
         <button
           onClick={onSave}
-          disabled={isUpdating}
+          disabled={isUpdating || !canSave}
           className="px-3 py-1.5 text-sm bg-black text-white font-bold rounded-lg disabled:opacity-50"
         >
           {isUpdating ? '저장 중...' : '저장'}

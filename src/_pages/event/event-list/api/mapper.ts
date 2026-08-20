@@ -1,5 +1,5 @@
-import type { EventDTO } from './get-events-list';
-import type { MeetupItemDTO } from './get-meetup-list';
+import type { EventDTO } from '@/shared/api/endpoints/event';
+import type { MeetupItemDTO } from '@/shared/api/endpoints/meetup';
 import {
   type OfficialEvent,
   type PersonalEvent,

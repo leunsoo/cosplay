@@ -1,14 +1,12 @@
 'use client';
 
 import { useRef, useState } from 'react';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { type Seller } from '@/entities/product';
-import { deleteProduct } from '../api/delete-product';
-import { updateProductStatus } from '../api/update-product-status';
-import { FAVORITE_PRODUCT_QUERIES } from '@/shared/api/favorite-product';
-import { useAuthStore } from '@/shared/auth';
-import { useLogined } from '@/entities/auth';
+import { type Seller } from '@/shared/api/endpoints/product';
+import { useAuthStore, useLogined } from '@/shared/auth';
+import { ROUTES } from '@/shared/routes';
+import { useUpdateProductStatus } from '../api/use-update-product-status';
+import { useDeleteProduct } from '../api/use-delete-product';
 import { SellerInfoCard } from './SellerInfoCard';
 import { FavoriteButton } from './FavoriteButton';
 import { ConfirmDialog } from '@/shared/ui/ConfirmDialog';
@@ -19,7 +17,7 @@ const PRODUCT_STATUS_OPTIONS = [
   { value: 'SOLD', label: '판매완료' },
 ] as const;
 
-type ProductStatus = (typeof PRODUCT_STATUS_OPTIONS)[number]['value'];
+type ProductStatusOption = (typeof PRODUCT_STATUS_OPTIONS)[number]['value'];
 
 interface ProductInfoProps {
   productId: number;
@@ -55,47 +53,22 @@ export function ProductInfo({
   onChatClick,
 }: ProductInfoProps) {
   const router = useRouter();
-  const queryClient = useQueryClient();
   const logined = useLogined();
   const userUuid = useAuthStore((state) => state.userUuid);
   const deleteDialogRef = useRef<HTMLDialogElement>(null);
-  const [status, setStatus] = useState<ProductStatus>(
-    (currentStatus as ProductStatus) ?? 'SELLING'
+  const [status, setStatus] = useState<ProductStatusOption>(
+    (currentStatus as ProductStatusOption) ?? 'SELLING'
   );
 
-  const { mutate: changeStatus, isPending: isStatusPending } = useMutation({
-    mutationFn: (newStatus: ProductStatus) =>
-      updateProductStatus({ uuid: userUuid, productId }, { status: newStatus }),
-    onSuccess: (_, newStatus) => {
-      queryClient.invalidateQueries({
-        queryKey: FAVORITE_PRODUCT_QUERIES.all(),
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['recently-viewed', userUuid],
-      });
-      setStatus(newStatus);
-    },
-    onError: () => alert('상태 변경에 실패했습니다.'),
-  });
+  const { mutate: changeStatus, isPending: isStatusPending } =
+    useUpdateProductStatus({ userUuid, productId });
 
-  const { mutate: removeProduct, isPending: isDeletePending } = useMutation({
-    mutationFn: () => deleteProduct({ uuid: userUuid, productId }),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['products'] });
-      queryClient.invalidateQueries({
-        queryKey: FAVORITE_PRODUCT_QUERIES.all(),
-      });
-      queryClient.invalidateQueries({
-        queryKey: ['recently-viewed', userUuid],
-      });
-      router.push('/market');
-    },
-    onError: () => alert('상품 삭제에 실패했습니다.'),
-  });
+  const { mutate: removeProduct, isPending: isDeletePending } =
+    useDeleteProduct({ userUuid, productId });
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const newStatus = e.target.value as ProductStatus;
-    changeStatus(newStatus);
+    const newStatus = e.target.value as ProductStatusOption;
+    changeStatus(newStatus, { onSuccess: () => setStatus(newStatus) });
   };
 
   const openDeleteDialog = () => deleteDialogRef.current?.showModal();
@@ -179,7 +152,7 @@ export function ProductInfo({
           {/* 수정 / 삭제 버튼 */}
           <div className="flex gap-2">
             <button
-              onClick={() => router.push(`/market/products/${productId}/edit`)}
+              onClick={() => router.push(ROUTES.PRODUCT.EDIT(productId))}
               className="flex-1 h-12 border border-gray-300 rounded-lg font-bold text-gray-700 hover:bg-gray-50 transition-colors"
             >
               수정

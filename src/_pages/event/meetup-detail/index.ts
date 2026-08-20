@@ -1,2 +1,2 @@
-export { MeetUpDetailPage } from './ui/MeetUpDetailPage';
-export { MeetUpParticipants } from './ui/MeetUpParticipants';
+export { MeetupDetailPage } from './ui/MeetupDetailPage';
+export { MeetupParticipants } from './ui/MeetupParticipants';

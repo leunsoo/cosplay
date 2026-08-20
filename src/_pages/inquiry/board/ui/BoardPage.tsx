@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { ROUTES } from '@/shared/routes';
-import { useLogined } from '@/entities/auth';
+import { useLogined } from '@/shared/auth';
 import { useNoticeList } from '../api/use-notice-list';
 import { useQnaList } from '../api/use-qna-list';
 import { BoardTable } from './BoardTable';

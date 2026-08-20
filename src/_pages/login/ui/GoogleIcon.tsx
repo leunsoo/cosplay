@@ -1,4 +1,4 @@
-import type { IconProps } from './iconProps';
+import type { IconProps } from './icon-props';
 
 export function GoogleIcon({ size = 20 }: IconProps) {
   return (

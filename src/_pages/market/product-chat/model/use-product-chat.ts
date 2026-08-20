@@ -2,13 +2,15 @@
 
 import { useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
-import { getChatRoomList } from '../api/get-chat-room-list';
-import { CHAT_ROOM_LIST_QUERIES } from '../api/chat-room-list.query';
+import {
+  getChatRoomList,
+  CHAT_ROOM_QUERIES,
+} from '@/shared/api/endpoints/product-chat';
 import { transformChatRoomList } from './mapper';
 import { useChatRoom } from './use-chat-room';
 import { useProductChatEntry } from './use-product-chat-entry';
 import { useChatHeaderInfo } from './use-chat-header-info';
-import { useLeaveChatRoom } from './use-leave-chat-room';
+import { useLeaveChatRoom } from '../api/use-leave-chat-room';
 import { useAuthStore } from '@/shared/auth';
 import type { ChatRoom } from './chat';
 
@@ -31,7 +33,7 @@ export function useProductChat({
     isLoading,
     error,
   } = useQuery({
-    queryKey: CHAT_ROOM_LIST_QUERIES.list(userUuid),
+    queryKey: CHAT_ROOM_QUERIES.list(userUuid),
     queryFn: () => getChatRoomList({ userUuid }),
   });
 
@@ -47,7 +49,7 @@ export function useProductChat({
     handleSend,
     handleSendImage,
     clearSelectedRoom,
-  } = useChatRoom({ userUuid, chatRooms });
+  } = useChatRoom({ userUuid });
 
   // roomId로 직접 진입 시 즉시 활성화, roomId 제거 시 선택 초기화
   // userUuid가 준비된 후에만 방 입장 (새로고침 시 auth 로드 타이밍 보장)

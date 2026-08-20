@@ -1,9 +1,13 @@
-import type { EventChatRoomDTO } from '@/_pages/event/event-detail/api/get-event-chat-room';
-import type { EventChatMessageListDTO } from '@/_pages/event/event-detail/api/get-event-chat-messages';
-import type { EventChatActiveCountDTO } from '@/_pages/event/event-detail/api/get-event-chat-active-count';
-import type { MeetupChatRoomDTO } from '@/_pages/event/meetup-detail/api/get-meetup-chat-room';
-import type { MeetupChatMessageListDTO } from '@/_pages/event/meetup-detail/api/get-meetup-chat-messages';
-import type { MeetupChatActiveCountDTO } from '@/_pages/event/meetup-detail/api/get-meetup-chat-active-count';
+import type {
+  EventChatRoomDTO,
+  EventChatMessageListDTO,
+  EventChatActiveCountDTO,
+} from '@/shared/api/endpoints/event-chat';
+import type {
+  MeetupChatRoomDTO,
+  MeetupChatMessageListDTO,
+  MeetupChatActiveCountDTO,
+} from '@/shared/api/endpoints/meetup-chat';
 
 export const mockEventChatRoom: EventChatRoomDTO = {
   roomId: 101,

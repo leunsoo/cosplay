@@ -3,9 +3,12 @@
 import { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useRouter } from 'next/navigation';
-import { RECENTLY_VIEWED_QUERIES } from '@/shared/api/recently-viewed';
-import { getRecentlyViewedList } from '../api/get-recently-viewed-list';
+import {
+  RECENTLY_VIEWED_QUERIES,
+  getRecentlyViewedList,
+} from '@/shared/api/endpoints/recently-viewed';
 import { mapRecentlyViewedProductToSidePanelProduct } from './mapper';
+import { ROUTES } from '@/shared/routes';
 
 const ITEMS_PER_PAGE = 3;
 
@@ -39,7 +42,7 @@ export function useRecentlyViewedPanel({ uuid }: UseRecentlyViewedPanelParams) {
   );
 
   const handleProductClick = (productId: number) => {
-    router.push(`/market/products/${productId}`);
+    router.push(ROUTES.PRODUCT.DETAIL(productId));
   };
 
   return {

@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { GenderSchema } from '@/shared/api/user';
+import { GenderSchema } from '@/shared/api/endpoints/user';
 
 export const GENDER_OPTIONS = GenderSchema.options;
 
@@ -16,3 +16,16 @@ export const UserProfileFormValuesSchema = z.object({
 });
 
 export type UserProfileFormValues = z.infer<typeof UserProfileFormValuesSchema>;
+
+// 폼을 처음 채우거나 데이터가 아직 없을 때 쓰는 공통 빈 값
+export const EMPTY_USER_PROFILE_FORM_VALUES: UserProfileFormValues = {
+  nickname: '',
+  name: '',
+  gender: 'MAN',
+  phone: '',
+  birthDate: '',
+  email: '',
+  profileImageUri: '',
+  introduction: '',
+  removeProfileImage: false,
+};

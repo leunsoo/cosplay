@@ -1,0 +1,69 @@
+import { useRouter, useSearchParams } from 'next/navigation';
+import { IS_DEMO } from '@/shared/lib/is-demo';
+import {
+  useAuthStore,
+  saveLoginRedirectPath,
+  type AuthStore,
+} from '@/shared/auth';
+import {
+  resolveDemoLoginRedirect,
+  resolveOAuthLoginRedirect,
+  type LoginRedirectAction,
+} from './login-redirect-strategy';
+import type { LoginProvider } from './login-provider';
+
+export function useLoginRedirect(provider: LoginProvider): () => void {
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const setDemoAuthenticated = useAuthStore(
+    (state) => state.setDemoAuthenticated
+  );
+  const setDemoTempAuthenticated = useAuthStore(
+    (state) => state.setDemoTempAuthenticated
+  );
+
+  return function handleLoginClick() {
+    const nextPath = searchParams.get('next');
+    const action = IS_DEMO
+      ? resolveDemoLoginRedirect(nextPath)
+      : resolveOAuthLoginRedirect(provider, nextPath);
+
+    runLoginRedirectAction(action, router, {
+      setDemoAuthenticated,
+      setDemoTempAuthenticated,
+    });
+  };
+}
+
+function runLoginRedirectAction(
+  action: LoginRedirectAction,
+  router: ReturnType<typeof useRouter>,
+  demoActions: Pick<
+    AuthStore,
+    'setDemoAuthenticated' | 'setDemoTempAuthenticated'
+  >
+) {
+  if (action.type !== 'config-error') {
+    saveLoginRedirectPath(action.pathToPersist);
+  }
+
+  switch (action.type) {
+    case 'navigate':
+      if (action.authenticateAs === 'member') {
+        demoActions.setDemoAuthenticated();
+      } else {
+        demoActions.setDemoTempAuthenticated();
+      }
+      if (action.asReplace) {
+        router.replace(action.path);
+      } else {
+        router.push(action.path);
+      }
+      return;
+    case 'oauth-redirect':
+      window.location.assign(action.url);
+      return;
+    case 'config-error':
+      throw new Error(action.reason);
+  }
+}

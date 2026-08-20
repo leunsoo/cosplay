@@ -2,20 +2,21 @@
 
 import { useState, useCallback, useRef, useEffect } from 'react';
 import { useQueryClient } from '@tanstack/react-query';
-import { CHAT_ROOM_LIST_QUERIES } from '../api/chat-room-list.query';
-import { useChatStomp, type StompMessagePayload } from '../api/use-chat-stomp';
+import {
+  CHAT_ROOM_QUERIES,
+  type StompMessagePayload,
+} from '@/shared/api/endpoints/product-chat';
+import { useChatStomp } from '../api/use-chat-stomp';
 import { useChatMessages } from './use-chat-messages';
-import type { ChatRoom } from './chat';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { sendDemoMessage } from '@/mocks';
 
 interface UseChatRoomParams {
   userUuid: string;
-  chatRooms: ChatRoom[];
 }
 
 // 방 선택 상태 + 메시지 전송 오케스트레이션 훅
-export function useChatRoom({ userUuid, chatRooms }: UseChatRoomParams) {
+export function useChatRoom({ userUuid }: UseChatRoomParams) {
   const [selectedRoomId, setSelectedRoomId] = useState<string | null>(null);
   const queryClient = useQueryClient();
 
@@ -25,13 +26,12 @@ export function useChatRoom({ userUuid, chatRooms }: UseChatRoomParams) {
   const { messages, receiveMessage, loadedRoomId } = useChatMessages({
     userUuid,
     selectedRoomId,
-    chatRooms,
   });
 
   // 목록 업데이트 핸들러 → React Query cache 무효화
   const handleListUpdate = useCallback(() => {
     queryClient.invalidateQueries({
-      queryKey: CHAT_ROOM_LIST_QUERIES.list(userUuid),
+      queryKey: CHAT_ROOM_QUERIES.list(userUuid),
     });
   }, [queryClient, userUuid]);
 

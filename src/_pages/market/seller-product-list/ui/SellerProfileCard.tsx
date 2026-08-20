@@ -1,17 +1,17 @@
-import { UserAvatar } from '@/entities/user';
-import { SellerProfile } from '../model/types';
+import { UserAvatar } from '@/shared/ui';
+import type { SellerProfileDTO } from '@/shared/api/endpoints/seller';
 
 export function SellerProfileCard({
   name,
-  avatarUrl,
+  profileImageUrl,
   introduction,
-}: SellerProfile) {
+}: SellerProfileDTO) {
   return (
     <div className="bg-white  rounded-xl border border-border-color shadow-sm p-6">
       <div className="flex flex-col md:flex-row gap-6 items-center md:items-center">
         <div className="relative px-2">
           <UserAvatar
-            avatarUrl={avatarUrl}
+            avatarUrl={profileImageUrl}
             size="lg"
             shape="circle"
             className="border-2 border-white"

@@ -17,7 +17,8 @@
 각각 다른 플랫폼(트위터, 번개장터, 오픈카톡)에서 따로 찾아야 하는 불편함이 있었습니다.
 이를 하나의 플랫폼으로 통합한 커뮤니티 서비스를 기획·개발했습니다.
 
-서비스는 아쉽게도 운영되지 못했으며, 포트폴리오 목적으로 데모 모드를 적용해 배포했습니다.
+서비스는 아쉽게도 운영되지 못했습니다.
+포트폴리오 목적으로 데모 모드를 적용해 배포했으며 지속적인 리팩토링 과정에 있습니다.
 
 ---
 
@@ -53,15 +54,17 @@
 ## 아키텍처
 
 [Feature-Sliced Design(FSD)](https://feature-sliced.design/) 아키텍처를 적용했습니다.
+프로젝트 루트의 `app/`은 Next.js App Router 전용 라우트 디렉터리이며, FSD 레이어인
+`_app`과는 별개입니다(이름 충돌을 피하기 위해 FSD 레이어들은 `_` 접두사를 붙였습니다).
 
 ```
 src/
-├── core/          # 앱 초기화, 전역 Provider (AuthProvider, QueryProvider 등)
-├── entities/      # 도메인 단위 모델·API (user, product, event, banner 등)
-├── features/      # 사용자 인터랙션 단위 (login, logout, favorite, chat 등)
-├── views/         # 페이지 단위 UI 조합 (page component)
-├── widgets/       # 여러 feature를 조합한 독립 UI 블록 (헤더, 사이드바 등)
-└── shared/        # 공통 유틸·컴포넌트·훅·스토어 (ui, lib, api, store 등)
+├── _app/          # 앱 초기화, 전역 Provider (AuthProvider, AuthGuard, QueryProvider)
+├── _pages/        # 페이지 단위 UI 조합 (event, market, inquiry, my-info, signup, login 등)
+├── widgets/       # 여러 화면에서 재사용되는 독립 UI 블록 (main-menu, market-sidebar, mobile-header 등)
+├── features/      # 사용자 인터랙션 단위 (favorite-event, favorite-meetup, logout, user-profile-form)
+├── entities/      # 도메인 단위 모델·UI (chat, event, product, user)
+└── shared/        # 공통 유틸·컴포넌트·API·인증 (ui, lib, api, auth, routes, stomp)
 ```
 
 ---

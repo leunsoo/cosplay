@@ -21,6 +21,7 @@ export const ROUTES = {
   // 상품
   PRODUCT: {
     DETAIL: (id: string | number) => `/market/products/${id}`,
+    EDIT: (id: string | number) => `/market/products/${id}/edit`,
     REGISTER: '/market/products/regist',
     MANAGE: '/market/products/manage',
   },

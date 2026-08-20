@@ -1,4 +1,4 @@
-import { type ProductDetailResponseDTO } from '@/entities/product';
+import { type ProductDetailResponseDTO } from '@/shared/api/endpoints/product';
 
 interface ProductJsonLdProps {
   product: ProductDetailResponseDTO['product'];

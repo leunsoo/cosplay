@@ -4,7 +4,7 @@ import { useCallback, useEffect, useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { z, type ZodType } from 'zod';
 import type { ApiResponse } from '@/shared/api';
-import { stompClient } from './stompClient';
+import { stompClient } from './stomp-client';
 
 const ActiveCountPayloadSchema = z.object({
   count: z.number().int().nonnegative(),

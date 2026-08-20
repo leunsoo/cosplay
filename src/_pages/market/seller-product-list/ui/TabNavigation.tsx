@@ -1,4 +1,9 @@
-import { Tab } from '../model/types';
+export interface Tab {
+  id: string;
+  label: string;
+  count: number;
+  isActive: boolean;
+}
 
 interface TabNavigationProps {
   tabs: Tab[];

@@ -1,8 +1,7 @@
 'use client';
 
-import { useLogined } from '@/entities/auth';
-import { useAuthStore } from '@/shared/auth';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { useAuthStore, useLogined } from '@/shared/auth';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 import { FavoriteProductList } from './FavoriteProductList';
 import { RecentlyViewedList } from './RecentlyViewedList';
 

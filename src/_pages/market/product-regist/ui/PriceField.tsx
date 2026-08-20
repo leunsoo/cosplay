@@ -1,5 +1,5 @@
 import type { UseFormRegisterReturn } from 'react-hook-form';
-import { formatPrice, parsePrice } from '@/shared/lib/formatPrice';
+import { formatPrice, parsePrice } from '@/shared/lib/format-price';
 
 interface PriceFieldProps {
   label: string;

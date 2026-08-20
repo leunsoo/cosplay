@@ -2,7 +2,7 @@
 
 import { LoadingState, ErrorState } from '@/shared/ui';
 import { UserProfileFormFields } from '@/features/user-profile-form';
-import { MobileHeaderCustom } from '@/widgets/mobile-header/MobileHeader';
+import { MobileHeaderCustom } from '@/widgets/mobile-header';
 import { useMyProfileEditor } from '../model/use-my-profile-editor';
 import { MyInfoMobileMenu } from './MyInfoMobileMenu';
 import { EditActions } from './EditActions';

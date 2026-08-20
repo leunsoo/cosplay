@@ -6,8 +6,8 @@ import { MainMenu } from '@/widgets/main-menu';
 import { Footer } from '@/widgets/footer';
 import { QueryProvider } from '@/_app/providers/QueryProvider';
 import { MobileGuard, DemoBanner } from '@/shared/ui';
-import { MobileBottomNav } from '@/widgets/mobile-bottom-nav/MobileBottomNav';
-import { MobileHeader } from '@/widgets/mobile-header/MobileHeader';
+import { MobileBottomNav } from '@/widgets/mobile-bottom-nav';
+import { MobileHeader } from '@/widgets/mobile-header';
 
 const notoSansKR = Noto_Sans_KR({
   subsets: ['latin'],

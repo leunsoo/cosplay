@@ -22,7 +22,7 @@ import { AuthProvider } from './AuthProvider';
  *   const queryClient = getQueryClient()                // 서버용 QueryClient 생성
  *   await queryClient.prefetchQuery({ ... })            // 서버에서 API 미리 호출
  *   <HydrationBoundary state={dehydrate(queryClient)}> // 클라이언트 캐시에 주입
- *     <EventListView />                                 // useQuery가 캐시에서 즉시 읽음
+ *     <EventListPage />                                  // useQuery가 캐시에서 즉시 읽음
  *   </HydrationBoundary>
  */
 export function QueryProvider({ children }: { children: React.ReactNode }) {

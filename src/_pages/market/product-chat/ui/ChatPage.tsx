@@ -9,6 +9,7 @@ import { MessageBubble } from './MessageBubble';
 import { DateDivider } from './DateDivider';
 import { SystemNotification } from './SystemNotification';
 import { ConfirmDialog } from '@/shared/ui';
+import { ROUTES } from '@/shared/routes';
 import { useProductChat } from '../model/use-product-chat';
 
 interface ChatPageProps {
@@ -73,9 +74,9 @@ export function ChatPage({ productId, sellerUuid, roomId }: ChatPageProps) {
     });
   }, [messages]);
 
-  // 방 클릭: URL을 roomId 기준으로 교체 + 모바일 뷰 전환
+  // 방 클릭: URL을 roomId 기준으로 교체
   const handleRoomClick = (clickedRoomId: string) => {
-    router.replace(`/market/chat?roomId=${clickedRoomId}`);
+    router.replace(`${ROUTES.CHAT}?roomId=${clickedRoomId}`);
     setMobileView('chat');
   };
 

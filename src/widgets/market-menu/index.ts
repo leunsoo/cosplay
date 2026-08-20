@@ -1,2 +1,2 @@
 export { MarketMenu } from './ui/MarketMenu';
-export { MarketMobileHeader } from './ui/MarketMobileHeader';
+export { MarketMobileMenu } from './ui/MarketMobileMenu';

@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import { useLogined } from '@/entities/auth';
+import { useLogined } from '@/shared/auth';
 import { useEventFavoriteList } from '@/features/favorite-event';
 import { useMeetupFavoriteList } from '@/features/favorite-meetup';
 import { FavoriteEventList } from './FavoriteEventList';

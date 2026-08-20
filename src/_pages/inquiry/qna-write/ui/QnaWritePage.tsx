@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { ROUTES } from '@/shared/routes';
-import { useLogined } from '@/entities/auth';
+import { useLogined } from '@/shared/auth';
 import { useCreateQna } from '../api/use-create-qna';
 
 export function QnaWritePage() {

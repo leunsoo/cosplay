@@ -1,8 +1,4 @@
-export {
-  EventDetailDTOSchema,
-  type EventDetailDTO,
-  type UploaderDTO,
-} from './schema';
+export { type EventDetailDTO } from '@/shared/api/endpoints/event';
 export {
   mapEventDetailDtoToEventDetailWithUploader,
   type EventDetailWithUploader,

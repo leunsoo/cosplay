@@ -1,14 +1,12 @@
 import type { UseFormRegisterReturn } from 'react-hook-form';
-import { SHIPPING_OPTIONS } from '../model/const';
-import { formatPrice, parsePrice } from '@/shared/lib/formatPrice';
+import { SHIPPING_OPTIONS } from '../model/product-form';
+import { formatPrice, parsePrice } from '@/shared/lib/format-price';
 
 interface ShippingSectionProps {
   shippingType: 'included' | 'separate';
   shippingTypeRegistration: UseFormRegisterReturn<'shippingType'>;
   standardShippingValue: number;
   onStandardShippingChange: (value: number) => void;
-  economyShipping: 'possible' | 'impossible';
-  onEconomyShippingChange: (option: 'possible' | 'impossible') => void;
   error?: string;
 }
 

@@ -9,7 +9,16 @@
       "Bash(do sed -i '' 's|from \"\"./types\"\"|from \"\"../model/types\"\"|g' \"$file\")",
       "Bash(done)",
       "Bash(tree:*)",
-      "Bash(npx tsc:*)"
+      "Bash(npx tsc:*)",
+      "Bash(mkdir -p /Users/leeeunsoo/Desktop/cosplay/src/shared/api/chat *)",
+      "Bash(git mv *)",
+      "Bash(npx tsc *)",
+      "Bash(npx eslint *)",
+      "Bash(rm /Users/leeeunsoo/Desktop/cosplay/src/_pages/event/event-list/index.server.ts *)"
+    ],
+    "additionalDirectories": [
+      "/Users/leeeunsoo/Desktop/cosplay/src/shared/api",
+      "/Users/leeeunsoo/Desktop/cosplay/src/_pages/event/event-list"
     ]
   }
 }

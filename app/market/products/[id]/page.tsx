@@ -4,8 +4,9 @@ export const dynamic = 'force-dynamic';
 import { type Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { getQueryClient } from '@/shared/lib/getQueryClient';
-import { getProductDetailServer } from '@/_pages/market/product-detail/index.server';
+import { getQueryClient } from '@/shared/lib/get-query-client';
+import { getProductDetailServer } from '@/shared/api/endpoints/product/index.server';
+import { PRODUCT_QUERIES } from '@/shared/api/endpoints/product';
 import { ProductDetailPage } from '@/_pages/market/product-detail';
 import { ProductJsonLd } from './_components/ProductJsonLd';
 
@@ -77,10 +78,10 @@ export default async function ProductDetailRoute({
   try {
     productData = await fetchProductDetail(id);
 
-    // prefetchQuery: useProductDetail의 useQuery(['product', productId])와 동일한 queryKey
+    // prefetchQuery: useProductDetail의 useQuery(PRODUCT_QUERIES.detail(productId))와 동일한 queryKey
     // → 클라이언트에서 API 재호출 없이 캐시에서 즉시 데이터를 가져옴 → SEO 가능
     await queryClient.prefetchQuery({
-      queryKey: ['product', Number(id)],
+      queryKey: PRODUCT_QUERIES.detail(Number(id)),
       queryFn: () => fetchProductDetail(id),
     });
   } catch {

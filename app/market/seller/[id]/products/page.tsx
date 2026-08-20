@@ -1,5 +1,5 @@
-import { SellerProductsListView } from '@/_pages/market/seller-product-list';
+import { SellerProductListPage } from '@/_pages/market/seller-product-list';
 
-export default function SellerProductsListPage() {
-  return <SellerProductsListView />;
+export default function SellerProductListRoute() {
+  return <SellerProductListPage />;
 }

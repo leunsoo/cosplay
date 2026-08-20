@@ -1,2 +1,2 @@
-export { StompClient, stompClient } from './stompClient';
+export { StompClient, stompClient } from './stomp-client';
 export { useGroupChat } from './use-group-chat';

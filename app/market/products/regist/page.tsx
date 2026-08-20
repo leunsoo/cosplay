@@ -1,10 +1,10 @@
 import { AuthGuard } from '@/_app/providers/AuthGuard';
-import { ProductRegistView } from '@/_pages/market/product-regist';
+import { ProductRegistPage } from '@/_pages/market/product-regist';
 
-export default function ProductRegistPage() {
+export default function ProductRegistRoute() {
   return (
     <AuthGuard>
-      <ProductRegistView />
+      <ProductRegistPage />
     </AuthGuard>
   );
 }

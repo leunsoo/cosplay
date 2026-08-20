@@ -63,17 +63,3 @@ export const isTokenExpired = (token: string): boolean => {
     return true; // 에러 발생 시 만료된 것으로 간주
   }
 };
-
-/**
- * JWT 토큰 디코딩 (검증 없이 payload만 추출)
- * @param token - JWT 토큰
- * @returns 디코딩된 payload
- */
-export const decodeToken = (token: string): JwtPayload => {
-  try {
-    return jwtDecode<JwtPayload>(token);
-  } catch (error) {
-    console.error('Failed to decode token:', error);
-    throw new Error('Invalid token format');
-  }
-};

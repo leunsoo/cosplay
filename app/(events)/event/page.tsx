@@ -4,16 +4,14 @@ export const dynamic = 'force-dynamic';
 
 import { type Metadata } from 'next';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { getQueryClient } from '@/shared/lib/getQueryClient';
+import { getQueryClient } from '@/shared/lib/get-query-client';
 import {
   EVENT_QUERIES,
   BANNER_QUERIES,
-  EventListView,
+  EventListPage,
 } from '@/_pages/event/event-list';
-import {
-  getEventsListServer,
-  getBannerListServer,
-} from '@/_pages/event/event-list/index.server';
+import { getEventsListServer } from '@/shared/api/endpoints/event/index.server';
+import { getBannerListServer } from '@/shared/api/endpoints/banner/index.server';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 
@@ -63,7 +61,7 @@ export default async function EventMainPage() {
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <EventListView />
+      <EventListPage />
     </HydrationBoundary>
   );
 }

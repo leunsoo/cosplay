@@ -1,12 +1,11 @@
 'use client';
 
-import { useAuthStore } from '@/shared/auth';
-import { useLogined } from '@/entities/auth';
+import { useAuthStore, useLogined } from '@/shared/auth';
 import { EventStatus } from '@/entities/event';
 import { useEventGroupChat } from '../model/use-event-group-chat';
 import { GroupChatHeader, GroupMessageInput } from '@/entities/chat';
 import { GroupMessageList } from './GroupMessageList';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 
 interface EventGroupChatProps {
   eventId: string;

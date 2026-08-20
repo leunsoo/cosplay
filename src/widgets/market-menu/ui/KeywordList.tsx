@@ -1,6 +1,8 @@
 'use client';
 
-import { useRecentKeywords } from '../model/use-recent-keywords';
+import { useSearchKeywords } from '../api/use-search-keywords';
+import { useDeleteSearchKeyword } from '../api/use-delete-search-keyword';
+import { useDeleteAllSearchKeywords } from '../api/use-delete-all-search-keywords';
 import { KeywordItem } from './KeywordItem';
 
 interface KeywordListProps {
@@ -8,7 +10,9 @@ interface KeywordListProps {
 }
 
 export function KeywordList({ onSearch }: KeywordListProps) {
-  const { keywords, deleteSingle, deleteAll } = useRecentKeywords();
+  const { keywords } = useSearchKeywords();
+  const { mutate: deleteSingle } = useDeleteSearchKeyword();
+  const { mutate: deleteAll } = useDeleteAllSearchKeywords();
 
   if (keywords.length === 0) return null;
 

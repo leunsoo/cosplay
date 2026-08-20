@@ -2,8 +2,8 @@
 
 import { usePathname, useParams } from 'next/navigation';
 import { Sidebar } from '@/widgets/event-sidebar';
-import { MeetUpParticipants } from '@/_pages/event/meetup-detail';
-import { IS_DEMO } from '@/shared/lib/isDemo';
+import { MeetupParticipants } from '@/_pages/event/meetup-detail';
+import { IS_DEMO } from '@/shared/lib/is-demo';
 
 export default function EventsLayout({
   children,
@@ -27,7 +27,7 @@ export default function EventsLayout({
         >
           <Sidebar />
           {isMeetupDetail && meetupId && (
-            <MeetUpParticipants meetupId={meetupId} />
+            <MeetupParticipants meetupId={meetupId} />
           )}
         </aside>
       )}

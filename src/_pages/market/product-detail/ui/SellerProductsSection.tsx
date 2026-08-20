@@ -1,5 +1,6 @@
-import { ProductCard, type Product, type Seller } from '@/entities/product';
-import { UserAvatar } from '@/entities/user';
+import { ProductCard, type Product } from '@/entities/product';
+import { type Seller } from '@/shared/api/endpoints/product';
+import { UserAvatar } from '@/shared/ui';
 
 interface SellerProductsSectionProps {
   seller: Seller;

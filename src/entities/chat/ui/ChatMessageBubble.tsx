@@ -1,4 +1,4 @@
-import { UserAvatar } from '@/entities/user';
+import { UserAvatar } from '@/shared/ui';
 import { cn } from '@/shared/lib/cn';
 import type { ChatMessage } from '../model/chat-message';
 

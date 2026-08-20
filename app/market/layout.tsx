@@ -1,5 +1,6 @@
-import { MarketMenu, MarketMobileHeader } from '@/widgets/market-menu';
+import { MarketMenu, MarketMobileMenu } from '@/widgets/market-menu';
 import { MarketSideBar } from '@/widgets/market-sidebar';
+import { MobileHeaderCustom } from '@/widgets/mobile-header';
 
 export default function CosMarketLayout({
   children,
@@ -8,7 +9,7 @@ export default function CosMarketLayout({
 }) {
   return (
     <div className="relative w-full">
-      <MarketMobileHeader />
+      <MobileHeaderCustom actions={<MarketMobileMenu />} />
       <div className="flex flex-col container-custom mx-auto pt-6">
         <MarketMenu />
 

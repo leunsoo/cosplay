@@ -1,12 +1,12 @@
 'use client';
 
 import type { ComponentType } from 'react';
-import { useLoginRedirect } from '../model/useLoginRedirect';
-import type { LoginProvider } from '../model/loginProvider';
+import { useLoginRedirect } from '../model/use-login-redirect';
+import type { LoginProvider } from '../model/login-provider';
 import { GoogleIcon } from './GoogleIcon';
 import { KakaoIcon } from './KakaoIcon';
 import { XIcon } from './XIcon';
-import type { IconProps } from './iconProps';
+import type { IconProps } from './icon-props';
 
 interface LoginBtnProps {
   provider: LoginProvider;

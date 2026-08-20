@@ -1,14 +1,16 @@
 'use client';
 
 import { useGroupChat } from '@/shared/stomp';
-import { getEventChatRoom } from '../api/get-event-chat-room';
-import { getEventChatMessages } from '../api/get-event-chat-messages';
-import { getEventChatActiveCount } from '../api/get-event-chat-active-count';
-import { EventChatReceivePayloadSchema } from '../api/event-chat-stomp';
+import {
+  getEventChatRoom,
+  getEventChatMessages,
+  getEventChatActiveCount,
+  EventChatReceivePayloadSchema,
+} from '@/shared/api/endpoints/event-chat';
 import {
   mapEventChatMessageDTOToMessage,
   mapEventChatMessageDTOsToMessages,
-} from '../api/mapper';
+} from './mapper';
 
 interface UseEventGroupChatParams {
   eventId: number;

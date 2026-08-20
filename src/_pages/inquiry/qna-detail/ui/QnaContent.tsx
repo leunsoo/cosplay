@@ -1,51 +1,39 @@
-'use client';
-
-import { useState } from 'react';
-import type { QnaDetail } from '@/shared/api/qna';
+import type { QnaDetail } from '@/shared/api/endpoints/qna';
 import { formatDateTime } from '@/shared/ui';
+import type { QnaEditActions } from './qna-edit-actions';
 
 interface QnaContentProps {
   post: QnaDetail;
   isMyPost: boolean;
-  onDelete: () => void;
-  isDeleting: boolean;
-  onUpdate: (data: { title: string; content: string }) => void;
-  isUpdating: boolean;
-  isEditing: boolean;
-  onEdit: () => void;
-  onSave: () => void;
-  onCancel: () => void;
+  actions: QnaEditActions;
+  editTitle: string;
+  editContent: string;
+  onTitleChange: (value: string) => void;
+  onContentChange: (value: string) => void;
 }
 
 export function QnaContent({
   post,
   isMyPost,
-  onDelete,
-  isDeleting,
-  onUpdate,
-  isUpdating,
-  isEditing,
-  onEdit,
-  onSave,
-  onCancel,
+  actions,
+  editTitle,
+  editContent,
+  onTitleChange,
+  onContentChange,
 }: QnaContentProps) {
-  const [editTitle, setEditTitle] = useState(post.title);
-  const [editContent, setEditContent] = useState(post.content);
+  const {
+    isEditing,
+    isDeleting,
+    isUpdating,
+    canSave,
+    onEdit,
+    onSave,
+    onCancel,
+    onDelete,
+  } = actions;
 
   const updatedAtStr = formatDateTime(post.updatedAt);
   const answerAtStr = post.answerAt ? formatDateTime(post.answerAt) : null;
-
-  const handleSave = () => {
-    if (!editTitle.trim() || !editContent.trim()) return;
-    onUpdate({ title: editTitle.trim(), content: editContent.trim() });
-    onSave();
-  };
-
-  const handleCancel = () => {
-    setEditTitle(post.title);
-    setEditContent(post.content);
-    onCancel();
-  };
 
   return (
     <div className="space-y-4">
@@ -57,7 +45,7 @@ export function QnaContent({
             <input
               type="text"
               value={editTitle}
-              onChange={(e) => setEditTitle(e.target.value)}
+              onChange={(e) => onTitleChange(e.target.value)}
               maxLength={100}
               className="w-full text-md md:text-2xl font-bold md:font-black text-gray-900 border border-gray-300 rounded-lg px-3 py-1.5 focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
             />
@@ -91,7 +79,7 @@ export function QnaContent({
               {isEditing ? (
                 <>
                   <button
-                    onClick={handleCancel}
+                    onClick={onCancel}
                     disabled={isUpdating}
                     className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 transition-colors disabled:opacity-50"
                   >
@@ -101,10 +89,8 @@ export function QnaContent({
                     취소
                   </button>
                   <button
-                    onClick={handleSave}
-                    disabled={
-                      isUpdating || !editTitle.trim() || !editContent.trim()
-                    }
+                    onClick={onSave}
+                    disabled={isUpdating || !canSave}
                     className="flex items-center gap-1 text-sm text-primary hover:text-primary/80 font-semibold transition-colors disabled:opacity-50"
                   >
                     <span className="material-symbols-outlined text-[16px]">
@@ -145,7 +131,7 @@ export function QnaContent({
           {isEditing ? (
             <textarea
               value={editContent}
-              onChange={(e) => setEditContent(e.target.value)}
+              onChange={(e) => onContentChange(e.target.value)}
               rows={10}
               className="w-full resize-none border border-gray-300 rounded-lg px-3 py-2 text-sm text-gray-800 leading-relaxed focus:outline-none focus:ring-2 focus:ring-primary/50 focus:border-primary"
             />

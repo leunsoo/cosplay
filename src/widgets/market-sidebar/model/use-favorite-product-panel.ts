@@ -6,8 +6,9 @@ import { useRouter } from 'next/navigation';
 import {
   deleteFavorite,
   FAVORITE_PRODUCT_QUERIES,
-} from '@/shared/api/favorite-product';
+} from '@/shared/api/endpoints/favorite-product';
 import { mapFavoriteProductToSidePanelProduct } from './mapper';
+import { ROUTES } from '@/shared/routes';
 
 const ITEMS_PER_PAGE = 3;
 
@@ -40,7 +41,7 @@ export function useFavoriteProductPanel({
   const currentProducts = products.slice(startIndex, endIndex);
 
   const handleProductClick = (productId: number) => {
-    router.push(`/market/products/${productId}`);
+    router.push(ROUTES.PRODUCT.DETAIL(productId));
   };
 
   const removeMutation = useMutation({

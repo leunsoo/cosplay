@@ -1,14 +1,16 @@
 'use client';
 
 import { useGroupChat } from '@/shared/stomp';
-import { getMeetupChatRoom } from '../api/get-meetup-chat-room';
-import { getMeetupChatMessages } from '../api/get-meetup-chat-messages';
-import { getMeetupChatActiveCount } from '../api/get-meetup-chat-active-count';
-import { MeetupChatReceivePayloadSchema } from '../api/meetup-chat-stomp';
+import {
+  getMeetupChatRoom,
+  getMeetupChatMessages,
+  getMeetupChatActiveCount,
+  MeetupChatReceivePayloadSchema,
+} from '@/shared/api/endpoints/meetup-chat';
 import {
   mapMeetupChatMessageDTOToMessage,
   mapMeetupChatMessageDTOsToMessages,
-} from '../api/mapper';
+} from './mapper';
 
 interface UseMeetupGroupChatParams {
   meetupId: number;

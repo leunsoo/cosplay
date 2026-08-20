@@ -1,6 +1,6 @@
 'use client';
 
-import { FavoriteIconButton } from '@/entities/favorite';
+import { FavoriteIconButton } from '@/shared/ui';
 import { useEventFavoriteToggle } from '../model/use-event-favorite-toggle';
 import type { FavoriteEvent } from '../model/favorite-event';
 
