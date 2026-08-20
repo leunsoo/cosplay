@@ -1,6 +1,6 @@
 import { ROUTES } from '@/shared/routes';
 import { DEMO_REGISTERED_KEY } from '@/shared/auth';
-import type { LoginProvider } from './loginProvider';
+import type { LoginProvider } from './login-provider';
 
 const OAUTH_PATHS: Record<LoginProvider, string> = {
   google: '/oauth2/authorization/google-user',

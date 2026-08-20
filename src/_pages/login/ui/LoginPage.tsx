@@ -1,6 +1,6 @@
 import { Suspense } from 'react';
 import { LoginBtn } from './LoginBtn';
-import { PROVIDERS } from '../model/loginProvider';
+import { PROVIDERS } from '../model/login-provider';
 
 export function LoginPage() {
   return (
