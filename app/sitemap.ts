@@ -2,7 +2,7 @@ export const dynamic = 'force-dynamic';
 
 import { MetadataRoute } from 'next';
 import { getEventsListServer } from '@/shared/api/endpoints/event/index.server';
-import { getProductListServer } from '@/_pages/market/product-list/index.server';
+import { getProductListServer } from '@/shared/api/endpoints/product/index.server';
 
 /**
  * 검색 엔진 크롤러에게 사이트의 모든 페이지 목록을 제공하는 sitemap.xml 생성

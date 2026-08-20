@@ -4,8 +4,9 @@ export const dynamic = 'force-dynamic';
 import { type Metadata } from 'next';
 import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
 import { getQueryClient } from '@/shared/lib/getQueryClient';
-import { getProductListServer } from '@/_pages/market/product-list/index.server';
-import { ProductListView } from '@/_pages/market/product-list';
+import { getProductListServer } from '@/shared/api/endpoints/product/index.server';
+import { PRODUCT_QUERIES } from '@/shared/api/endpoints/product';
+import { ProductListPage } from '@/_pages/market/product-list';
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL!;
 
@@ -57,13 +58,13 @@ export default async function MarketPage({ searchParams }: MarketPageProps) {
   const queryClient = getQueryClient();
 
   await queryClient.prefetchQuery({
-    queryKey: ['products', 1], // ProductListView의 초기 페이지(1)와 동일한 queryKey
+    queryKey: PRODUCT_QUERIES.list(1), // ProductListPage의 초기 페이지(1)와 동일한 queryKey
     queryFn: () => getProductListServer({ page: 1 }, { cache: 'no-store' }),
   });
 
   return (
     <HydrationBoundary state={dehydrate(queryClient)}>
-      <ProductListView keyword={keyword} />
+      <ProductListPage keyword={keyword} />
     </HydrationBoundary>
   );
 }

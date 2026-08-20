@@ -1,68 +1,40 @@
 'use client';
 
-import { useState, useEffect } from 'react';
-import { useQuery, useQueryClient } from '@tanstack/react-query';
-import { ProductGrid, mapProductDTOsToProducts } from '@/entities/product';
-import {
-  getProductList,
-  getProductSearch,
-  PRODUCT_QUERIES,
-} from '@/shared/api/endpoints/product';
+import { useState } from 'react';
+import { ProductGrid } from '@/entities/product';
 import { useAuthStore } from '@/shared/auth';
 import { useLogined } from '@/entities/auth';
-import { useFavoriteProductCards } from './model/use-favorite-product-cards';
+import { useProductListing } from '../model/use-product-listing';
+import { useFavoriteProductCards } from '../api/use-favorite-product-cards';
 import { PaginationControl } from '@/shared/ui';
-import { Header } from './ui';
+import { Header } from './Header';
 
-interface ProductListViewProps {
+interface ProductListPageProps {
   keyword?: string;
 }
 
-export function ProductListView({ keyword = '' }: ProductListViewProps) {
+export function ProductListPage({ keyword = '' }: ProductListPageProps) {
   const userUuid = useAuthStore((state) => state.userUuid);
   const isLogined = useLogined();
-  const [currentPage, setCurrentPage] = useState(1);
   const [showFavorites, setShowFavorites] = useState(false);
 
-  const isSearchMode = keyword.trim().length > 0;
-  const queryClient = useQueryClient();
-
-  const { data, error } = useQuery({
-    queryKey: isSearchMode
-      ? PRODUCT_QUERIES.search(keyword, currentPage)
-      : PRODUCT_QUERIES.list(currentPage),
-    queryFn: () =>
-      isSearchMode
-        ? getProductSearch({
-            keyword,
-            page: currentPage,
-            uuid: userUuid || undefined,
-          })
-        : getProductList({ page: currentPage }),
-  });
+  const {
+    isSearchMode,
+    currentPage,
+    setCurrentPage,
+    products,
+    totalCount,
+    totalPages,
+    error,
+  } = useProductListing({ keyword, userUuid });
 
   const { products: allProductsAsCards } = useFavoriteProductCards({
     uuid: userUuid,
   });
 
-  useEffect(() => {
-    if (isSearchMode && data && userUuid) {
-      queryClient.invalidateQueries({
-        queryKey: ['search-keywords', userUuid],
-      });
-    }
-    // eslint-disable-next-line
-  }, [data]);
-
   if (error) {
     return null;
   }
-
-  const products = data?.data.products
-    ? mapProductDTOsToProducts(data.data.products)
-    : [];
-  const totalCount = data?.data.pagination.totalElements || 0;
-  const totalPages = data?.data.pagination.totalPages || 1;
 
   return (
     <div className="flex flex-col gap-8 pb-20">
