@@ -13,7 +13,9 @@
     "test": "vitest",
     "test:run": "vitest run",
     "test:ui": "vitest --ui",
-    "coverage": "vitest run --coverage"
+    "coverage": "vitest run --coverage",
+    "storybook": "storybook dev -p 6006",
+    "build-storybook": "storybook build"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
@@ -71,6 +73,16 @@
     "prettier": "^3.8.0",
     "tailwindcss": "^4",
     "typescript": "^5",
-    "vitest": "^4.0.18"
+    "vitest": "^4.0.18",
+    "storybook": "^10.5.10",
+    "@storybook/nextjs-vite": "^10.5.10",
+    "@chromatic-com/storybook": "latest",
+    "@storybook/addon-vitest": "^10.5.10",
+    "@storybook/addon-a11y": "^10.5.10",
+    "@storybook/addon-docs": "^10.5.10",
+    "@storybook/addon-mcp": "latest",
+    "vite": "latest",
+    "eslint-plugin-storybook": "^10.5.10",
+    "@vitest/browser-playwright": "4.0.18"
   }
 }
