@@ -24,6 +24,7 @@ export function ChatMessageBubble({ message }: ChatMessageBubbleProps) {
       <UserAvatar
         className="mt-3"
         avatarUrl={message.senderProfileImageUri}
+        name={message.senderNickname}
         size="xs"
       />
       <div className="space-y-1 max-w-full md:max-w-[50%]">

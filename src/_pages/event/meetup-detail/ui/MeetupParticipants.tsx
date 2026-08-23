@@ -39,6 +39,7 @@ export function MeetupParticipants({ meetupId }: MeetupParticipantsProps) {
             >
               <UserAvatar
                 avatarUrl={member.user.profileImageUrl ?? null}
+                name={member.user.nickname}
                 size="xs"
               />
               <p className="text-gray-800 font-medium text-sm">

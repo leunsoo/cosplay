@@ -55,6 +55,7 @@ export function UserProfileFormFields({
         <div className="flex flex-col items-center sm:items-start gap-3">
           <UserAvatar
             avatarUrl={values.profileImageUri ?? null}
+            name={values.nickname}
             className="w-28 h-28 border border-gray-200"
           />
           {!readOnly && (

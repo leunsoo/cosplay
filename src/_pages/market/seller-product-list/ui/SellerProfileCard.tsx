@@ -12,6 +12,7 @@ export function SellerProfileCard({
         <div className="relative px-2">
           <UserAvatar
             avatarUrl={profileImageUrl}
+            name={name}
             size="lg"
             shape="circle"
             className="border-2 border-white"

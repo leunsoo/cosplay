@@ -18,11 +18,11 @@
   --spacing-sidebar: 6.5rem;
 
   /* Border Radius */
+  --radius-sm: 0.25rem;
   --radius: 0.5rem;
   --radius-lg: 0.75rem;
   --radius-xl: 1rem;
   --radius-2xl: 1.5rem;
-  --radius-full: 9999px;
 
   /* Box Shadows */
   --shadow-card: 0 2px 8px rgba(0, 0, 0, 0.08);

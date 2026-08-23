@@ -35,6 +35,7 @@ export function ChatRoomItem({
         {/* 프로필 - 왼쪽 상단 */}
         <UserAvatar
           avatarUrl={userAvatar ?? null}
+          name={userName}
           size="sm"
           className="absolute left-0 top-0 border-2 border-white"
         />

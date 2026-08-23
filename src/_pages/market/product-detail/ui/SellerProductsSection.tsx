@@ -18,6 +18,7 @@ export function SellerProductsSection({
       <div className="flex items-center gap-3 mb-6">
         <UserAvatar
           avatarUrl={seller.avatar}
+          name={seller.name}
           size="md"
           className="ring-2 ring-white"
         />

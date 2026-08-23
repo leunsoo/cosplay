@@ -14,6 +14,7 @@ export function SellerInfoCard({ seller }: SellerInfoCardProps) {
     <div className="bg-gray-50 rounded-lg p-4 flex items-center gap-4 mb-8 border border-gray-100">
       <UserAvatar
         avatarUrl={seller.avatar}
+        name={seller.name}
         size="sm"
         className="ring-2 ring-white"
       />

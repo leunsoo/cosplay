@@ -69,6 +69,7 @@ export function MainMenu() {
               <Link href={ROUTES.MY_INFO} aria-label="내 정보로 이동">
                 <UserAvatar
                   avatarUrl={profile?.data?.profileImageUri ?? null}
+                  name={profile?.data?.nickname ?? undefined}
                   size="xs"
                   className="border border-gray-200 hover:ring-2 hover:ring-primary transition-all"
                 />
