@@ -17,9 +17,7 @@ export function Footer() {
 
         {/* 링크 */}
         <div className="flex flex-wrap gap-x-4 gap-y-2 mb-6">
-          <span className="text-sm text-text-sub">
-            llowa.official@gmail.com
-          </span>
+          <span className="text-sm text-text-sub">dmstn9221@gmail.com</span>
         </div>
 
         {/* 서비스 이용 주의사항 */}
