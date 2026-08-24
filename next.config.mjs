@@ -9,6 +9,15 @@ const nextConfig = {
   //     },
   //   ];
   // },
+  async redirects() {
+    return [
+      {
+        source: '/',
+        destination: '/event',
+        permanent: false,
+      },
+    ];
+  },
   images: {
     remotePatterns: [
       {
