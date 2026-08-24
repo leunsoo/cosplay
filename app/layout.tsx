@@ -1,6 +1,5 @@
 import type { Metadata } from 'next';
 import { Noto_Sans_KR } from 'next/font/google';
-import Script from 'next/script';
 import './globals.css';
 import { MainMenu } from '@/widgets/main-menu';
 import { Footer } from '@/widgets/footer';
@@ -97,10 +96,6 @@ export default function RootLayout({
       <body
         className={`${notoSansKR.variable} bg-background-light text-text-main font-sans overflow-x-hidden antialiased flex flex-col min-h-screen`}
       >
-        <Script
-          src={`//dapi.kakao.com/v2/maps/sdk.js?appkey=${process.env.NEXT_PUBLIC_KAKAO_MAP_APP_KEY}&libraries=services&autoload=false`}
-          strategy="beforeInteractive"
-        />
         <DemoBanner />
         <QueryProvider>
           <MobileGuard>
