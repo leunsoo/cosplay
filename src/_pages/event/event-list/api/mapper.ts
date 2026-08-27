@@ -22,8 +22,8 @@ export function mapEventDtoToEvent(dto: EventDTO): OfficialEvent {
     status: eventStatusMap[dto.status],
     source: EventSource.OFFICIAL,
     dateInfo: {
-      startDate: new Date(dto.startDate),
-      endDate: new Date(dto.endDate),
+      startDate: dto.startDate,
+      endDate: dto.endDate,
       isRecurring: false,
     },
     title: dto.title,
@@ -50,8 +50,8 @@ export function mapMeetupDtoToEvent(dto: MeetupItemDTO): PersonalEvent {
     status: resolveMeetupStatus(dto.status),
     source: EventSource.PERSONAL,
     dateInfo: {
-      startDate: scheduledDate,
-      endDate: scheduledDate,
+      startDate: dto.scheduledAt,
+      endDate: dto.scheduledAt,
       startTime: `${hours}:${minutes}`,
       isRecurring: false,
     },

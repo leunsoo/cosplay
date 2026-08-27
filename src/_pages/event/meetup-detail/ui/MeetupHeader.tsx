@@ -49,7 +49,7 @@ export function MeetupHeader({
     title: detail.title,
     imageUrl: detail.thumbnailUrl ?? '',
     location: detail.location,
-    dateInfo: { startDate: new Date(detail.scheduledAt), isRecurring: false },
+    dateInfo: { startDate: detail.scheduledAt, isRecurring: false },
     currentMembers: detail.currentMembers,
     maxMembers: detail.maxMembers,
     status: parseEventStatus(detail.status),

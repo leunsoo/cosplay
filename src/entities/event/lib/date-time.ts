@@ -19,12 +19,14 @@ export function formatEventDate(dateInfo: EventDate): string {
   };
 
   const { startDate, endDate, startTime } = dateInfo;
+  const start = new Date(startDate);
+  const end = endDate ? new Date(endDate) : undefined;
 
-  if (!endDate || startDate.toDateString() === endDate.toDateString()) {
-    return formatSingleDate(startDate, !!startTime);
+  if (!end || start.toDateString() === end.toDateString()) {
+    return formatSingleDate(start, !!startTime);
   }
 
-  return `${formatSingleDate(startDate)} - ${formatSingleDate(endDate)}`;
+  return `${formatSingleDate(start)} - ${formatSingleDate(end)}`;
 }
 
 /**

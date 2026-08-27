@@ -51,8 +51,8 @@ export function mapFavoriteEventToOfficialEvent(
     status: parseEventStatus(dto.status),
     source: EventSource.OFFICIAL,
     dateInfo: {
-      startDate: new Date(dto.startDate),
-      endDate: new Date(dto.endDate),
+      startDate: dto.startDate,
+      endDate: dto.endDate,
       isRecurring: false,
     },
   };

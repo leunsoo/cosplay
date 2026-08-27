@@ -53,10 +53,8 @@ export function useEventFavoriteToggle({
                   eventId,
                   title,
                   thumbnailUrl: imageUrl,
-                  startDate: dateInfo.startDate.toISOString(),
-                  endDate: (
-                    dateInfo.endDate ?? dateInfo.startDate
-                  ).toISOString(),
+                  startDate: dateInfo.startDate,
+                  endDate: dateInfo.endDate ?? dateInfo.startDate,
                   location,
                   price,
                   category,

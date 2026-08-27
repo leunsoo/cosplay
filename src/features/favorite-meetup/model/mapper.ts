@@ -52,8 +52,8 @@ export function mapFavoriteMeetupToPersonalEvent(
     status: parseEventStatus(dto.status),
     source: EventSource.PERSONAL,
     dateInfo: {
-      startDate: scheduledDate,
-      endDate: scheduledDate,
+      startDate: dto.scheduledAt,
+      endDate: dto.scheduledAt,
       startTime: `${hours}:${minutes}`,
       isRecurring: false,
     },

@@ -23,8 +23,8 @@ export function mapEventDetailDtoToEventDetailWithUploader(
     imageUrl: dto.thumbnailUrl,
     category: dto.category,
     dateInfo: {
-      startDate: new Date(dto.startDate),
-      endDate: new Date(dto.endDate),
+      startDate: dto.startDate,
+      endDate: dto.endDate,
       isRecurring: false,
     },
     title: dto.title,

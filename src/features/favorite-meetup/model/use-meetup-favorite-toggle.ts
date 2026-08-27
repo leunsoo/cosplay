@@ -54,7 +54,7 @@ export function useMeetupFavoriteToggle({
                   meetupId,
                   title,
                   thumbnailUrl: imageUrl,
-                  scheduledAt: dateInfo.startDate.toISOString(),
+                  scheduledAt: dateInfo.startDate,
                   location,
                   maxMembers,
                   currentMembers,

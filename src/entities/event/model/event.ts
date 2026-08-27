@@ -1,6 +1,6 @@
 export interface EventDate {
-  startDate: Date;
-  endDate?: Date;
+  startDate: string; // ISO 문자열 — Date 인스턴스로 만들면 서버→클라이언트 경계를 못 건넘
+  endDate?: string;
   startTime?: string; // "18:00" 형식
   endTime?: string;
   isRecurring: boolean;
