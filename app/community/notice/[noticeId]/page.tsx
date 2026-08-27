@@ -1,5 +1,3 @@
-export const dynamic = 'force-dynamic';
-
 import { NoticeDetailPage } from '@/_pages/inquiry/notice-detail';
 
 interface Props {
