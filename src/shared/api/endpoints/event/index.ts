@@ -1,8 +1,4 @@
-export {
-  getEventDetail,
-  type EventDetailDTO,
-  type ScheduleItem,
-} from './get-event-detail';
+export { type EventDetailDTO, type ScheduleItem } from './get-event-detail';
 export {
   getEventsList,
   EventListDTOSchema,

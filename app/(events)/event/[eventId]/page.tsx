@@ -2,9 +2,7 @@
 export const dynamic = 'force-dynamic';
 
 import { type Metadata } from 'next';
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { getQueryClient } from '@/shared/lib/get-query-client';
-import { EVENT_QUERIES } from '@/shared/api/endpoints/event';
+import { notFound } from 'next/navigation';
 import { getEventDetailServer } from '@/shared/api/endpoints/event/index.server';
 import { EventDetailPage } from '@/_pages/event/event-detail';
 import { EventJsonLd } from './_components/EventJsonLd';
@@ -71,26 +69,18 @@ export default async function EventDetailRoute({
   params,
 }: EventDetailRouteProps) {
   const { eventId } = await params;
-  const queryClient = getQueryClient();
 
-  let event = null;
+  let event;
   try {
     event = await fetchEventDetail(eventId);
-
-    // prefetchQuery: EventDetailPage의 useQuery(EVENT_QUERIES.detail(eventId))와 동일한 queryKey
-    // → 클라이언트에서 API 재호출 없이 캐시에서 즉시 데이터를 가져옴 → SEO 가능
-    await queryClient.prefetchQuery({
-      queryKey: EVENT_QUERIES.detail(eventId),
-      queryFn: async () => ({ data: await fetchEventDetail(eventId) }),
-    });
   } catch {
-    // JSON-LD/prefetch 실패 시 무시 (EventDetailPage는 자체적으로 에러 처리)
+    notFound();
   }
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      {event && <EventJsonLd event={event} eventId={eventId} />}
-      <EventDetailPage eventId={eventId} />
-    </HydrationBoundary>
+    <>
+      <EventJsonLd event={event} eventId={eventId} />
+      <EventDetailPage eventId={eventId} event={event} />
+    </>
   );
 }

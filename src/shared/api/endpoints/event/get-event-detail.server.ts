@@ -8,8 +8,6 @@ import {
   type GetEventDetailParams,
 } from './get-event-detail';
 
-// 서버 컴포넌트 / prefetchQuery 전용: apiClient(axios)는 내부적으로
-// Zustand(useAuthStore)를 참조해 서버 컴포넌트에서 사용할 수 없음
 export const getEventDetailServer = async (
   params: GetEventDetailParams
 ): Promise<ApiResponse<EventDetailDTO>> => {

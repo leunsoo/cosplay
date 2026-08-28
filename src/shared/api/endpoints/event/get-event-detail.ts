@@ -1,6 +1,5 @@
 import { z } from 'zod';
-import { apiClient, type ApiResponse } from '@/shared/api';
-import { IS_DEMO } from '@/shared/lib/is-demo';
+import { type ApiResponse } from '@/shared/api';
 import { mockEventDetails } from '@/mocks';
 
 const UploaderDTOSchema = z.object({
@@ -38,20 +37,10 @@ export interface GetEventDetailParams {
   eventId: number;
 }
 
-// getEventDetail/getEventDetailServer가 공통으로 쓰는 데모 모드 조회
+// getEventDetailServer가 사용하는 데모 모드 조회
 export function resolveDemoEventDetail(
   eventId: number
 ): ApiResponse<EventDetailDTO> {
   const detail = mockEventDetails[eventId] ?? mockEventDetails[1];
   return { status: 'SUCCESS', message: '성공', data: detail };
 }
-
-export const getEventDetail = async (
-  params: GetEventDetailParams
-): Promise<ApiResponse<EventDetailDTO>> => {
-  if (IS_DEMO) return resolveDemoEventDetail(params.eventId);
-  return apiClient.getWithValidation(
-    `/api/v1/events/${params.eventId}`,
-    EventDetailDTOSchema
-  );
-};
