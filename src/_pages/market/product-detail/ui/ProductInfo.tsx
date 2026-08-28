@@ -7,6 +7,7 @@ import { useAuthStore, useLogined } from '@/shared/auth';
 import { ROUTES } from '@/shared/routes';
 import { useUpdateProductStatus } from '../api/use-update-product-status';
 import { useDeleteProduct } from '../api/use-delete-product';
+import { useAddRecentlyViewed } from '../api/use-add-recently-viewed';
 import { SellerInfoCard } from './SellerInfoCard';
 import { FavoriteButton } from './FavoriteButton';
 import { ConfirmDialog } from '@/shared/ui/ConfirmDialog';
@@ -32,8 +33,6 @@ interface ProductInfoProps {
   registeredDate: string;
   seller: Seller;
   currentStatus: string;
-  isOwner: boolean;
-  onChatClick?: () => void;
 }
 
 export function ProductInfo({
@@ -49,22 +48,37 @@ export function ProductInfo({
   registeredDate,
   seller,
   currentStatus,
-  isOwner,
-  onChatClick,
 }: ProductInfoProps) {
   const router = useRouter();
   const logined = useLogined();
   const userUuid = useAuthStore((state) => state.userUuid);
+  // 로그인 상태(zustand)는 클라이언트에만 존재해서 서버에서 계산할 수 없다 —
+  // 반드시 client인 이 컴포넌트 안에서 직접 비교해야 한다.
+  const isOwner = !!userUuid && userUuid === seller.uuid;
   const deleteDialogRef = useRef<HTMLDialogElement>(null);
   const [status, setStatus] = useState<ProductStatusOption>(
     (currentStatus as ProductStatusOption) ?? 'SELLING'
   );
+
+  // 최근 본 상품 기록 (원래 ProductDetailPage가 서버 컴포넌트가 되면서 이곳으로 이동)
+  useAddRecentlyViewed({ uuid: userUuid, productId });
 
   const { mutate: changeStatus, isPending: isStatusPending } =
     useUpdateProductStatus({ userUuid, productId });
 
   const { mutate: removeProduct, isPending: isDeletePending } =
     useDeleteProduct({ userUuid, productId });
+
+  const handleChatClick = () => {
+    const chatPath = `${ROUTES.CHAT}?productId=${productId}&sellerUuid=${seller.uuid}`;
+
+    if (!logined) {
+      router.push(`${ROUTES.LOGIN}?next=${encodeURIComponent(chatPath)}`);
+      return;
+    }
+
+    router.push(chatPath);
+  };
 
   const handleStatusChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newStatus = e.target.value as ProductStatusOption;
@@ -186,7 +200,7 @@ export function ProductInfo({
           {/* Action Buttons */}
           <div className="mt-auto flex gap-3">
             <button
-              onClick={onChatClick}
+              onClick={handleChatClick}
               className="flex-1 flex items-center justify-center gap-2 bg-primary hover:bg-primary-dark text-white h-12 rounded-lg font-bold text-lg shadow-md transition-all active:scale-[0.98]"
             >
               <span className="material-symbols-outlined">chat_bubble</span>

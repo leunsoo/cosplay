@@ -3,10 +3,7 @@ export const dynamic = 'force-dynamic';
 
 import { type Metadata } from 'next';
 import { notFound } from 'next/navigation';
-import { dehydrate, HydrationBoundary } from '@tanstack/react-query';
-import { getQueryClient } from '@/shared/lib/get-query-client';
 import { getProductDetailServer } from '@/shared/api/endpoints/product/index.server';
-import { PRODUCT_QUERIES } from '@/shared/api/endpoints/product';
 import { ProductDetailPage } from '@/_pages/market/product-detail';
 import { ProductJsonLd } from './_components/ProductJsonLd';
 
@@ -72,27 +69,18 @@ export default async function ProductDetailRoute({
   params,
 }: ProductDetailPageProps) {
   const { id } = await params;
-  const queryClient = getQueryClient();
 
-  let productData = null;
+  let productData;
   try {
     productData = await fetchProductDetail(id);
-
-    // prefetchQuery: useProductDetail의 useQuery(PRODUCT_QUERIES.detail(productId))와 동일한 queryKey
-    // → 클라이언트에서 API 재호출 없이 캐시에서 즉시 데이터를 가져옴 → SEO 가능
-    await queryClient.prefetchQuery({
-      queryKey: PRODUCT_QUERIES.detail(Number(id)),
-      queryFn: () => fetchProductDetail(id),
-    });
   } catch {
-    // JSON-LD/prefetch 실패 시 무시 (ProductDetailPage는 자체적으로 에러 처리)
     notFound();
   }
 
   return (
-    <HydrationBoundary state={dehydrate(queryClient)}>
-      {productData && <ProductJsonLd product={productData.product} id={id} />}
-      <ProductDetailPage productId={Number(id)} />
-    </HydrationBoundary>
+    <>
+      <ProductJsonLd product={productData.product} id={id} />
+      <ProductDetailPage productDetail={productData} />
+    </>
   );
 }

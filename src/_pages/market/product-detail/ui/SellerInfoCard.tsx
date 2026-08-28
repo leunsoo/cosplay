@@ -1,4 +1,4 @@
-import { useRouter } from 'next/navigation';
+import Link from 'next/link';
 import { type Seller } from '@/shared/api/endpoints/product';
 import { UserAvatar } from '@/shared/ui';
 import { ROUTES } from '@/shared/routes';
@@ -8,8 +8,6 @@ interface SellerInfoCardProps {
 }
 
 export function SellerInfoCard({ seller }: SellerInfoCardProps) {
-  const router = useRouter();
-
   return (
     <div className="bg-gray-50 rounded-lg p-4 flex items-center gap-4 mb-8 border border-gray-100">
       <UserAvatar
@@ -26,12 +24,12 @@ export function SellerInfoCard({ seller }: SellerInfoCardProps) {
         </div>
         <div className="flex items-center gap-3 text-xs text-gray-500 mt-0.5"></div>
       </div>
-      <button
-        onClick={() => router.push(ROUTES.SELLER.PRODUCTS(seller.uuid))}
+      <Link
+        href={ROUTES.SELLER.PRODUCTS(seller.uuid)}
         className="text-xs font-bold text-gray-600 border border-gray-300 bg-white px-3 py-1.5 rounded hover:bg-gray-50 transition-colors"
       >
         상점방문
-      </button>
+      </Link>
     </div>
   );
 }
