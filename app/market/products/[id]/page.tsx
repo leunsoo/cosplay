@@ -19,7 +19,7 @@ interface ProductDetailPageProps {
  */
 async function fetchProductDetail(id: string) {
   const response = await getProductDetailServer({ productId: Number(id) });
-  return response.data;
+  return response?.data ?? null;
 }
 
 /**
@@ -38,7 +38,14 @@ export async function generateMetadata({
   const { id } = await params;
 
   try {
-    const { product } = await fetchProductDetail(id);
+    const productData = await fetchProductDetail(id);
+    if (!productData) {
+      return {
+        title: '상품을 찾을 수 없습니다',
+        description: '요청하신 상품을 찾을 수 없습니다.',
+      };
+    }
+    const { product } = productData;
 
     return {
       title: product.title,
@@ -69,11 +76,9 @@ export default async function ProductDetailRoute({
   params,
 }: ProductDetailPageProps) {
   const { id } = await params;
+  const productData = await fetchProductDetail(id);
 
-  let productData;
-  try {
-    productData = await fetchProductDetail(id);
-  } catch {
+  if (!productData) {
     notFound();
   }
 

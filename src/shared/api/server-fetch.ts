@@ -1,6 +1,12 @@
 import { z, ZodError } from 'zod';
 import { type ApiResponse } from './response';
 
+interface ServerFetchOptions {
+  revalidate?: number; // N초마다 캐시 갱신. 미지정 시 기본 캐시 정책 사용
+  tags?: string[]; // 캐시 태그 (revalidateTag()로 수동 무효화 시 사용)
+  cache?: RequestCache; // 'force-cache'(영구 캐시) | 'no-store'(캐시 없음)
+}
+
 /**
  * 서버 컴포넌트 전용 fetch 함수
  *
@@ -17,16 +23,25 @@ import { type ApiResponse } from './response';
  * @param url      - API 경로 (예: '/api/v1/events')
  * @param schema   - 응답 data 필드를 검증할 Zod 스키마 (기존 apiClient와 동일하게 적용)
  * @param options  - Next.js fetch 전용 캐싱 옵션
+ *
+ * `notFoundStatus`: 그 상태 코드는 예외 대신 `null`로 반환 (단일 리소스 조회처럼
+ * 404가 정상 결과인 엔드포인트에서만 사용 — 목록 API 등엔 쓰지 말 것)
  */
 export async function serverFetch<T>(
   url: string,
   schema: z.ZodSchema<T>,
-  options?: {
-    revalidate?: number; // N초마다 캐시 갱신. 미지정 시 기본 캐시 정책 사용
-    tags?: string[]; // 캐시 태그 (revalidateTag()로 수동 무효화 시 사용)
-    cache?: RequestCache; // 'force-cache'(영구 캐시) | 'no-store'(캐시 없음)
-  }
-): Promise<ApiResponse<T>> {
+  options: ServerFetchOptions & { notFoundStatus: number }
+): Promise<ApiResponse<T> | null>;
+export async function serverFetch<T>(
+  url: string,
+  schema: z.ZodSchema<T>,
+  options?: ServerFetchOptions
+): Promise<ApiResponse<T>>;
+export async function serverFetch<T>(
+  url: string,
+  schema: z.ZodSchema<T>,
+  options?: ServerFetchOptions & { notFoundStatus?: number }
+): Promise<ApiResponse<T> | null> {
   const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
   const response = await fetch(`${BASE_URL}${url}`, {
@@ -39,6 +54,9 @@ export async function serverFetch<T>(
   });
 
   if (!response.ok) {
+    if (options?.notFoundStatus === response.status) {
+      return null;
+    }
     throw new Error(`serverFetch 실패: ${response.status} ${url}`);
   }
 
