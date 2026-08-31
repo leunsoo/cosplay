@@ -15,7 +15,6 @@ export function ProductCard({
   return (
     <Link
       href={ROUTES.PRODUCT.DETAIL(id)}
-      prefetch
       className="group flex flex-col bg-white rounded-md overflow-hidden border border-gray-200 transition-all duration-300 hover:shadow-md"
     >
       <ProductImage imageUrl={image} title={title} badges={badges} />
