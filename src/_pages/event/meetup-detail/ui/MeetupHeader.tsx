@@ -1,6 +1,5 @@
 'use client';
 
-import Image from 'next/image';
 import Link from 'next/link';
 import { useRef } from 'react';
 import { ROUTES } from '@/shared/routes';
@@ -9,7 +8,7 @@ import { parseEventStatus } from '@/entities/event';
 import { useLogined } from '@/shared/auth';
 import { useMeetupMembers } from '../api/use-meetup-members';
 import { FavoriteMeetupButton } from '@/features/favorite-meetup';
-import { ConfirmDialog } from '@/shared/ui';
+import { ConfirmDialog, ImageWithFallback } from '@/shared/ui';
 
 export interface MeetupHeaderProps {
   meetupId: number;
@@ -66,8 +65,8 @@ export function MeetupHeader({
       {/* 이미지 */}
       <div className="md:w-2/5 md:shrink-0 md:pr-12">
         <div className="relative w-full aspect-square md:rounded-xs overflow-hidden md:shadow-md bg-gray-100">
-          <Image
-            src={detail.thumbnailUrl || '/placeholder.png'}
+          <ImageWithFallback
+            src={detail.thumbnailUrl}
             alt={detail.title}
             fill
             className="object-cover"

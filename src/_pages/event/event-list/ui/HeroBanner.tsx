@@ -1,6 +1,7 @@
 'use client';
 
 import Link from 'next/link';
+import { ImageWithFallback } from '@/shared/ui';
 import { useHeroBanner } from '../model/use-hero-banner';
 
 const EMPTY_STATE_CLASSNAME =
@@ -27,9 +28,11 @@ export function HeroBanner() {
 
   const bannerContent = (
     <>
-      <div
-        className="absolute inset-0 bg-cover bg-center transform group-hover:scale-105 transition-transform duration-500"
-        style={{ backgroundImage: `url('${currentBanner.imageUrl}')` }}
+      <ImageWithFallback
+        src={currentBanner.imageUrl}
+        alt={currentBanner.title}
+        fill
+        className="object-cover transform group-hover:scale-105 transition-transform duration-500"
       />
       <div className="absolute inset-0 bg-linear-to-r from-black/80 via-black/40 to-transparent"></div>
       <div className="absolute inset-0 p-6 md:p-10 flex flex-col justify-center items-start z-10">

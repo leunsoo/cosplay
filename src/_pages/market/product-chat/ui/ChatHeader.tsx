@@ -1,5 +1,6 @@
 import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/shared/routes';
+import { ImageWithFallback } from '@/shared/ui';
 import { ChatProductInfo } from '../model/chat';
 
 interface ChatHeaderProps extends ChatProductInfo {
@@ -20,12 +21,18 @@ export function ChatHeader({
     <div className="px-3 py-3 sm:p-4 border-b border-gray-100 bg-gray-50/50 flex items-center justify-between gap-2 shrink-0 min-w-0">
       <div className="flex items-center gap-2 sm:gap-3 min-w-0">
         <div
-          className="w-11 h-11 sm:w-14 sm:h-14 rounded-lg bg-cover bg-center border border-gray-200 shadow-sm cursor-pointer shrink-0"
-          style={{ backgroundImage: `url('${productImage}')` }}
+          className="relative w-11 h-11 sm:w-14 sm:h-14 rounded-lg overflow-hidden border border-gray-200 shadow-sm cursor-pointer shrink-0"
           onClick={() =>
             productId && router.push(ROUTES.PRODUCT.DETAIL(productId))
           }
-        ></div>
+        >
+          <ImageWithFallback
+            src={productImage}
+            alt={productTitle}
+            fill
+            className="object-cover"
+          />
+        </div>
         <div className="flex flex-col min-w-0">
           <span className="text-sm font-bold text-gray-900 truncate max-w-35 sm:max-w-none">
             {productTitle}

@@ -1,5 +1,5 @@
 import { ReactNode } from 'react';
-import { PageStepper } from '@/shared/ui';
+import { ImageWithFallback, PageStepper } from '@/shared/ui';
 import type { SidePanelProduct } from '../model/product';
 import { isProductInactive } from '../model/product';
 
@@ -72,17 +72,22 @@ export function ProductSidePanel({
                   >
                     <div
                       className={[
-                        'w-full h-full bg-cover bg-center rounded-sm border border-gray-100 transition-all',
+                        'relative w-full h-full rounded-sm border border-gray-100 transition-all overflow-hidden',
                         inactive
                           ? 'grayscale cursor-default opacity-60'
                           : 'cursor-pointer hover:ring-2 hover:ring-primary',
                       ].join(' ')}
-                      style={{ backgroundImage: `url('${product.image}')` }}
                       onClick={() => {
                         if (!inactive) onProductClick(product.id);
                       }}
                       title={inactive ? '판매불가 상품' : product.title}
                     >
+                      <ImageWithFallback
+                        src={product.image}
+                        alt={product.title}
+                        fill
+                        className="object-cover"
+                      />
                       {inactive && (
                         <div className="absolute inset-0 flex items-end justify-center pb-1 pointer-events-none">
                           <span className="text-[10px] text-white bg-black/80 rounded-md px-1">

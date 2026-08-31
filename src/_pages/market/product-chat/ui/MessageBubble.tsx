@@ -1,5 +1,5 @@
 import { Message } from '../model/chat';
-import Image from 'next/image';
+import { ImageWithFallback } from '@/shared/ui';
 import { cn } from '@/shared/lib/cn';
 import { formatChatTimestamp } from './format-chat-timestamp';
 
@@ -23,7 +23,7 @@ export function MessageBubble({ type, message, imageUrl, timestamp }: Message) {
       >
         {imageUrl ? (
           <div className="overflow-hidden rounded-sm border border-gray-200 cursor-pointer hover:opacity-90 transition-opacity shrink-0">
-            <Image
+            <ImageWithFallback
               className="object-cover"
               src={imageUrl}
               alt="Image message"

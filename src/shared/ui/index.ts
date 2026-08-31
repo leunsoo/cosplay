@@ -11,3 +11,4 @@ export { BackLink } from './BackLink';
 export { formatDate, formatDateTime } from './format-date';
 export { UserAvatar } from './UserAvatar';
 export { FavoriteIconButton } from './FavoriteIconButton';
+export { ImageWithFallback } from './ImageWithFallback';

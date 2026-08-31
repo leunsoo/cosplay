@@ -18,7 +18,7 @@ export function ProductCard({
       prefetch
       className="group flex flex-col bg-white rounded-md overflow-hidden border border-gray-200 transition-all duration-300 hover:shadow-md"
     >
-      <ProductImage imageUrl={image} badges={badges} />
+      <ProductImage imageUrl={image} title={title} badges={badges} />
 
       <div className="flex flex-col gap-2 px-2 pt-3 pb-2">
         <h3 className="font-medium text-gray-800 text-sm leading-snug truncate">

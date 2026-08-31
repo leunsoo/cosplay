@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import type { ReactNode } from 'react';
+import { ImageWithFallback } from '@/shared/ui';
 
 interface SummaryCardShellProps {
   href: string;
@@ -25,10 +26,12 @@ export function SummaryCardShell({
       <article className="group relative flex flex-col md:flex-row bg-white rounded-md md:rounded-xl overflow-hidden border border-gray-200 hover:border-primary/50 transition-all shadow-card hover:shadow-card-hover cursor-pointer">
         {/* 이미지 */}
         <div className="md:w-60 aspect-square relative overflow-hidden">
-          <div
-            className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-110"
-            style={{ backgroundImage: `url('${imageUrl}')` }}
-          ></div>
+          <ImageWithFallback
+            src={imageUrl}
+            alt={title}
+            fill
+            className="object-cover transition-transform duration-500 group-hover:scale-110"
+          />
           <div className="absolute top-3 left-3 flex gap-1">{badges}</div>
           {/* 찜 버튼 — 모바일에서만 이미지 우측 상단 */}
           <div

@@ -1,8 +1,8 @@
 'use client';
 
-import Image from 'next/image';
 import { formatEventDate } from '@/entities/event';
 import { useLogined } from '@/shared/auth';
+import { ImageWithFallback } from '@/shared/ui';
 import type { OfficialEventDetail } from '../model';
 import { FavoriteButton } from '@/features/favorite-event';
 
@@ -29,7 +29,7 @@ export function EventHeader({ event }: EventHeaderProps) {
       {/* 이미지 */}
       <div className="md:w-2/5 md:shrink-0 md:pr-12">
         <div className="relative w-full aspect-4/5 md:rounded-xs overflow-hidden md:shadow-md">
-          <Image
+          <ImageWithFallback
             src={event.imageUrl}
             alt={event.title}
             fill

@@ -19,7 +19,10 @@ export function ProductDetailPage({ productDetail }: ProductDetailPageProps) {
         <div className="bg-white rounded-xl shadow-sm border border-border-color p-6 lg:p-8 mb-8">
           <div className="flex flex-col lg:flex-row gap-10 min-w-0">
             {/* Product Images */}
-            <ProductImage mainImage={product.mainImageUrl} />
+            <ProductImage
+              mainImage={product.mainImageUrl}
+              title={product.title}
+            />
 
             {/* Product Info */}
             <ProductInfo

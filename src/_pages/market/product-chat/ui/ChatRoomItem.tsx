@@ -1,6 +1,6 @@
 import { cn } from '@/shared/lib/cn';
 import { ChatRoom } from '../model/chat';
-import { UserAvatar } from '@/shared/ui';
+import { ImageWithFallback, UserAvatar } from '@/shared/ui';
 
 interface ChatRoomItemProps extends ChatRoom {
   onClick?: () => void;
@@ -40,22 +40,13 @@ export function ChatRoomItem({
           className="absolute left-0 top-0 border-2 border-white"
         />
         {/* 상품 썸네일 - 오른쪽 하단 */}
-        <div
-          className={cn(
-            'absolute right-0 bottom-0 w-9 h-9 rounded-md',
-            thumbnailImage
-              ? 'bg-cover bg-center border border-gray-200'
-              : 'bg-gray-100 flex items-center justify-center text-gray-300'
-          )}
-          style={
-            thumbnailImage
-              ? { backgroundImage: `url('${thumbnailImage}')` }
-              : {}
-          }
-        >
-          {!thumbnailImage && (
-            <span className="material-symbols-outlined text-base">image</span>
-          )}
+        <div className="absolute right-0 bottom-0 w-9 h-9 rounded-md overflow-hidden border border-gray-200">
+          <ImageWithFallback
+            src={thumbnailImage ?? null}
+            alt=""
+            fill
+            className="object-cover"
+          />
         </div>
         {/* 읽지 않은 메시지 배지 */}
         {unreadCount !== undefined && unreadCount > 0 && (
