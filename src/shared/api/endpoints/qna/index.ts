@@ -1,5 +1,4 @@
 export { getQnaList } from './get-qna-list';
-export { getQnaDetail } from './get-qna-detail';
 export { createQna, type CreateQnaBody } from './create-qna';
 export { updateQna, type UpdateQnaBody } from './update-qna';
 export { deleteQna } from './delete-qna';

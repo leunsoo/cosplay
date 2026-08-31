@@ -1,5 +1,5 @@
-export const dynamic = 'force-dynamic';
-
+import { notFound } from 'next/navigation';
+import { getQnaDetailServer } from '@/shared/api/endpoints/qna/index.server';
 import { QnaDetailPage } from '@/_pages/inquiry/qna-detail';
 
 interface Props {
@@ -8,5 +8,11 @@ interface Props {
 
 export default async function Page({ params }: Props) {
   const { qnaPostId } = await params;
-  return <QnaDetailPage qnaPostId={Number(qnaPostId)} />;
+  const response = await getQnaDetailServer(Number(qnaPostId));
+
+  if (!response) {
+    notFound();
+  }
+
+  return <QnaDetailPage qnaPostId={Number(qnaPostId)} post={response.data} />;
 }
