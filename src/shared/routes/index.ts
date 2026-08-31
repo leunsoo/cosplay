@@ -49,6 +49,7 @@ export const ROUTES = {
     LIST: '/community',
     NOTICE_DETAIL: (id: string | number) => `/community/notice/${id}`,
     QNA_DETAIL: (id: string | number) => `/community/qna/${id}`,
+    QNA_EDIT: (id: string | number) => `/community/qna/${id}/edit`,
     WRITE: '/community/write',
   },
 } as const;
